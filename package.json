@@ -1,0 +1,46 @@
+{
+    "name": "fullstack-template",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "packageManager": "pnpm@7.28.0",
+    "author": {
+        "name": "向文可",
+        "email": "1041367524@qq.com",
+        "url": "https://github.com/saatana97"
+    },
+    "scripts": {
+        "client": "pnpm -F @apps/client dev",
+        "server": "pnpm -F @apps/server dev",
+        "build:client": "pnpm -F @apps/client build",
+        "build:server": "pnpm -F @apps/server build",
+        "build": "npm run build:client && npm run build:server",
+        "release": "npm run build && npm run sftp",
+        "sftp": "npx publish-sftp -c",
+        "preview": "npm run build && npm run start",
+        "start": "node ./dist/server/index.cjs",
+        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
+        "prettier": "prettier --write ./**/*.{vue,ts,tsx,js,jsx,css,json,md,html}",
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.4.1",
+        "@commitlint/config-conventional": "^17.4.0",
+        "@saatana97/eslint-config": "^1.0.0",
+        "@types/node": "^18.14.6",
+        "eslint": "^8.22.0",
+        "husky": "^8.0.3",
+        "lint-staged": "^13.1.0",
+        "prettier": "^2.7.1",
+        "publish-sftp": "^1.0.6",
+        "typescript": "^5.0.4"
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx,vue}": [
+            "npm run lint"
+        ],
+        "*.{js,jsx,ts,tsx,vue,html,css,less,md}": [
+            "npm run prettier"
+        ]
+    }
+}
