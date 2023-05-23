@@ -11,7 +11,6 @@ import history from 'connect-history-api-fallback';
 export const preSetup = (app: Application) => {
     app.use(accessHandler);
     app.use(rejectHandler);
-    app.use(errorHandler);
 };
 /**
  * 路由注册后的中间件
@@ -20,4 +19,5 @@ export const postSetup = (app: Application) => {
     app.use(history());
     app.use(resourceHandler);
     app.use(notFoundHandler);
+    app.use(errorHandler);
 };

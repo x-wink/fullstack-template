@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import type { Config } from '.';
 export const config: Config = {
+    base: '/api',
     port: 3000,
     sslPort: 0,
     staticDir: resolve(__dirname, '../../../dist/client'),

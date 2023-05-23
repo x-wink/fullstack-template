@@ -1,4 +1,5 @@
 export interface Config {
+    base: string;
     port: number;
     sslPort: number;
     staticDir: string;
