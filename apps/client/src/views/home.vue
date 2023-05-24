@@ -1,13 +1,16 @@
 <template>
-    <div class="container">HOME</div>
+    <div class="container">
+        <code-rain style="font-size: 2em" />
+    </div>
 </template>
 
 <script setup lang="ts">
-    import { detailUser } from '@/api/user';
-    detailUser(1).then(console.info);
+    import CodeRain from '@/components/code-rain.vue';
 </script>
 
 <style scoped lang="less">
     .container {
+        width: 100%;
+        height: 100%;
     }
 </style>
