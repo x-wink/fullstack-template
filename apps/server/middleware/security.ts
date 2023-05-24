@@ -18,7 +18,7 @@ export const security = (whiteList: string[]): RequestHandler[] => {
         // 校验token
         (req, res, next) => {
             const token = getToken(req);
-            if (verify(token)) {
+            if (!token || verify(token)) {
                 next();
             } else {
                 res.send(Res.forbidden());

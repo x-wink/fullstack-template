@@ -5,8 +5,8 @@
         "dev": "nodemon index.ts",
         "build": "set NODE_OPTIONS=--openssl-legacy-provider && tsc --noEmit && ncc build ./index.ts -o ../../dist/server && npm run copy-ssl && npm run copy-run && npm run copy-config",
         "copy-ssl": "ts-node ./scripts/copy.ts ./ssl ../../dist/server/ssl",
-        "copy-run": "ts-node ./scripts/copy.ts ./scripts/run.sh ../../dist/server/run.sh",
-        "copy-config": "ts-node ./scripts/copy.ts ./.env.production ../../dist/server/.env"
+        "copy-run": "ts-node ./scripts/copy.ts ./scripts/run.sh ../../dist/run.sh",
+        "copy-config": "ts-node ./scripts/copy.ts ./.env.production ../../dist/server/env"
     },
     "author": "向文可",
     "devDependencies": {

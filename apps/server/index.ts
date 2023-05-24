@@ -17,6 +17,7 @@ const {
     publish: { port, sslPort, domain },
     dir: { ssl },
 } = config;
+logger.info(config);
 http.createServer(app).listen(port, () => {
     logger.info(`HTTP服务启动成功【${env}】 >> http://${domain}:${port}`);
 });

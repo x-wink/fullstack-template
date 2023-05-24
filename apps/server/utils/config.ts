@@ -29,7 +29,7 @@ export const isDev = env === 'development';
 import dotenv from 'dotenv';
 import path from 'path';
 const { error, parsed: envConfig } = dotenv.config({
-    path: path.resolve(__dirname, isDev ? '../.env.local' : '.env'),
+    path: path.resolve(__dirname, isDev ? '../.env.local' : 'env'),
 });
 if (error) {
     console.error(error);

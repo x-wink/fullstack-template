@@ -1,8 +1,6 @@
 {
     "name": "fullstack-template",
     "version": "1.0.0",
-    "private": true,
-    "type": "module",
     "packageManager": "pnpm@7.28.0",
     "author": {
         "name": "向文可",
@@ -15,10 +13,10 @@
         "build:client": "pnpm -F @apps/client build",
         "build:server": "pnpm -F @apps/server build",
         "build": "npm run build:client && npm run build:server",
-        "release": "npm run build && npm run sftp",
         "sftp": "npx publish-sftp -c",
+        "release": "npm run build && npm run sftp",
+        "start": "node ./dist/server/index.js",
         "preview": "npm run build && npm run start",
-        "start": "node ./dist/server/index.cjs",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
         "prettier": "prettier --write ./**/*.{vue,ts,tsx,js,jsx,css,json,md,html}",
         "prepare": "husky install"
