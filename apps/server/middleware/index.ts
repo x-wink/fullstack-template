@@ -5,11 +5,13 @@ import { notFoundHandler } from './notFound';
 import { rejectHandler } from './reject';
 import { resourceHandler } from './resource';
 import history from 'connect-history-api-fallback';
+import { config } from '../config';
+const { base } = config;
 /**
  * 路由注册前的中间件
  */
 export const preSetup = (app: Application) => {
-    app.use(accessHandler);
+    app.use(base, accessHandler);
     app.use(rejectHandler);
 };
 /**
