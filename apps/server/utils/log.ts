@@ -18,7 +18,7 @@ configure({
         access: { appenders: ['date'], level: isDev ? 'debug' : 'info' },
     },
 });
-export const useLogger = (category = 'global', level = levels.INFO) => {
+export const useLogger = (category = 'global', level = levels.DEBUG) => {
     const logger = getLogger(category);
     logger.level = level;
     return logger;

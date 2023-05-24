@@ -8,6 +8,8 @@ export const config: Config = {
     uploadDir: resolve(__dirname, '../uploads'),
     sslDir: resolve(__dirname, '../ssl'),
     domain: 'localhost',
+    JWTSecretKey: 'wink',
+    JWTExpiress: 60 * 60 * 24 * 1,
     mysql: {
         host: '',
         port: 3306,

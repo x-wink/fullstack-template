@@ -1,5 +1,6 @@
 import { Request, RequestHandler } from 'express';
 import { Res } from '../entity';
+import { verify } from '../utils/jwt';
 
 export const security = (whiteList: string[]): RequestHandler[] => {
     const getToken = (req: Request) =>
@@ -14,10 +15,14 @@ export const security = (whiteList: string[]): RequestHandler[] => {
                 res.send(Res.forbidden());
             }
         },
-        // 解析token
+        // 校验token
         (req, res, next) => {
-            // TODO 集成jwt
-            next();
+            const token = getToken(req);
+            if (verify(token)) {
+                next();
+            } else {
+                res.send(Res.forbidden());
+            }
         },
     ];
 };

@@ -6,6 +6,8 @@ export interface Config {
     uploadDir: string;
     sslDir: string;
     domain: string;
+    JWTSecretKey: string;
+    JWTExpiress: number;
     mysql: {
         host: string;
         port: number;

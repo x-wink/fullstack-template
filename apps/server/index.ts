@@ -7,6 +7,7 @@ import { config, env } from './config';
 import { setup as setupController } from './controller';
 import { preSetup as preSetupMiddleware, postSetup as postSetuoMiddleware } from './middleware';
 import { useLogger } from './utils';
+import { encode } from './utils/jwt';
 // 配置服务
 const app = express();
 preSetupMiddleware(app);
@@ -14,6 +15,7 @@ setupController(app);
 postSetuoMiddleware(app);
 // 启动服务
 const logger = useLogger();
+logger.debug(encode({ username: 'administrator' }));
 const { port, sslPort, sslDir, domain } = config;
 http.createServer(app).listen(port, () => {
     logger.info(`HTTP服务启动成功【${env}】 >> http://${domain}:${port}`);

@@ -3,7 +3,6 @@ import { Res, User } from '../entity';
 import { createUser, getUser, removeUser, searchUser, updateUser } from '../service/user';
 
 export const userController = express.Router();
-userController.use(express.json());
 userController.get('/:id', async (req, res) => {
     res.send(Res.success(await getUser(Number(req.params.id || 0))));
 });

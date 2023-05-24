@@ -1,9 +1,8 @@
 import { useDao } from 'wink-dao';
 import { useLogger } from '../utils';
 import { config, isDev } from '../config';
-import { levels } from 'log4js';
 
-const logger = useLogger('dao', levels.DEBUG);
+const logger = useLogger('dao');
 const dao = useDao({
     config: config.mysql,
     debug: isDev,
