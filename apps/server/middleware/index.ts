@@ -5,7 +5,7 @@ import { notFoundHandler } from './notFound';
 import { rejectHandler } from './reject';
 import { resourceHandler } from './resource';
 import history from 'connect-history-api-fallback';
-import { config } from '../config';
+import { config } from '../utils';
 import { security } from './security';
 const { base } = config;
 /**

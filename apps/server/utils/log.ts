@@ -1,12 +1,15 @@
 import { configure, getLogger, levels } from 'log4js';
-import { isDev } from '../config';
+import { isDev, config } from './config';
+import path from 'path';
+import { Response } from 'express';
+import { Res } from '../entity';
 configure({
     appenders: {
-        file: { type: 'file', filename: 'logs/out.log' },
+        file: { type: 'file', filename: path.resolve(config.logDir, 'out.log') },
         console: { type: 'console' },
         date: {
             type: 'dateFile',
-            filename: 'logs/access.log',
+            filename: path.resolve(config.logDir, 'access.log'),
             pattern: 'yyyyMMdd',
             alwaysIncludePattern: true,
             keepFileExt: true,
@@ -24,3 +27,14 @@ export const useLogger = (category = 'global', level = levels.DEBUG) => {
     return logger;
 };
 export const useAccessLogger = () => useLogger('access');
+
+const logger = useLogger();
+export const createErrorHandler = (res: Response) => {
+    return (e: Error) => {
+        logger.error(e);
+        if (!res.writableFinished && !res.destroyed && !res.closed) {
+            res.status(200);
+            res.send(Res.error((e as Error).message ?? e));
+        }
+    };
+};

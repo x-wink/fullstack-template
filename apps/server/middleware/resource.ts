@@ -1,5 +1,5 @@
 import express from 'express';
-import { config } from '../config';
+import { config } from '../utils';
 const { staticDir, uploadDir } = config;
 export const resourceHandler = [
     express.static(staticDir),

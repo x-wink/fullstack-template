@@ -1,6 +1,5 @@
 import { useDao } from 'wink-dao';
-import { useLogger } from '../utils';
-import { config, isDev } from '../config';
+import { config, isDev, useLogger } from '../utils';
 
 const logger = useLogger('dao');
 const dao = useDao({

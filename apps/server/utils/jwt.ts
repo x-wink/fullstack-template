@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { config } from '../config';
+import { config } from './config';
 const { JWTSecretKey, JWTExpiress } = config;
 export const encode = (content: Record<string, unknown>) => {
     return jwt.sign(content, JWTSecretKey, {

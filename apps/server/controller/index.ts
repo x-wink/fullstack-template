@@ -2,7 +2,7 @@ import { testController } from './test';
 import { userController } from './user';
 import { fileController } from './file';
 import { Application, Router, json } from 'express';
-import { config } from '../config';
+import { config } from '../utils';
 const { base } = config;
 export const setup = (app: Application) => {
     const router = Router();

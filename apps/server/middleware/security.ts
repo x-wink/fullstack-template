@@ -1,6 +1,6 @@
 import { Request, RequestHandler } from 'express';
 import { Res } from '../entity';
-import { verify } from '../utils/jwt';
+import { verify } from '../utils';
 
 export const security = (whiteList: string[]): RequestHandler[] => {
     const getToken = (req: Request) =>
