@@ -3,13 +3,16 @@ import { isDev, config } from './config';
 import path from 'path';
 import { Response } from 'express';
 import { Res } from '../entity';
+const {
+    dir: { log },
+} = config;
 configure({
     appenders: {
-        file: { type: 'file', filename: path.resolve(config.logDir, 'out.log') },
+        file: { type: 'file', filename: path.resolve(log, 'out.log') },
         console: { type: 'console' },
         date: {
             type: 'dateFile',
-            filename: path.resolve(config.logDir, 'access.log'),
+            filename: path.resolve(log, 'access.log'),
             pattern: 'yyyyMMdd',
             alwaysIncludePattern: true,
             keepFileExt: true,

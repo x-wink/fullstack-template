@@ -10,7 +10,7 @@ export const fileController = express.Router();
 fileController.use(express.json());
 fileController.use(express.urlencoded());
 const storage = multer.diskStorage({
-    destination: config.uploadDir,
+    destination: config.dir.upload,
     filename: (req, file, cb) => {
         cb(null, [v4(), file.originalname.split('.').pop()].join('.'));
     },
@@ -20,7 +20,7 @@ const upload = multer({
 });
 const logger = useLogger('upload');
 const removeFile = (filename: string) => {
-    const path = resolve(config.uploadDir, filename);
+    const path = resolve(config.dir.upload, filename);
     unlink(path, () => {
         //删除旧照片
         logger.info('[remove]', path);

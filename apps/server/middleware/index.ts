@@ -7,7 +7,9 @@ import { resourceHandler } from './resource';
 import history from 'connect-history-api-fallback';
 import { config } from '../utils';
 import { security } from './security';
-const { base } = config;
+const {
+    publish: { base },
+} = config;
 /**
  * 路由注册前的中间件
  */

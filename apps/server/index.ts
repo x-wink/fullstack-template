@@ -13,13 +13,16 @@ setupController(app);
 postSetuoMiddleware(app);
 // 启动服务
 const logger = useLogger();
-const { port, sslPort, sslDir, domain } = config;
+const {
+    publish: { port, sslPort, domain },
+    dir: { ssl },
+} = config;
 http.createServer(app).listen(port, () => {
     logger.info(`HTTP服务启动成功【${env}】 >> http://${domain}:${port}`);
 });
 if (sslPort) {
-    const cert = readFileSync(resolve(sslDir, domain + '.pem'), 'utf8');
-    const key = readFileSync(resolve(sslDir, domain + '.key'), 'utf8');
+    const cert = readFileSync(resolve(ssl, domain + '.pem'), 'utf8');
+    const key = readFileSync(resolve(ssl, domain + '.key'), 'utf8');
     https.createServer({ key, cert }, app).listen(sslPort, () => {
         logger.info(`HTTPS服务启动成功【${env}】 >> https://${domain}:${sslPort}`);
     });

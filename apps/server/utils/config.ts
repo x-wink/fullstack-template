@@ -1,15 +1,21 @@
 /* eslint-disable no-console */
 export interface Config {
-    base: string;
-    port: number;
-    sslPort: number;
-    staticDir: string;
-    uploadDir: string;
-    sslDir: string;
-    logDir: string;
-    domain: string;
-    JWTSecretKey: string;
-    JWTExpiress: number;
+    publish: {
+        base: string;
+        domain: string;
+        port: number;
+        sslPort: number;
+    };
+    dir: {
+        static: string;
+        upload: string;
+        ssl: string;
+        log: string;
+    };
+    jwt: {
+        secret: string;
+        expires: number;
+    };
     mysql: {
         host: string;
         port: number;
@@ -33,7 +39,7 @@ import { merge } from 'lodash';
 const resolveConfig = (json: Record<string, unknown> = {}) => {
     const res = {} as Record<string, unknown>;
     for (const p in json) {
-        if (p.endsWith('Dir')) {
+        if (p.startsWith('dir.')) {
             // 处理路径
             json[p] = path.resolve(__dirname, isDev ? '../' : './', json[p] as string);
         } else if (!isNaN(Number(json[p]).valueOf())) {

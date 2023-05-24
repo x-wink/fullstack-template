@@ -45,19 +45,19 @@ pnpm install
 
 ## 👍 使用说明
 
-> -   项目分为前端和后端两个项目，分别是`apps/client`和`apps/server`
-> -   后端实体类、持久层、服务层、控制层分别对应文件夹`entity`、`dao`、`service`、`controller`
-> -   `.env`文件为配置文件，因开源原因开发环境会使用`.env.local`文件（不会上传到`git`），可在`utils/config.ts`中修改
-> -   配置文件中全部都是字符串，目前会自动将数值转为数字类型，目录（属性名以 Dir 结尾）会相对于`.env`文件补全路径
-> -   前端项目编译后生成产物到`dist/client`目录，会被后端服务当做静态资源，可直接部署不需要`nginx`
-> -   后端项目编译后会将`ssl`文件夹下的证书、`.env.production`生产环境配置、`scripts/run.sh`启动脚本复制到产物
-> -   编译完成后通过`sftp`上传到远程服务器，配置文件为项目根目录`sftp.json`
+-   项目分为前端和后端两个项目，分别是`apps/client`和`apps/server`
+-   后端实体类、持久层、服务层、控制层分别对应文件夹`entity`、`dao`、`service`、`controller`
+-   `.env`文件为配置文件，因开源原因开发环境会使用`.env.local`文件（不会上传到`git`），可在`utils/config.ts`中修改
+-   配置文件中全部都是字符串，目前会自动将数值转为数字类型，目录（属性名以`dir.`开头）会相对于`.env`文件补全路径，`xxx.xxx=xxx`形式的属性会解析成对象结构
+-   前端项目编译后生成产物到`dist/client`目录，会被后端服务当做静态资源，可直接部署不需要`nginx`
+-   后端项目编译后会将`ssl`文件夹下的证书、`.env.production`生产环境配置、`scripts/run.sh`启动脚本复制到产物`dist/server`目录
+-   编译完成后通过`sftp`上传到远程服务器，配置文件为项目根目录`sftp.json`
 
 ## 👤 Author
 
 **向文可**
 
--   Email: 1041367524@qq.com
+-   Email: 13202090601@163.com
 -   Github: [@x-wink](https://github.com/x-wink)
 
 ## 🤝 Contributing
