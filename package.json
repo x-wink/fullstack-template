@@ -10,6 +10,7 @@
     "scripts": {
         "client": "pnpm -F @apps/client dev",
         "server": "pnpm -F @apps/server dev",
+        "ssh": "pnpm -F @pkgs/ssh dev",
         "build:client": "pnpm -F @apps/client build",
         "build:server": "pnpm -F @apps/server build",
         "build": "npm run build:client && npm run build:server",

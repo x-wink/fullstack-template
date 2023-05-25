@@ -1,0 +1,16 @@
+{
+    "name": "@pkgs/ssh",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "nodemon src/index.ts"
+    },
+    "main": "src/index.ts",
+    "devDependencies": {
+        "@types/ssh2": "^1.11.11",
+        "nodemon": "^2.0.21",
+        "ts-node": "^10.9.1"
+    },
+    "dependencies": {
+        "ssh2": "^1.13.0"
+    }
+}
