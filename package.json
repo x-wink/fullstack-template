@@ -14,8 +14,8 @@
         "build:client": "pnpm -F @apps/client build",
         "build:server": "pnpm -F @apps/server build",
         "build": "npm run build:client && npm run build:server",
-        "sftp": "npx publish-sftp -c",
-        "release": "npm run build && npm run sftp",
+        "publish": "npx wink-sftp -c sftp.json",
+        "release": "npm run build && npm run publish",
         "start": "node ./dist/server/index.js",
         "preview": "npm run build && npm run start",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
@@ -25,13 +25,13 @@
     "devDependencies": {
         "@commitlint/cli": "^17.4.1",
         "@commitlint/config-conventional": "^17.4.0",
-        "@saatana97/eslint-config": "^1.0.0",
         "@types/node": "^18.14.6",
+        "@xwink/eslint-config": "^1.0.0",
+        "@xwink/sftp": "^1.0.0",
         "eslint": "^8.22.0",
         "husky": "^8.0.3",
         "lint-staged": "^13.1.0",
         "prettier": "^2.7.1",
-        "publish-sftp": "^1.0.6",
         "typescript": "^5.0.4"
     },
     "lint-staged": {

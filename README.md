@@ -42,6 +42,8 @@ pnpm install
 -   [LintStaged](https://github.com/okonet/lint-staged#readme) 针对暂存的 git 文件运行检查
 -   [Husky](https://typicode.github.io/husky) 改善你的提交
 -   [CommitLint](https://github.com/conventional-changelog/commitlint#readme) 检查代码提交消息
+-   [@xwink/eslint-config](https://github.com/x-wink/eslint-config) 共享 Eslint 配置文件
+-   [@xwink/sftp](https://github.com/x-wink/sftp) 远程部署 SFTP 命令行工具
 
 ## 👍 使用说明
 
