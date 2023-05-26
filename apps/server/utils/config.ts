@@ -56,7 +56,6 @@ const resolveConfig = (json: Record<string, unknown> = {}) => {
             }, json[p]) as Record<string, unknown>;
         merge(res, v);
     }
-    console.info(res);
     return res as unknown as Config;
 };
 export const config = resolveConfig(envConfig);
