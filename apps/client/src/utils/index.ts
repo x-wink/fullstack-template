@@ -1,4 +1,4 @@
-import { createUser, detailUser, updateUser, type User } from '@/api/user';
+import { createUser, detailUser, updateUser, type User } from '@/apis/user';
 import router from '@/routes';
 let user: User | undefined;
 export const getUser = async (): Promise<User> => {
