@@ -1,5 +1,5 @@
 <template>
-    <CodeRain background style="font-size: 2em" />
+    <CodeRain background style="font-size: 2rem" />
     <section class="layout flex col">
         <Header />
         <main class="main">

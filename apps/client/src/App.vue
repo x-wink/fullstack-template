@@ -8,7 +8,7 @@
 
 <style lang="less">
     :root {
-        --primary: #283079;
+        --primary: #00ff00;
         --info: #409eff;
         --error: #f56c6c;
     }
@@ -19,6 +19,13 @@
         color: white;
         background-color: black;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    ol,
+    ul {
+        list-style: none;
+    }
+    a {
+        color: inherit;
     }
 
     #app {
