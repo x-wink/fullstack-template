@@ -16,7 +16,7 @@ export default (configEnv: ConfigEnv) => {
         base: env.VITE_BASE_URL,
         server: {
             host: '0.0.0.0',
-            port: 5173,
+            port: 9527,
             open: false,
             proxy: {
                 [env.VITE_API_BASE_URL]: {

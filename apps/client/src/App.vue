@@ -42,6 +42,16 @@
         #app & {
             transition: all 0.3s;
         }
+        &::-webkit-scrollbar {
+            background: transparent;
+            width: 7px;
+            height: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: rgba(0, 255, 0, 0.3);
+            border: 1px solid var(--primary);
+        }
     }
 
     .flex {

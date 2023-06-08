@@ -15,6 +15,7 @@
         flex-direction: column;
         align-items: center;
         padding: 10px;
+        overflow: hidden;
         :deep(.container),
         :deep([class*='-container']) {
             width: 100%;
@@ -23,6 +24,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            overflow: auto;
         }
     }
 </style>

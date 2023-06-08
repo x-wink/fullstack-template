@@ -25,6 +25,7 @@
 <style scoped lang="less">
     .blogs-container {
         flex-direction: row !important;
+        overflow: hidden !important;
 
         .list {
             height: 100%;
@@ -34,6 +35,7 @@
         .content {
             flex: 1;
             height: 100%;
+            overflow: auto;
         }
     }
 </style>
