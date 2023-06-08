@@ -4,9 +4,12 @@
 
 <script setup lang="ts">
     import { svgs } from '@/icons';
+    defineOptions({
+        name: 'XIcon',
+    });
     const props = defineProps<{
         name: string;
     }>();
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less"></style>

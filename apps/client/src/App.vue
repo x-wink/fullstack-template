@@ -52,6 +52,9 @@
             background: rgba(0, 255, 0, 0.3);
             border: 1px solid var(--primary);
         }
+        &::-webkit-scrollbar-corner {
+            background: transparent;
+        }
     }
 
     .flex {

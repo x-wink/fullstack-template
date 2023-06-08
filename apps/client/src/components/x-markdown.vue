@@ -1,19 +1,22 @@
 <template>
-    <div class="markdown-container">
+    <div class="x-markdown">
         <div class="html" v-html="content"></div>
     </div>
 </template>
 
 <script setup lang="ts">
     import { marked } from 'marked';
+    defineOptions({
+        name: 'XMarkdown',
+    });
     const props = defineProps<{
         md: string;
     }>();
-    const content = computed(() => marked(props.md));
+    const content = computed(() => marked(props.md, { mangle: false, headerIds: false }));
 </script>
 
-<style scoped lang="less">
-    .markdown-container {
+<style lang="less">
+    .x-markdown {
         display: block !important;
         width: fit-content !important;
         height: fit-content !important;
@@ -25,7 +28,7 @@
             }
             > * {
                 margin: 20px 0;
-                line-height: 2.5em;
+                line-height: 1.5em;
             }
             hr {
                 border-color: var(--primary);

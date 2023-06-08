@@ -16,7 +16,7 @@
     const current = ref(0);
     const list = reactive([
         {
-            name: 'SVG转图片使用画布绘制',
+            name: 'SVG转图片',
             content: svg2img,
         },
     ]);

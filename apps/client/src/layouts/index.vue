@@ -1,13 +1,13 @@
 <template>
-    <CodeRain background style="font-size: 2rem" />
-    <section class="layout flex col">
+    <x-rain background style="font-size: 2rem" />
+    <x-box class="layout flex col">
         <Header />
         <main class="main">
             <Aside />
             <Content />
         </main>
         <Footer />
-    </section>
+    </x-box>
 </template>
 
 <script setup lang="ts">
@@ -18,14 +18,6 @@
 </script>
 
 <style scoped lang="less">
-    @keyframes shake {
-        form {
-            box-shadow: 0 0 30px #00ff00ff;
-        }
-        to {
-            box-shadow: 0 0 0px #00ff0000;
-        }
-    }
     .layout {
         width: 90%;
         height: calc(98% - 20px);
@@ -36,12 +28,6 @@
         left: 0;
         right: 0;
         margin: auto;
-        border: 2px solid rgba(0, 255, 0, 0.8);
-        border-radius: 10px;
-        background: rgba(0, 0, 0, 0.8);
-        overflow: hidden;
-        box-shadow: 0 0 15px #0f0;
-        animation: shake 1s ease-in-out 0s infinite alternate-reverse;
         > .main {
             flex: 1;
             display: flex;
