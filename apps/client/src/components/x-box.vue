@@ -12,7 +12,7 @@
 
 <style lang="less">
     @keyframes breathe {
-        form {
+        from {
             box-shadow: inset 0 0 15px #00ff00ff;
         }
         to {
