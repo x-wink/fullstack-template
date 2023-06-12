@@ -21,7 +21,7 @@
         width: fit-content !important;
         height: fit-content !important;
         margin: auto;
-        :deep(.html) {
+        .html {
             overflow: auto;
             * {
                 user-select: text;
