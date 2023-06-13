@@ -27,21 +27,18 @@
         {
             title: '个人主页',
             icon: 'logo',
-            height: 24,
             route: '/',
             link: true,
         },
         {
             title: 'Github',
             icon: 'github',
-            height: 28,
             route: 'https://github.com/x-wink',
             link: true,
         },
         {
             title: 'NPM',
             icon: 'npm',
-            height: 28,
             route: 'https://www.npmjs.com/~xwink',
             link: true,
         },
@@ -54,6 +51,9 @@
         align-items: center;
         .menus {
             margin-left: 30px;
+        }
+        .links {
+            font-size: 24px;
         }
     }
 </style>

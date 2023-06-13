@@ -1,6 +1,8 @@
 <template>
     <div class="blogs-container">
-        <x-menu v-model:active="current" class="list" :menus="list" vertical />
+        <x-drawer v-model="menuVisible" @click="menuVisible = false">
+            <x-menu v-model:active="current" class="list" :menus="list" vertical />
+        </x-drawer>
         <div class="content">
             <x-markdown :md="list[current].content" />
         </div>
@@ -9,6 +11,7 @@
 
 <script setup lang="ts">
     import svg2img from './svg2img.md?raw';
+    const menuVisible = ref(true);
     const current = ref(0);
     const list = reactive([
         {

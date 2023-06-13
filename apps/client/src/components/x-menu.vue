@@ -7,7 +7,7 @@
             :title="item.title"
         >
             <x-button class="flex row-center" text :title="item.name" @click="handleClick(item, index)">
-                <x-icon v-if="item.icon" :height="item.height" :name="item.icon" />
+                <x-icon v-if="item.icon" :name="item.icon" />
                 <span v-if="item.name">
                     {{ item.name }}
                 </span>
@@ -65,7 +65,6 @@
         }
         li {
             .x-button {
-                font-size: 1rem;
                 color: inherit;
             }
             &.active {

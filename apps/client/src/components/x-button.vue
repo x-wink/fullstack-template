@@ -22,6 +22,7 @@
 
 <style lang="less">
     .x-button {
+        font-size: inherit;
         color: var(--primary);
         background: none;
         border: none;

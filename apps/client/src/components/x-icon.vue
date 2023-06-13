@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
     import { svgs } from '@/icons';
+    console.info(svgs);
     defineOptions({
         name: 'XIcon',
     });
@@ -12,4 +13,9 @@
     }>();
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+    .x-icon {
+        width: 1em;
+        height: 1em;
+    }
+</style>
