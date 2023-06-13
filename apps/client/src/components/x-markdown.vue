@@ -17,12 +17,8 @@
 
 <style lang="less">
     .x-markdown {
-        display: block !important;
-        width: fit-content !important;
-        height: fit-content !important;
-        margin: auto;
+        overflow: auto;
         .html {
-            overflow: auto;
             * {
                 user-select: text;
             }

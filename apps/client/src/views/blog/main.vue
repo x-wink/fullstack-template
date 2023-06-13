@@ -14,6 +14,9 @@
 
 <style scoped lang="less">
     .blogs-main-container {
-        overflow: auto;
+        .x-markdown {
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
 </style>
