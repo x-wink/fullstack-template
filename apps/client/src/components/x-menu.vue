@@ -3,10 +3,10 @@
         <li
             v-for="(item, index) in props.menus"
             :key="index"
-            :class="{ active: props.active === item.code }"
+            :class="{ active: props.active === index }"
             :title="item.title"
         >
-            <x-button class="flex row-center" text :title="item.name" @click="handleClick(item)">
+            <x-button class="flex row-center" text :title="item.name" @click="handleClick(item, index)">
                 <x-icon v-if="item.icon" :height="item.height" :name="item.icon" />
                 <span v-if="item.name">
                     {{ item.name }}
@@ -23,14 +23,14 @@
     });
     const props = defineProps<{
         menus: Menu[];
-        active?: string;
+        active?: number;
         vertical?: boolean;
     }>();
     const router = useRouter();
     const emits = defineEmits<{
-        'update:active': [value: string];
+        'update:active': [value: number];
     }>();
-    const handleClick = (menu: Menu): void => {
+    const handleClick = (menu: Menu, index: number): void => {
         if (menu.route) {
             if (menu.link) {
                 window.open(menu.route, '_blank');
@@ -40,7 +40,7 @@
                 });
             }
         }
-        emits('update:active', menu.code);
+        emits('update:active', index);
     };
 </script>
 
@@ -52,6 +52,7 @@
                     margin-left: 10px;
                 }
             }
+            transform-origin: center bottom;
         }
         &.col {
             li {
@@ -59,6 +60,8 @@
                     margin-top: 10px;
                 }
             }
+            transform-origin: left center;
+            padding: 0 10px;
         }
         li {
             .x-button {
@@ -68,7 +71,6 @@
             &.active {
                 color: var(--primary);
                 transform: scale(1.2);
-                transform-origin: center bottom;
             }
         }
     }
