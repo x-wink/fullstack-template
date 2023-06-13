@@ -2,8 +2,9 @@
     <header class="header flex row-between">
         <div class="left flex col-end">
             <h2>X-WINK</h2>
-            <x-menu :active="currentMenu" class="menus" :menus="menus" />
+            <x-menu :active="currentMenu" class="modules" :menus="menus" />
         </div>
+        <div class="center"></div>
         <div class="right">
             <x-menu class="links" :menus="links" />
         </div>
@@ -11,18 +12,11 @@
 </template>
 
 <script setup lang="ts">
+    import { useApp } from '@/core';
+    const app = useApp();
     const route = useRoute();
-    const menus = reactive([
-        {
-            name: '首页',
-            route: 'Home',
-        },
-        {
-            name: '博客',
-            route: 'Blogs',
-        },
-    ]);
-    const currentMenu = computed(() => menus.findIndex((item) => item.route === route.name));
+    const menus = reactive(app.modules);
+    const currentMenu = computed(() => menus.findIndex((item) => item.name === route.name));
     const links = reactive([
         {
             title: '个人主页',
@@ -49,7 +43,7 @@
     .header {
         padding: 10px;
         align-items: center;
-        .menus {
+        .modules {
             margin-left: 30px;
         }
         .links {

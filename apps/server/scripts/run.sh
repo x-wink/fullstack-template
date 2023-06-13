@@ -1,4 +1,4 @@
-APP=myapp
+APP=personal-website
 echo "尝试停止服务"
 PID=$(ps -ef | grep node | grep $APP | awk '{print $2}')
 if [ -z "${PID}" ]; then
@@ -11,5 +11,5 @@ MAIN=/apps/$APP/server/index.js
 LOG=/dev/null
 chmod a+x $MAIN
 echo "开始启动服务"
-nohup node --max-old-space-size=3072 $MAIN >$LOG 2>&1 &
+nohup node --max-old-space-size=1024 $MAIN >$LOG 2>&1 &
 echo "服务已启动"

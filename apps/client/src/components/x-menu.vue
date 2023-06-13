@@ -6,10 +6,10 @@
             :class="{ active: props.active === index }"
             :title="item.title"
         >
-            <x-button class="flex row-center" text :title="item.name" @click="handleClick(item, index)">
+            <x-button class="flex row-center" text :title="item.title" @click="handleClick(item, index)">
                 <x-icon v-if="item.icon" :name="item.icon" />
-                <span v-if="item.name">
-                    {{ item.name }}
+                <span v-if="!item.link && item.title">
+                    {{ item.title }}
                 </span>
             </x-button>
         </li>
@@ -35,9 +35,7 @@
             if (menu.link) {
                 window.open(menu.route, '_blank');
             } else {
-                router.push({
-                    name: menu.route,
-                });
+                router.push(menu.route);
             }
         }
         emits('update:active', index);
@@ -51,16 +49,16 @@
                 + li {
                     margin-left: 10px;
                 }
+                transform-origin: center bottom;
             }
-            transform-origin: center bottom;
         }
         &.col {
             li {
                 + li {
                     margin-top: 10px;
                 }
+                transform-origin: left center;
             }
-            transform-origin: left center;
             padding: 0 10px;
         }
         li {
