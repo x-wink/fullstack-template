@@ -33,7 +33,7 @@
     const emits = defineEmits<{
         close: [action: 'cancel' | 'confirm'];
     }>();
-    const visible = ref(false);
+    const visible = ref(true);
     const handleClose = (reason: 'cancel' | 'confirm' = 'cancel') => {
         emits('close', reason);
     };
