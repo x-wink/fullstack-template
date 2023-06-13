@@ -16,6 +16,7 @@
         "build": "npm run build:client && npm run build:server",
         "publish": "npx wink-sftp -c sftp.json",
         "release": "npm run build && npm run publish",
+        "release:client": "npm run build:client && npm run publish",
         "start": "node ./dist/server/index.js",
         "preview": "npm run build && npm run start",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
