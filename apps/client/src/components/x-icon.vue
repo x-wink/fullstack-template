@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
     import { svgs } from '@/icons';
-    console.info(svgs);
     defineOptions({
         name: 'XIcon',
     });

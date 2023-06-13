@@ -1,5 +1,7 @@
 <template>
-    <aside class="aside"></aside>
+    <aside class="aside">
+        <slot></slot>
+    </aside>
 </template>
 
 <script setup lang="ts"></script>

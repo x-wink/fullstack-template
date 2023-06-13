@@ -14,7 +14,10 @@ const routes = [
             {
                 path: '/blogs',
                 name: 'Blogs',
-                component: () => import('@/views/blogs/index.vue'),
+                components: {
+                    default: () => import('@/views/blogs/main.vue'),
+                    aside: () => import('@/views/blogs/aside.vue'),
+                },
             },
         ],
     },

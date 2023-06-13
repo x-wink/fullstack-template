@@ -3,8 +3,16 @@
     <x-box class="layout flex col">
         <Header />
         <main class="main">
-            <Aside />
-            <Content />
+            <Aside>
+                <Suspense>
+                    <router-view name="aside" />
+                </Suspense>
+            </Aside>
+            <Content>
+                <Suspense>
+                    <router-view />
+                </Suspense>
+            </Content>
         </main>
         <Footer />
     </x-box>
@@ -19,6 +27,7 @@
 
 <style scoped lang="less">
     .layout {
+        perspective: none;
         width: 90%;
         height: calc(98% - 20px);
         max-width: 1200px;

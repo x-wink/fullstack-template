@@ -1,8 +1,6 @@
 <template>
     <section class="content">
-        <Suspense>
-            <router-view />
-        </Suspense>
+        <slot></slot>
     </section>
 </template>
 
