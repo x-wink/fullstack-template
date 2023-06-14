@@ -17,7 +17,13 @@
 </template>
 
 <script setup lang="ts">
-    import { Menu } from '@/types';
+    interface Menu {
+        name?: string;
+        title?: string;
+        icon?: string;
+        route?: string;
+        link?: boolean;
+    }
     defineOptions({
         name: 'XMenu',
     });

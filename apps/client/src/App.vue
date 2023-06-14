@@ -4,10 +4,6 @@
 
 <script setup lang="ts">
     import Layout from '@/layouts/index.vue';
-    import { useApp } from '@/core';
-    import { corePlugins } from '@/plugins';
-    const app = useApp();
-    corePlugins.forEach(app.registPlugin);
 </script>
 
 <style lang="less">

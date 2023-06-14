@@ -12,10 +12,19 @@
 </template>
 
 <script setup lang="ts">
-    import { useApp } from '@/core';
-    const app = useApp();
     const route = useRoute();
-    const menus = reactive(app.modules);
+    const router = useRouter();
+    const menus = router
+        .getRoutes()
+        .filter((item) => item.meta.module)
+        .map((item) => {
+            return {
+                name: item.name,
+                title: item.meta.module,
+                route: item.path,
+            };
+        });
+    console.info(menus);
     const currentMenu = computed(() => menus.findIndex((item) => item.name === route.name));
     const links = reactive([
         {
