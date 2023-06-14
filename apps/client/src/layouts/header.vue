@@ -24,7 +24,6 @@
                 route: item.path,
             };
         });
-    console.info(menus);
     const currentMenu = computed(() => menus.findIndex((item) => item.name === route.name));
     const links = reactive([
         {

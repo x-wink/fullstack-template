@@ -15,8 +15,8 @@
 <style scoped lang="less">
     .blogs-main-container {
         .x-markdown {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
         }
     }
 </style>

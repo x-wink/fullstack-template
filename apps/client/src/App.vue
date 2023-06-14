@@ -36,8 +36,12 @@
     * {
         padding: 0;
         margin: 0;
-        box-sizing: border-box;
         user-select: none;
+        box-sizing: border-box;
+        &::before,
+        &::after {
+            box-sizing: border-box;
+        }
 
         #app & {
             transition: all 0.3s;

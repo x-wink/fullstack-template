@@ -19,8 +19,10 @@
 
         .list {
             height: 100%;
+            padding: 10px;
             margin-right: 10px;
             justify-content: flex-start;
+            align-items: flex-start;
         }
     }
 </style>
