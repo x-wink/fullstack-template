@@ -25,6 +25,14 @@ const routes = [
                     module: '博客',
                 },
             },
+            {
+                path: '/canvas',
+                name: 'Canvas',
+                component: () => import('@/views/canvas.vue'),
+                meta: {
+                    module: '画布',
+                },
+            },
         ],
     },
 ] as RouteRecordRaw[];
