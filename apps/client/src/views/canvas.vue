@@ -1,10 +1,16 @@
 <template>
     <div class="canvas-container">
-        <canvas id="cvs"></canvas>
-        <div class="flex col-center form">
-            <label for="#rotate">旋转角度</label>
-            <input id="rotate" v-model="shapes.children[1].rotation" type="number" />
+        <div class="flex col col-center form">
+            <div class="form-item">
+                <label for="#index">SVG图片</label>
+                <input id="index" v-model="index" :max="shapes.children.length - 1" :min="0" type="range" />
+            </div>
+            <div class="form-item">
+                <label for="#rotate">旋转角度</label>
+                <input id="rotate" v-model="svg.rotation" :max="360" :min="0" type="range" />
+            </div>
         </div>
+        <canvas id="cvs"></canvas>
     </div>
 </template>
 
@@ -12,6 +18,7 @@
     import pic from '@/assets/test.png';
     import svg1 from '@/assets/1.svg?raw';
     import svg2 from '@/assets/2.svg?raw';
+    import svg3 from '@/assets/3.svg?raw';
     const shapes = reactive({
         image: {
             src: pic,
@@ -29,8 +36,17 @@
                 height: 150,
                 rotation: 45,
             },
+            {
+                svg: svg3,
+                width: 603.6,
+                height: 133,
+                rotation: 21,
+            },
         ],
     });
+    const index = ref(2);
+    const svg = computed(() => shapes.children[index.value]);
+
     const createTransformMatrix = (angle = 0, scaleX = 1, scaleY = 1, flipHorizontal = false, flipVertical = false) => {
         angle = (angle * Math.PI) / 180;
         const cos = Math.cos(angle);
@@ -61,24 +77,24 @@
     };
 
     onMounted(async () => {
-        const svg = shapes.children[1];
         const cvs = document.getElementById('cvs') as HTMLCanvasElement;
         const ctx = cvs.getContext('2d')!;
         watch(
-            shapes,
+            svg,
             async () => {
-                const { width, height } = getTransformedSize(svg.width, svg.height, svg.rotation);
-                cvs.width = width;
-                cvs.height = height;
+                const { width, height, rotation, svg: xml } = svg.value;
+                const { width: w, height: h } = getTransformedSize(width, height, rotation);
+                cvs.width = w;
+                cvs.height = h;
                 ctx.clearRect(0, 0, cvs.width, cvs.height);
 
                 const [centerX, centerY] = [cvs.width / 2, cvs.height / 2];
                 ctx.translate(centerX, centerY);
-                ctx.transform(...createTransformMatrix(svg.rotation));
+                ctx.transform(...createTransformMatrix(rotation));
                 ctx.translate(-centerX, -centerY);
 
-                const img = await loadImage(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg.svg)}`);
-                ctx.drawImage(img, (svg.width - width) / -2, (height - svg.height) / 2, svg.width, svg.height);
+                const img = await loadImage(`data:image/svg+xml;charset=utf-8,${encodeURIComponent(xml)}`);
+                ctx.drawImage(img, (width - w) / -2, (h - height) / 2, width, height);
             },
             {
                 immediate: true,
@@ -90,12 +106,12 @@
 
 <style scoped lang="less">
     .canvas-container {
-        background: #000;
         canvas {
-            background: white;
+            background: #ffff;
+            margin: auto;
         }
         .form {
-            margin-top: 30px;
+            margin-bottom: auto;
             font-size: 1.2em;
             label {
                 margin-right: 20px;
