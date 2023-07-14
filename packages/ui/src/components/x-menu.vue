@@ -21,10 +21,11 @@
     import XButton from './x-button.vue';
     import XIcon from './x-icon.vue';
     import type { Router } from 'vue-router';
+    import type { IconNames } from '@pkgs/icons';
     interface Menu {
         name?: string;
         title?: string;
-        icon?: string;
+        icon?: IconNames;
         route?: string;
         link?: boolean;
     }

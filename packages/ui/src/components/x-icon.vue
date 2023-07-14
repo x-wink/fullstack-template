@@ -3,21 +3,22 @@
 </template>
 
 <script setup lang="ts">
-    import { type Component, computed } from 'vue';
+    import { computed } from 'vue';
     import * as svgs from '@pkgs/icons';
+    import type { IconNames } from '@pkgs/icons';
     defineOptions({
         name: 'XIcon',
     });
     const props = withDefaults(
         defineProps<{
-            name: string;
+            name: IconNames;
             size?: string | number | [string | number, string | number];
         }>(),
         {
             size: '1em',
         }
     );
-    const iconComponent = computed(() => (svgs as Record<string, Component>)[props.name]);
+    const iconComponent = computed(() => svgs[props.name]);
     const iconSize = computed(() =>
         (Array.isArray(props.size) ? props.size : [props.size, props.size]).map((item) =>
             Number.isNaN(Number(item)) ? item : `${item}px`
