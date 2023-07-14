@@ -28,19 +28,19 @@
     const links = reactive([
         {
             title: '个人主页',
-            icon: 'logo',
+            icon: 'Logo',
             route: '/',
             link: true,
         },
         {
             title: 'Github',
-            icon: 'github',
+            icon: 'Github',
             route: 'https://github.com/x-wink',
             link: true,
         },
         {
             title: 'NPM',
-            icon: 'npm',
+            icon: 'Npm',
             route: 'https://www.npmjs.com/~xwink',
             link: true,
         },

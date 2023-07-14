@@ -17,6 +17,7 @@
         "vue": "^3.3.4"
     },
     "dependencies": {
+        "@pkgs/icons": "workspace:^",
         "marked": "^5.0.5"
     },
     "devDependencies": {

@@ -1,0 +1,20 @@
+{
+    "name": "@pkgs/icons",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "author": {
+        "name": "向文可",
+        "email": "1041367524@qq.com",
+        "url": "https://github.com/saatana97"
+    },
+    "main": "src/main.ts",
+    "scripts": {},
+    "peerDependencies": {
+        "vue": "^3.3.4"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "vite": "^4.0.0"
+    }
+}

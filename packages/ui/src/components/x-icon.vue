@@ -1,10 +1,10 @@
 <template>
-    <component :is="svgs[props.name]" class="x-icon" />
+    <component :is="iconComponent" class="x-icon" />
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue';
-    import { svgs } from '../icons';
+    import { type Component, computed } from 'vue';
+    import * as svgs from '@pkgs/icons';
     defineOptions({
         name: 'XIcon',
     });
@@ -17,6 +17,7 @@
             size: '1em',
         }
     );
+    const iconComponent = computed(() => (svgs as Record<string, Component>)[props.name]);
     const iconSize = computed(() =>
         (Array.isArray(props.size) ? props.size : [props.size, props.size]).map((item) =>
             Number.isNaN(Number(item)) ? item : `${item}px`

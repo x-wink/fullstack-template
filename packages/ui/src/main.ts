@@ -7,4 +7,4 @@ export { default as XMenu } from './components/x-menu.vue';
 export { default as XModal } from './components/x-modal.vue';
 export { default as XRain } from './components/x-rain.vue';
 export * from './utils';
-export * from './icons';
+export * from '@pkgs/icons';
