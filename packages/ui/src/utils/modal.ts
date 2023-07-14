@@ -1,5 +1,5 @@
 import { createDynamicComponent } from './dynamicComponent';
-import XModal from '@/components/x-modal.vue';
+import XModal from '../components/x-modal.vue';
 export const showModal = (props: {
     title?: string;
     content: string;

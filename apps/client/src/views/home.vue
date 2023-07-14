@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-    import { showAlert } from '@/utils';
+    import { showAlert } from '@pkgs/ui';
     const handleModal = async () => {
         showAlert('V我五十就告诉你');
     };

@@ -1,7 +1,7 @@
 import { createUser, detailUser, updateUser, type User } from '@/apis/user';
 import router from '@/routes';
 let user: User | undefined;
-import { showAlert } from './modal';
+import { showAlert } from '@pkgs/ui';
 export const getUser = async (): Promise<User> => {
     if (!user) {
         const localUser = JSON.parse(localStorage.getItem('user') || 'null') as User | null;

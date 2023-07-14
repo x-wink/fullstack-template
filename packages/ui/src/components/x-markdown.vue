@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
     import { marked } from 'marked';
+    import { computed } from 'vue';
     defineOptions({
         name: 'XMarkdown',
     });

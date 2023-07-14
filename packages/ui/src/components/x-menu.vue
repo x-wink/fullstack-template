@@ -17,6 +17,10 @@
 </template>
 
 <script setup lang="ts">
+    import { getCurrentInstance } from 'vue';
+    import XButton from './x-button.vue';
+    import XIcon from './x-icon.vue';
+    import type { Router } from 'vue-router';
     interface Menu {
         name?: string;
         title?: string;
@@ -32,7 +36,8 @@
         active?: number;
         vertical?: boolean;
     }>();
-    const router = useRouter();
+    const instance = getCurrentInstance()!;
+    const router = instance.appContext.config.globalProperties.$router as Router;
     const emits = defineEmits<{
         'update:active': [value: number];
     }>();
@@ -41,7 +46,7 @@
             if (menu.link) {
                 window.open(menu.route, '_blank');
             } else {
-                router.push(menu.route);
+                router?.push(menu.route);
             }
         }
         emits('update:active', index);

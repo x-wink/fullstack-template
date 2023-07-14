@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
+    import { ref, onMounted, watch, onUnmounted } from 'vue';
+    import XBox from './x-box.vue';
     defineOptions({
         name: 'XDialog',
     });

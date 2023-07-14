@@ -1,5 +1,5 @@
 <template>
-    <x-rain background style="font-size: 2rem" />
+    <x-code-rain background style="font-size: 2rem" />
     <x-box class="layout flex col">
         <Header />
         <main class="main">

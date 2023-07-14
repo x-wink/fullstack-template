@@ -14,6 +14,9 @@
 </template>
 
 <script setup lang="ts">
+    import XDialog from './x-dialog.vue';
+    import XButton from './x-button.vue';
+    import { ref } from 'vue';
     defineOptions({
         name: 'XModal',
     });
