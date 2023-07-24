@@ -20,9 +20,14 @@ export default (configEnv: ConfigEnv) => {
             open: false,
             proxy: {
                 [env.VITE_API_BASE_URL]: {
-                    target: env.VITE_PROXY_TARGET,
+                    target: env.VITE_API_PROXY_TARGET,
                     changeOrigin: true,
                     rewrite: (path: string) => path.replace(new RegExp('^' + env.VITE_API_BASE_URL), ''),
+                },
+                [env.VITE_WS_BASE_URL]: {
+                    target: env.VITE_WS_PROXY_TARGET,
+                    changeOrigin: true,
+                    rewrite: (path: string) => path.replace(new RegExp('^' + env.VITE_WS_BASE_URL), ''),
                 },
             },
         },
