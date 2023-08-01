@@ -5,9 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "启动服务",
+            "name": "server",
             "request": "launch",
             "runtimeArgs": ["run-script", "server"],
+            "runtimeExecutable": "npm",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "node"
+        },
+        {
+            "name": "chat",
+            "request": "launch",
+            "runtimeArgs": ["run-script", "chat"],
             "runtimeExecutable": "npm",
             "skipFiles": ["<node_internals>/**"],
             "type": "node"
