@@ -1,17 +1,16 @@
+/* eslint-disable no-console */
 import express from 'express';
 
 export const chat = express.Router();
+let id = 0;
+
 chat.ws('/all', function (ws, req) {
-    ws.onopen = () => {
-        ws.send('来了老弟，' + req.query.name);
-    };
-    ws.onclose = () => {
-        ws.send('拜拜了您嘞，' + req.query.name);
-    };
-    ws.onerror = (e) => {
-        ws.send('哦豁，' + e.message);
-    };
+    const name = req.query.name ?? '匿名用户' + ++id;
+    console.info('来了老弟，' + name);
+    ws.addListener('close', () => {
+        console.info('拜拜了您嘞，' + name);
+    });
     ws.onmessage = (e) => {
-        ws.send('人类的本质是复读机，' + e.data);
+        ws.send(name + '的本质是复读机，' + e.data);
     };
 });
