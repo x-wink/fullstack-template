@@ -5,6 +5,8 @@ export enum ChatDataType {
     request = 2,
     response = 3,
 }
+export const PING = 'PING';
+export const PONG = 'PONG';
 export class ChatData<T = ChatMessage> {
     id: string;
     type: ChatDataType;
@@ -15,14 +17,23 @@ export class ChatData<T = ChatMessage> {
         this.type = type;
     }
     static from<T = ChatMessage>(json: string) {
+        // eslint-disable-next-line no-console
         console.info(json);
         const data = new ChatData<T>();
         try {
-            const obj = JSON.parse(json);
-            if (typeof obj !== 'object') {
-                throw new Error('无效内容');
+            if ([PING, PONG].includes(json)) {
+                data.type = ChatDataType.heart;
             } else {
-                Object.assign(data, obj);
+                const obj = JSON.parse(json);
+                if (typeof obj !== 'object') {
+                    if (['string', 'number'].includes(typeof obj)) {
+                        data.content = new ChatMessage(obj) as T;
+                    } else {
+                        throw new Error('无效内容');
+                    }
+                } else {
+                    Object.assign(data, obj);
+                }
             }
         } catch (e) {
             data.type = ChatDataType.error;
@@ -36,6 +47,7 @@ export class ChatData<T = ChatMessage> {
 }
 
 export enum ChatMessageType {
+    system = -1,
     text = 0,
     emojis = 1,
     image = 2,
