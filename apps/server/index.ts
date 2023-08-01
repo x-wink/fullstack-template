@@ -6,28 +6,10 @@ import { resolve } from 'path';
 import { config, env, useLogger } from './utils';
 import { setup as setupController } from './controller';
 import { preSetup as preSetupMiddleware, postSetup as postSetuoMiddleware } from './middleware';
-import expressWs from 'express-ws';
 // 配置服务
 const app = express();
-expressWs(app);
 preSetupMiddleware(app);
 setupController(app);
-// const chat = express.Router();
-// chat.ws('/all', function (ws, req) {
-//     ws.onopen = () => {
-//         ws.send('来了老弟，' + req.query.name);
-//     };
-//     ws.onclose = () => {
-//         ws.send('拜拜了您嘞，' + req.query.name);
-//     };
-//     ws.onerror = (e) => {
-//         ws.send('哦豁，' + e.message);
-//     };
-//     ws.onmessage = (e) => {
-//         ws.send('人类的本质是复读机，' + e.data);
-//     };
-// });
-// app.use('/chat', chat);
 postSetuoMiddleware(app);
 // 启动服务
 const logger = useLogger();

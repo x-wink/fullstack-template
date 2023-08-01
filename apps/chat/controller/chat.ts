@@ -1,6 +1,7 @@
-import { default as express } from 'express';
-export const chatController = express.Router();
-chatController.ws('/all', function (ws, req) {
+import express from 'express';
+
+export const chat = express.Router();
+chat.ws('/all', function (ws, req) {
     ws.onopen = () => {
         ws.send('来了老弟，' + req.query.name);
     };
