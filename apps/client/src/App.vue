@@ -4,19 +4,19 @@
 
 <script setup lang="ts">
     import Layout from '@/layouts/index.vue';
-    const ws = new WebSocket('/ws/chat/all?name=test');
-    ws.onopen = () => {
-        console.info('连接成功');
-    };
-    ws.onclose = () => {
-        console.info('断开连接');
-    };
-    ws.onerror = (e) => {
-        console.info('连接异常');
-    };
-    ws.onmessage = (e) => {
-        console.info('收到消息', e);
-    };
+    // const ws = new WebSocket('/ws/chat/all?name=test');
+    // ws.onopen = () => {
+    //     console.info('连接成功');
+    // };
+    // ws.onclose = () => {
+    //     console.info('断开连接');
+    // };
+    // ws.onerror = (e) => {
+    //     console.info('连接异常');
+    // };
+    // ws.onmessage = (e) => {
+    //     console.info('收到消息', e);
+    // };
 </script>
 
 <style lang="less">
