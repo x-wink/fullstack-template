@@ -46,9 +46,10 @@
 
 <style lang="less">
     .x-button {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
+        display: inline-block;
+        white-space: nowrap;
+        text-align: center;
+        user-select: none;
         cursor: pointer;
         &.--normal {
             height: var(--x-height);

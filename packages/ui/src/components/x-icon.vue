@@ -12,7 +12,7 @@
     const props = withDefaults(
         defineProps<{
             name: IconNames;
-            size?: string | number | [string | number, string | number];
+            size?: string | number;
             animation?: 'spin' | 'pulse' | 'heart' | 'shake' | 'breathe';
         }>(),
         {
@@ -26,18 +26,20 @@
         };
     });
     const iconComponent = computed(() => svgs[props.name]);
-    const iconSize = computed(() =>
-        (Array.isArray(props.size) ? props.size : [props.size, props.size]).map((item) =>
-            Number.isNaN(Number(item)) ? item : `${item}px`
-        )
-    );
 </script>
 
 <style lang="less">
     .x-icon {
-        width: v-bind('iconSize[0]');
-        height: v-bind('iconSize[1]');
-        position: relative;
-        top: 0.05em;
+        font-size: v-bind('props.size');
+        display: inline-block;
+        color: inherit;
+        line-height: 0;
+        text-align: center;
+        vertical-align: -0.125em;
+        svg {
+            display: inline-block;
+            overflow: hidden;
+            line-height: 1;
+        }
     }
 </style>
