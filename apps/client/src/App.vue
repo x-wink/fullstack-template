@@ -20,12 +20,6 @@
 </script>
 
 <style lang="less">
-    :root {
-        --primary: #00ff00;
-        --info: #409eff;
-        --error: #f56c6c;
-    }
-
     html,
     body {
         width: 100%;
@@ -73,7 +67,7 @@
         &::-webkit-scrollbar-thumb {
             border-radius: 10px;
             background: rgba(0, 255, 0, 0.3);
-            border: 1px solid var(--primary);
+            border: 1px solid var(--x-primary);
         }
 
         &::-webkit-scrollbar-corner {

@@ -13,19 +13,19 @@
 <style lang="less">
     @keyframes breathe {
         from {
-            box-shadow: inset 0 0 15px #00ff00ff;
+            box-shadow: inset 0 0 15px var(--x-primary);
         }
         to {
-            box-shadow: inset 0 0 0px #00ff0000;
+            box-shadow: inset 0 0 0px #0000;
         }
     }
     .x-box {
-        border: 2px solid var(--primary);
+        border: 2px solid var(--x-primary);
         border-radius: 10px;
         background: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(0.2rem);
         overflow: hidden;
-        box-shadow: inset 0 0 15px var(--primary);
+        box-shadow: inset 0 0 15px var(--x-primary);
         animation: breathe 1s ease-in-out 0s infinite alternate-reverse;
     }
 </style>

@@ -30,7 +30,7 @@
                 line-height: 2;
             }
             hr {
-                border-color: var(--primary);
+                border-color: var(--x-primary);
             }
             code {
                 font-family: 'Courier New', Courier, monospace;
@@ -42,7 +42,7 @@
                 line-height: 1.3;
             }
             a {
-                border-bottom: 2px dashed var(--primary);
+                border-bottom: 2px dashed var(--x-primary);
                 padding-bottom: 3px;
                 text-decoration: none;
                 font-size: 0.8em;
@@ -55,7 +55,7 @@
                 &::before,
                 &::after {
                     display: inline-block;
-                    color: var(--primary);
+                    color: var(--x-primary);
                     padding: 0 3px;
                 }
                 &:hover {
@@ -86,7 +86,7 @@
                     width: 100%;
                     height: 100%;
                     background-color: #0f03;
-                    border: 1px solid var(--primary);
+                    border: 1px solid var(--x-primary);
                     border-radius: 5px;
                     font-size: 1.2em;
                     font-weight: bolder;
@@ -98,7 +98,7 @@
                 &:checked {
                     &::after {
                         content: '√';
-                        color: var(--primary);
+                        color: var(--x-primary);
                     }
                 }
             }

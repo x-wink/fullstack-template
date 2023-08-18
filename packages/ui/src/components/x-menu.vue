@@ -78,7 +78,7 @@
                 color: inherit;
             }
             &.active {
-                color: var(--primary);
+                color: var(--x-primary);
                 transform: scale(1.2);
             }
         }

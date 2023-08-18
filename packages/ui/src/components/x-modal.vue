@@ -8,7 +8,7 @@
             <x-button v-if="props.showCancel" class="cancel" danger @click="handleClose">
                 {{ props.cancelText }}
             </x-button>
-            <x-button class="confirm" @click="handleConfirm">{{ props.confirmText }}</x-button>
+            <x-button class="confirm" theme="primary" @click="handleConfirm">{{ props.confirmText }}</x-button>
         </div>
     </x-dialog>
 </template>
@@ -51,14 +51,14 @@
             padding: 0;
             > .header {
                 padding: 10px;
-                border-bottom: 1px solid var(--primary);
+                border-bottom: 1px solid var(--x-primary);
                 font-size: 1rem;
             }
             > .content {
                 padding: 20px;
             }
             > .footer {
-                border-top: 1px solid var(--primary);
+                border-top: 1px solid var(--x-primary);
                 > .x-button {
                     flex: 1;
                     margin: 0;

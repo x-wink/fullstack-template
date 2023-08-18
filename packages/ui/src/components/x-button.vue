@@ -1,49 +1,139 @@
 <template>
-    <button
-        class="x-button"
-        :class="{
-            '--danger': props.danger,
-            '--text': props.text,
-        }"
-    >
+    <button :class="classList">
+        <XIcon v-if="props.loading" animation="spin" class="x-button__icon" name="Logo" />
+        <XIcon v-else-if="props.icon" class="x-button__icon" :name="props.icon" />
         <slot></slot>
     </button>
 </template>
 
 <script setup lang="ts">
+    import type { IconNames } from '@pkgs/icons';
+    import XIcon from './x-icon.vue';
+    import { computed } from 'vue';
+
     defineOptions({
         name: 'XButton',
     });
-    const props = defineProps<{
-        danger?: boolean;
-        text?: boolean;
-    }>();
+    const props = withDefaults(
+        defineProps<{
+            theme?: string;
+            icon?: IconNames;
+            text?: boolean;
+            link?: boolean;
+            simple?: boolean;
+            round?: boolean;
+            circle?: boolean;
+            loading?: boolean;
+            disabled?: boolean;
+        }>(),
+        {
+            theme: 'default',
+        }
+    );
+    const classList = computed(() => {
+        return {
+            'x-button': true,
+            [`--${props.theme}`]: true,
+            '--link': props.link,
+            '--text': props.text,
+            '--normal': !props.link && !props.text,
+            '--simple': props.simple,
+            '--round': props.round,
+            '--circle': props.circle,
+        };
+    });
 </script>
 
 <style lang="less">
     .x-button {
-        font-size: inherit;
-        color: var(--primary);
-        background: none;
-        border: none;
-        border-radius: 5px;
-        outline: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
-        &:active {
-            transform: scale(0.8);
-        }
-        &:not(.--text) {
+        &.--normal {
+            height: var(--x-height);
             padding: 5px 10px;
-            background: #fff3;
-            &:hover {
-                background: #fff6;
+            border-radius: var(--x-border-radius);
+            border: 1px solid var(--x-gray);
+        }
+        &.--text,
+        &.--link {
+            background-color: transparent !important;
+            border: none;
+            font-weight: bold;
+        }
+        &.--text {
+            &:disabled {
+                text-decoration: line-through;
             }
         }
-        &.--danger {
-            color: var(--error);
+        &.--link {
+            text-decoration: underline;
+            &:disabled {
+                font-style: italic;
+            }
         }
-        + .x-button {
-            margin-left: 5px;
+        &.--round {
+            border-radius: 9999px;
+        }
+        &.--circle {
+            border-radius: 50%;
+            height: unset;
+            padding: 10px;
+            min-width: 30px;
+            min-height: 30px;
+            &::before {
+                content: '';
+                display: inline-block;
+                vertical-align: middle;
+                padding-top: 100%;
+                height: 0;
+            }
+        }
+
+        @themes: default, primary, second, info, success, warn, error;
+        @bgcs: var(--x-gray), var(--x-purple), var(--x-mauve), var(--x-blue), var(--x-green), var(--x-yellow),
+            var(--x-red);
+        @simpleBgcs: rgba(255, 255, 255, 0.2), var(--x-light-purple), var(--x-light-mauve), var(--x-light-blue),
+            var(--x-light-green), var(--x-light-yellow), var(--x-light-red);
+        @bcs: var(--x-white), var(--x-purple), var(--x-mauve), var(--x-blue), var(--x-green), var(--x-yellow),
+            var(--x-red);
+        @fcs: var(--x-gray), var(--x-purple), var(--x-mauve), var(--x-blue), var(--x-green), var(--x-yellow),
+            var(--x-red);
+        each(@themes, {
+            &.--@{value}{
+                color: if(@value = default,var(--x-black),var(--x-white));
+                background-color: extract(@bgcs,@index);
+                border-color: extract(@bcs,@index);
+                &.--simple {
+                    color: extract(@fcs,@index);
+                    background-color: extract(@simpleBgcs,@index);
+                    &:hover:not(:disabled) {
+                        background-color: extract(@bgcs,@index);
+                        color: if(@value = default,var(--x-black),var(--x-white));
+                    }
+                }
+                &:active{
+                    box-shadow: 0 0 5px extract(@bgcs,@index);
+                }
+            }
+        });
+
+        &:hover {
+            filter: brightness(110%);
+        }
+        &:active {
+            filter: brightness(90%);
+        }
+        &:disabled {
+            cursor: not-allowed;
+            filter: brightness(66%) grayscale(66%);
+        }
+        & + & {
+            margin-left: var(--x-space);
+        }
+        .x-button__icon {
+            margin: 0 var(--x-space-mini);
         }
     }
 </style>

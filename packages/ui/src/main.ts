@@ -1,3 +1,4 @@
+import './styles/index.less';
 export { default as XBox } from './components/x-box.vue';
 export { default as XButton } from './components/x-button.vue';
 export { default as XDialog } from './components/x-dialog.vue';
