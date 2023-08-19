@@ -1,6 +1,6 @@
 <template>
-    <button :class="classList">
-        <XIcon v-if="props.loading" animation="spin" class="x-button__icon" name="Logo" />
+    <button :class="classList" :disabled="props.disabled || props.loading">
+        <XIcon v-if="props.loading" animation="spin" class="x-button__icon" name="Loading" />
         <XIcon v-else-if="props.icon" class="x-button__icon" :name="props.icon" />
         <slot></slot>
     </button>
@@ -46,9 +46,15 @@
 
 <style lang="less">
     .x-button {
-        display: inline-block;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
         white-space: nowrap;
         text-align: center;
+        vertical-align: middle;
+        font-size: inherit;
+        line-height: 1;
+        outline: none;
         user-select: none;
         cursor: pointer;
         &.--normal {

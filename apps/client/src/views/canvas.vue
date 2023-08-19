@@ -106,7 +106,11 @@
 
 <style scoped lang="less">
     .canvas-container {
+        width: 100%;
+        overflow: hidden auto;
         canvas {
+            max-width: 100%;
+            max-height: 60%;
             background: #ffff;
             margin: auto;
         }

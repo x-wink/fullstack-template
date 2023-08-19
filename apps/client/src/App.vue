@@ -62,7 +62,7 @@
 
         &::-webkit-scrollbar-thumb {
             border-radius: 10px;
-            background: rgba(0, 255, 0, 0.3);
+            background: var(--x-fade-purple);
             border: 1px solid var(--x-primary);
         }
 

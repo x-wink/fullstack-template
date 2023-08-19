@@ -1,5 +1,5 @@
 <template>
-    <ul class="x-menu flex row-center col-center" :class="{ row: !props.vertical, col: props.vertical }">
+    <ul class="x-menu flex col-center" :class="{ row: !props.vertical, col: props.vertical }">
         <li
             v-for="(item, index) in props.menus"
             :key="index"
@@ -58,10 +58,7 @@
     .x-menu {
         &.row {
             li {
-                + li {
-                    margin-left: 10px;
-                }
-                transform-origin: center bottom;
+                margin: 0 var(--x-space-mini);
             }
         }
         &.col {

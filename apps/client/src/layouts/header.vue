@@ -1,7 +1,7 @@
 <template>
     <header class="header flex row-between">
-        <div class="left flex col-end">
-            <h2>X-WINK</h2>
+        <div class="left flex col-center">
+            <h2 class="title">X-WINK</h2>
             <x-menu :active="currentMenu" class="modules" :menus="menus" />
         </div>
         <div class="center"></div>
@@ -49,13 +49,17 @@
 
 <style scoped lang="less">
     .header {
-        padding: 10px;
+        padding: var(--x-space-small);
         align-items: center;
+        .title {
+            min-width: fit-content;
+        }
         .modules {
-            margin-left: 30px;
+            margin-left: var(--x-space);
+            flex-wrap: wrap;
         }
         .links {
-            font-size: 24px;
+            font-size: var(--x-size-large);
         }
     }
 </style>

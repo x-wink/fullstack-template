@@ -16,9 +16,11 @@
 <style scoped lang="less">
     .container {
         ul {
-            overflow: auto;
+            width: 100%;
+            overflow: hidden auto;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            grid-auto-rows: auto;
             grid-gap: var(--x-space-mini);
             li {
                 display: flex;

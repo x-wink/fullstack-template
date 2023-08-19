@@ -1,13 +1,12 @@
 <template>
     <div class="container">
         <p>告诉你一个秘密你想不想听？</p>
-        <x-button :icon="Logo" loading theme="primary" @click="handleModal">想听</x-button>
+        <x-button icon="Logo" theme="primary" @click="handleModal">想听</x-button>
     </div>
 </template>
 
 <script setup lang="ts">
     import { showAlert } from '@pkgs/ui';
-    import { Logo } from '@pkgs/ui';
     const handleModal = async () => {
         showAlert('V我五十就告诉你');
     };
@@ -15,7 +14,6 @@
 
 <style scoped lang="less">
     .container {
-        font-size: 1.2em;
         p {
             margin-bottom: 20px;
         }
