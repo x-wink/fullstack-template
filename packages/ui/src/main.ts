@@ -1,11 +1,4 @@
 import './styles/index.less';
-export { default as XBox } from './components/x-box.vue';
-export { default as XButton } from './components/x-button.vue';
-export { default as XDialog } from './components/x-dialog.vue';
-export { default as XIcon } from './components/x-icon.vue';
-export { default as XMarkdown } from './components/x-markdown.vue';
-export { default as XMenu } from './components/x-menu.vue';
-export { default as XModal } from './components/x-modal.vue';
-export { default as XRain } from './components/x-rain.vue';
+export * from './components';
 export * from './utils';
 export * from '@pkgs/icons';

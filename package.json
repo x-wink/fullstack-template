@@ -11,7 +11,7 @@
         "client": "pnpm -F @apps/client dev",
         "server": "pnpm -F @apps/server dev",
         "chat": "pnpm -F @apps/chat dev",
-        "ssh": "pnpm -F @pkgs/ssh dev",
+        "docs": "pnpm -F @pkgs/docs dev",
         "build:client": "pnpm -F @apps/client build",
         "build:server": "pnpm -F @apps/server build",
         "build:chat": "pnpm -F @apps/chat build",

@@ -1,0 +1,23 @@
+{
+    "name": "@pkgs/docs",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "author": {
+        "name": "向文可",
+        "email": "1041367524@qq.com",
+        "url": "https://github.com/saatana97"
+    },
+    "main": "src/main.ts",
+    "scripts": {
+        "dev": "vitepress dev --port 9527 --host 0.0.0.0",
+        "build": "vitepress build",
+        "preview": "vitepress preview"
+    },
+    "dependencies": {
+        "@pkgs/ui": "workspace:^"
+    },
+    "devDependencies": {
+        "vitepress": "1.0.0-rc.4"
+    }
+}
