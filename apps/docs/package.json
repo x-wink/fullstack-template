@@ -1,12 +1,12 @@
 {
-    "name": "@pkgs/docs",
+    "name": "@apps/docs",
     "version": "1.0.0",
     "private": true,
     "type": "module",
     "author": {
         "name": "向文可",
-        "email": "1041367524@qq.com",
-        "url": "https://github.com/saatana97"
+        "email": "13202090601@163.com",
+        "url": "https://github.com/x-wink"
     },
     "main": "src/main.ts",
     "scripts": {
