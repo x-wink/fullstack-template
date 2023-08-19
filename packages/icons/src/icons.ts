@@ -1,5 +1,10 @@
-export { default as Logo } from './svg/logo.svg';
-export { default as Github } from './svg/github.svg';
-export { default as Npm } from './svg/npm.svg';
-export { default as LeftArrow } from './svg/left-arrow.svg';
-export { default as RightArrow } from './svg/right-arrow.svg';
+export * from './svg/arrow';
+export * from './svg/document';
+export * from './svg/food';
+export * from './svg/items';
+export * from './svg/media';
+export * from './svg/other';
+export * from './svg/system';
+export * from './svg/traffic';
+export * from './svg/weather';
+export * from './svg/wink';

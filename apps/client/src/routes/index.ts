@@ -33,6 +33,14 @@ const routes = [
                     module: '画布',
                 },
             },
+            {
+                path: '/icon',
+                name: 'Icon',
+                component: () => import('@/views/icon.vue'),
+                meta: {
+                    module: '图标',
+                },
+            },
         ],
     },
 ] as RouteRecordRaw[];

@@ -1,0 +1,12 @@
+export { default as Sunrise } from './Sunrise.svg';
+export { default as Sunny } from './Sunny.svg';
+export { default as Ship } from './Ship.svg';
+export { default as MostlyCloudy } from './MostlyCloudy.svg';
+export { default as PartlyCloudy } from './PartlyCloudy.svg';
+export { default as Sunset } from './Sunset.svg';
+export { default as Drizzling } from './Drizzling.svg';
+export { default as Pouring } from './Pouring.svg';
+export { default as Cloudy } from './Cloudy.svg';
+export { default as Moon } from './Moon.svg';
+export { default as MoonNight } from './MoonNight.svg';
+export { default as Lightning } from './Lightning.svg';

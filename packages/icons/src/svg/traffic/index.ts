@@ -1,0 +1,13 @@
+export { default as Location } from './Location.svg';
+export { default as LocationInformation } from './LocationInformation.svg';
+export { default as DeleteLocation } from './DeleteLocation.svg';
+export { default as Coordinate } from './Coordinate.svg';
+export { default as Bicycle } from './Bicycle.svg';
+export { default as OfficeBuilding } from './OfficeBuilding.svg';
+export { default as School } from './School.svg';
+export { default as Guide } from './Guide.svg';
+export { default as AddLocation } from './AddLocation.svg';
+export { default as MapLocation } from './MapLocation.svg';
+export { default as Place } from './Place.svg';
+export { default as LocationFilled } from './LocationFilled.svg';
+export { default as Van } from './Van.svg';

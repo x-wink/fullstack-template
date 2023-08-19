@@ -23,7 +23,8 @@
         "preview": "pnpm build && pnpm start",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
         "prettier": "prettier --write ./**/*.{vue,ts,tsx,js,jsx,css,json,md,html}",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "icons": "pnpm -F @pkgs/icons fetch:icons"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.4.1",
