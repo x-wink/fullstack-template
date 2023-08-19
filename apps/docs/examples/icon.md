@@ -8,6 +8,8 @@ title: 图标
 
 # 使用方式
 
+<Github />
+
 ```vue
 <Github />
 ```
@@ -16,6 +18,21 @@ title: 图标
 import { Github } from 'wink-ui';
 ```
 
+<XIcon name="Github" />
+
+```vue
+<XIcon name="Github" />
+```
+
+```ts
+import { XIcon } from 'wink-ui';
+```
+
 # 图标列表
 
-<XIcon name="Logo" />
+<IconList />
+
+<script setup>
+import IconList from './icon.vue';
+import { Github } from '@pkgs/ui';
+</script>
