@@ -50,8 +50,6 @@ export default (configEnv: ConfigEnv) => {
                     {
                         // import { default as axios } from 'axios',
                         axios: [['default', 'axios']],
-                        // import { default as qs } from 'qs',
-                        qs: [['default', 'qs']],
                     },
                 ],
                 eslintrc: {

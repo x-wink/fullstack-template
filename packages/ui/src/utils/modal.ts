@@ -21,5 +21,6 @@ export const showModal = (props: {
         });
     });
 };
-export const showAlert = (content: string, title?: string) => showModal({ title, content, confirmText: '知道了' });
+export const showAlert = (content: string, title?: string, confirmText = '知道了') =>
+    showModal({ title, content, confirmText });
 export const showComfirm = (content: string, title?: string) => showModal({ title, content, showCancel: true });

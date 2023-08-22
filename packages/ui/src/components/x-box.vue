@@ -23,7 +23,7 @@
         border: 2px solid var(--x-primary);
         border-radius: 10px;
         background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(0.2rem);
+        backdrop-filter: blur(1.2px);
         overflow: hidden;
         box-shadow: inset 0 0 15px var(--x-primary);
         animation: breathe 1s ease-in-out 0s infinite alternate-reverse;

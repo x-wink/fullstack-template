@@ -27,9 +27,9 @@
     const currentMenu = computed(() => menus.findIndex((item) => item.name === route.name));
     const links = reactive([
         {
-            title: '个人主页',
+            title: 'UI',
             icon: 'Logo',
-            route: '/',
+            route: '/wink-ui',
             link: true,
         },
         {

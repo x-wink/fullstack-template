@@ -1,5 +1,8 @@
 <template>
-    <x-code-rain background style="font-size: 2rem" />
+    <x-code-rain
+        background
+        :charset="new Date().toDateString() === 'Tue Aug 22 2023' ? '七夕快乐我想你了❤️' : void 0"
+    />
     <x-box class="layout flex col">
         <Header />
         <main class="main">
@@ -26,11 +29,16 @@
 </script>
 
 <style scoped lang="less">
+    .x-code-rain {
+        font-size: 2rem;
+        color: var(--x-primary);
+    }
     .layout {
         perspective: none;
         width: 90%;
         height: calc(98% - 20px);
         max-width: 1200px;
+        background: none;
         position: fixed;
         top: 0;
         bottom: 0;
