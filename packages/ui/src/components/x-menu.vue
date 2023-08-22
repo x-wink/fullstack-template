@@ -18,8 +18,7 @@
 
 <script setup lang="ts">
     import { getCurrentInstance } from 'vue';
-    import XButton from './x-button.vue';
-    import XIcon from './x-icon.vue';
+    import { XIcon, XButton } from './';
     import type { Router } from 'vue-router';
     import type { IconNames } from '@pkgs/icons';
     interface Menu {

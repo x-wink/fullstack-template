@@ -9,11 +9,11 @@ hero:
     tagline: 仅用于学习参考，请勿随意用于生产环境
     actions:
         - theme: brand
-          text: 组件示例
-          link: /examples/icon
-        - theme: alt
           text: 快速开始
-          link: /starter
+          link: /examples/icon/index
+        - theme: alt
+          text: Github
+          link: https://github.com/x-wink/fullstack-template/tree/demo
 
 features:
     - title: 常用组件

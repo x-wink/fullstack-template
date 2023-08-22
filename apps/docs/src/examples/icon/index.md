@@ -68,5 +68,5 @@ title: 图标
 <script setup>
 import IconUse1 from './use1.vue';
 import IconUse2 from './use2.vue';
-import IconList from './icon.vue';
+import IconList from './list.vue';
 </script>

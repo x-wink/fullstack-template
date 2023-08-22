@@ -10,7 +10,7 @@
     },
     "main": "src/main.ts",
     "scripts": {
-        "dev": "vitepress dev --port 9527 --host 0.0.0.0",
+        "dev": "vitepress dev",
         "build": "vitepress build",
         "preview": "vitepress preview"
     },

@@ -5,15 +5,15 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import * as svgs from '@pkgs/icons';
-    import type { IconNames } from '@pkgs/icons';
+    import { IconAnimation, IconName } from './types';
     defineOptions({
         name: 'XIcon',
     });
     const props = withDefaults(
         defineProps<{
-            name: IconNames;
+            name: IconName;
             size?: string | number;
-            animation?: 'spin' | 'pulse' | 'heart' | 'shake' | 'breathe';
+            animation?: IconAnimation;
         }>(),
         {
             size: '1em',

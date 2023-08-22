@@ -7,8 +7,7 @@
 </template>
 
 <script setup lang="ts">
-    import type { IconNames } from '@pkgs/icons';
-    import XIcon from './x-icon.vue';
+    import { ButtonTheme, XIcon, IconName } from '../';
     import { computed } from 'vue';
 
     defineOptions({
@@ -16,8 +15,8 @@
     });
     const props = withDefaults(
         defineProps<{
-            theme?: string;
-            icon?: IconNames;
+            theme?: ButtonTheme;
+            icon?: IconName;
             text?: boolean;
             link?: boolean;
             simple?: boolean;

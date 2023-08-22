@@ -11,7 +11,7 @@ export default defineConfig({
         // https://vitepress.dev/reference/default-theme-config
         nav: [
             { text: '首页', link: '/' },
-            { text: '示例', link: '/examples/icon' },
+            { text: '示例', link: '/examples/icon/index' },
             { text: '入门', link: '/starter/install' },
         ],
         sidebar: {
@@ -19,8 +19,8 @@ export default defineConfig({
                 {
                     text: '基础组件',
                     items: [
-                        { text: '图标', link: '/examples/icon' },
-                        { text: '按钮', link: '/examples/button' },
+                        { text: '图标', link: '/examples/icon/index' },
+                        { text: '按钮', link: '/examples/button/index' },
                     ],
                 },
             ],
@@ -41,6 +41,12 @@ export default defineConfig({
             message: '寻找小伙伴一起开源',
             copyright:
                 '<a data-v-3a6926c8="" href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2021019875号</a>',
+        },
+    },
+    vite: {
+        server: {
+            port: 9527,
+            host: '0.0.0.0',
         },
     },
 });
