@@ -1,6 +1,6 @@
 <template>
     <div class="themes">
-        <XButton v-for="(item, index) in buttonThemes" :key="index" :theme="item">{{ item }}</XButton>
+        <XButton v-for="(item, index) in buttonThemes" :key="index" loading :theme="item">{{ item }}</XButton>
     </div>
 </template>
 

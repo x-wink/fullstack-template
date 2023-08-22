@@ -1,6 +1,6 @@
 <template>
     <div class="themes">
-        <XButton v-for="(item, index) in buttonThemes" :key="index" :theme="item">{{ item }}</XButton>
+        <XButton v-for="(item, index) in buttonThemes" :key="index" circle :theme="item">{{ item }}</XButton>
     </div>
 </template>
 
@@ -11,5 +11,6 @@
 <style scoped lang="less">
     .themes {
         display: flex;
+        align-items: center;
     }
 </style>
