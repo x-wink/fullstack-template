@@ -47,7 +47,7 @@ async function main() {
             }
             fs.writeFileSync(filePath, svgStr);
 
-            const exportStr = `export { default as ${iconName} } from './${fileName}?component';\n`;
+            const exportStr = `export { default as ${iconName} } from './${fileName}';\n`;
             fs.appendFileSync(entry, exportStr);
         });
     });

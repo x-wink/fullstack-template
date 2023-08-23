@@ -20,11 +20,11 @@
     import { getCurrentInstance } from 'vue';
     import { XIcon, XButton } from './';
     import type { Router } from 'vue-router';
-    import type { IconNames } from '@pkgs/icons';
+    import type { IconName } from '@pkgs/icons';
     interface Menu {
         name?: string;
         title?: string;
-        icon?: IconNames;
+        icon?: IconName;
         route?: string;
         link?: boolean;
     }
