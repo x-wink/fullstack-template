@@ -4,6 +4,9 @@
 
 <script setup lang="ts">
     import Layout from '@/layouts/index.vue';
+    onMounted(() => {
+        document.title = '来了老弟';
+    });
     // const ws = new WebSocket('/ws/chat/all?name=test');
     // ws.onopen = () => {
     //     console.info('连接成功');

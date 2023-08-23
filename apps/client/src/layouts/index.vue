@@ -1,8 +1,5 @@
 <template>
-    <x-code-rain
-        background
-        :charset="new Date().toDateString() === 'Tue Aug 22 2023' ? '七夕快乐我想你了❤️' : void 0"
-    />
+    <x-rain background />
     <x-box class="layout flex col">
         <Header />
         <main class="main">

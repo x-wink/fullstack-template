@@ -8,11 +8,7 @@
 <script setup lang="ts">
     import { showAlert } from '@pkgs/ui';
     const handleModal = async () => {
-        if (new Date().toDateString() === 'Tue Aug 22 2023') {
-            showAlert('七夕快乐哟~', '', '你也是');
-        } else {
-            showAlert('V我五十就告诉你');
-        }
+        showAlert('V我五十就告诉你');
     };
 </script>
 
