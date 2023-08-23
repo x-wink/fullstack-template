@@ -26,7 +26,7 @@ title: 图标
 
 ::: details 查看代码
 
-<<< ./use1.vue
+<<< @/examples/icon/use1.vue
 
 :::
 
@@ -37,7 +37,7 @@ title: 图标
 
 ::: details 查看代码
 
-<<< ./use2.vue
+<<< @/examples/icon/use2.vue
 
 :::
 

@@ -6,6 +6,9 @@ export default defineConfig({
     description: 'A vue3 components libary',
     base: '/wink-ui/',
     srcDir: 'src',
+    rewrites: {
+        'examples/:pkg/index.md': 'examples/:pkg.md',
+    },
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         logo: {
@@ -14,7 +17,7 @@ export default defineConfig({
         },
         nav: [
             { text: '首页', link: '/' },
-            { text: '示例', link: '/examples/icon/index' },
+            { text: '示例', link: '/examples/icon' },
             { text: '入门', link: '/starter/install' },
         ],
         sidebar: {
@@ -22,8 +25,8 @@ export default defineConfig({
                 {
                     text: '基础组件',
                     items: [
-                        { text: '图标', link: '/examples/icon/index' },
-                        { text: '按钮', link: '/examples/button/index' },
+                        { text: '图标', link: '/examples/icon' },
+                        { text: '按钮', link: '/examples/button' },
                     ],
                 },
             ],

@@ -17,7 +17,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./theme.vue
+<<< @/examples/button/theme.vue
 
 :::
 
@@ -28,7 +28,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./simple.vue
+<<< @/examples/button/simple.vue
 
 :::
 
@@ -39,7 +39,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./disabled.vue
+<<< @/examples/button/disabled.vue
 
 :::
 
@@ -50,7 +50,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./loading.vue
+<<< @/examples/button/loading.vue
 
 :::
 
@@ -61,7 +61,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./icon.vue
+<<< @/examples/button/icon.vue
 
 :::
 
@@ -72,7 +72,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./text.vue
+<<< @/examples/button/text.vue
 
 :::
 
@@ -83,7 +83,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./link.vue
+<<< @/examples/button/link.vue
 
 :::
 
@@ -94,7 +94,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./circle.vue
+<<< @/examples/button/circle.vue
 
 :::
 
@@ -105,7 +105,7 @@ dddd，没啥好说的 🤐
 
 ::: details 查看代码
 
-<<< ./round.vue
+<<< @/examples/button/round.vue
 
 :::
 
@@ -113,17 +113,17 @@ dddd，没啥好说的 🤐
 
 ### 属性
 
-|   名称   |   说明   |                 类型                  |   默认值    |
-| :------: | :------: | :-----------------------------------: | :---------: |
-|  theme   | 主题风格 |   [ButtonTheme](#buttontheme-type)    |   default   |
-|   icon   |   图标   | [IconName](../icon/index.md#图标列表) | `undefined` |
-|  simple  | 简约风格 |                boolean                |   `false`   |
-| disabled | 禁用状态 |                boolean                |   `false`   |
-| loading  | 加载状态 |                boolean                |   `false`   |
-|   text   | 文本按钮 |                boolean                |   `false`   |
-|   link   | 链接按钮 |                boolean                |   `false`   |
-|  circle  | 圆形按钮 |                boolean                |   `false`   |
-|  round   | 圆角按钮 |                boolean                |   `false`   |
+|   名称   |   说明   |                     类型                     |   默认值    |
+| :------: | :------: | :------------------------------------------: | :---------: |
+|  theme   | 主题风格 |       [ButtonTheme](#buttontheme-type)       |   default   |
+|   icon   |   图标   | [IconName](/examples/icon/index.md#图标列表) | `undefined` |
+|  simple  | 简约风格 |                   boolean                    |   `false`   |
+| disabled | 禁用状态 |                   boolean                    |   `false`   |
+| loading  | 加载状态 |                   boolean                    |   `false`   |
+|   text   | 文本按钮 |                   boolean                    |   `false`   |
+|   link   | 链接按钮 |                   boolean                    |   `false`   |
+|  circle  | 圆形按钮 |                   boolean                    |   `false`   |
+|  round   | 圆角按钮 |                   boolean                    |   `false`   |
 
 ### 事件
 

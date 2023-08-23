@@ -10,7 +10,7 @@ hero:
     actions:
         - theme: brand
           text: 快速开始
-          link: /examples/icon/index
+          link: /examples/icon
         - theme: alt
           text: Github
           link: https://github.com/x-wink/fullstack-template/tree/demo
