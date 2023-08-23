@@ -35,7 +35,7 @@
         {
             charset: 'qwertyuiopasdfghjklzxcvbnm0123456789',
             step: 100,
-            density: 15,
+            density: 20,
             length: 0,
         }
     );
@@ -50,11 +50,11 @@
         ctx.font = style.font;
         const fontSize = Number(style.fontSize.replace('px', '')) * 1.2;
         const cols = ~~(cvs.width / fontSize);
-        const length = props.length || ~~((window.innerHeight / fontSize) * 0.5);
+        const length = props.length || ~~((window.innerHeight / fontSize) * 0.7);
         const data = Array.from({ length: cols }, () =>
             Array.from({ length: randomInt(0, length) }, () => randomChar())
         );
-        const position = Array.from({ length: cols }, () => randomInt(-length, length));
+        const position = Array.from({ length: cols }, () => randomInt(-length * 2, length * 2));
         return {
             cvs,
             ctx,
@@ -114,7 +114,7 @@
                     }
                     if (position[i] * fontSize > cvs.height && randomInt(1, props.density) > props.density / 2) {
                         data[i] = Array.from({ length: randomInt(0, length) }, () => randomChar());
-                        position[i] = randomInt(-data[i].length, 0);
+                        position[i] = randomInt(-data[i].length * 2, 0);
                     }
                 }
             }

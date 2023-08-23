@@ -1,6 +1,6 @@
 <template>
-    <x-rain background />
-    <x-box class="layout flex col">
+    <XRain background />
+    <XBox class="layout flex col">
         <Header />
         <main class="main">
             <Aside>
@@ -15,7 +15,7 @@
             </Content>
         </main>
         <Footer />
-    </x-box>
+    </XBox>
 </template>
 
 <script setup lang="ts">
@@ -26,7 +26,7 @@
 </script>
 
 <style scoped lang="less">
-    .x-code-rain {
+    .x-rain {
         font-size: 2rem;
         color: var(--x-primary);
     }

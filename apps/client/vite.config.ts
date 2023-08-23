@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { loadEnv, type ConfigEnv, UserConfig } from 'vite';
+import { ImportInfo } from 'unplugin-vue-components/types';
 
 // https://vitejs.dev/config/
 export default (configEnv: ConfigEnv) => {
@@ -61,11 +62,23 @@ export default (configEnv: ConfigEnv) => {
             }),
             Components({
                 dirs: ['src/components'],
-                extensions: ['vue', 'jsx', 'tsx', 'js', 'ts'],
+                extensions: ['vue', 'tsx'],
                 deep: true,
                 dts: 'src/components.d.ts',
-                include: [/\.tsx$/, /\.jsx$/, /\.ts$/, /\.js$/, /\.vue$/, /\.vue\?vue/],
-                exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/],
+                include: [/\.tsx$/, /\.vue$/],
+                resolvers: [
+                    {
+                        type: 'component',
+                        resolve: (name: string) => {
+                            if (/X[A-Z]/.test(name)) {
+                                return {
+                                    name,
+                                    from: '@pkgs/ui',
+                                } as ImportInfo;
+                            }
+                        },
+                    },
+                ],
             }),
             legacy({
                 targets: ['defaults', 'not IE 11', 'chrome 52'],

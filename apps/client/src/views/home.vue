@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <p>告诉你一个秘密你想不想听？</p>
-        <x-button icon="Logo" theme="primary" @click="handleModal">想听</x-button>
+        <XButton icon="Logo" theme="primary" @click="handleModal">想听</XButton>
     </div>
 </template>
 
