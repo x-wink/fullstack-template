@@ -4,4 +4,7 @@ import App from './App.vue';
 import router from './routes';
 
 const app = createApp(App);
-app.use(router).mount('#app');
+
+import winkUI from '@pkgs/ui';
+
+app.use(router).use(winkUI).mount('#app');
