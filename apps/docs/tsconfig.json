@@ -1,5 +1,5 @@
 {
-    "include": ["env.d.ts", "examples/**/*"],
+    "include": ["env.d.ts", "src/**/*", ".vitepress/**/*"],
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig to read more about this file */
 

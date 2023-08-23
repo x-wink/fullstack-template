@@ -24,12 +24,8 @@ features:
       details: 源码全部使用 TypeScript 进行开发
 ---
 
-<ClientOnly>
-  <Teleport to="#app">
-    <XRain style="position: absolute; height: 100vh;top: 0;left: 0;z-index: -1;" />
-  </Teleport>
-</ClientOnly>
+<Index />
 
 <script setup>
-import { XRain } from "@pkgs/ui";
+import Index from "./index.vue";
 </script>

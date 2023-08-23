@@ -13,7 +13,8 @@
         "dev": "vitepress dev",
         "build": "vitepress build",
         "preview": "vitepress preview",
-        "release": "npx wink-sftp -c sftp.json"
+        "sftp": "npx wink-sftp -c sftp.json",
+        "release": "pnpm build && pnpm sftp"
     },
     "dependencies": {
         "@pkgs/ui": "workspace:^",

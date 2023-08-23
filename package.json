@@ -16,6 +16,7 @@
         "build:client": "pnpm -F @apps/client build",
         "build:server": "pnpm -F @apps/server build",
         "build:chat": "pnpm -F @apps/chat build",
+        "build:docs": "pnpm -F @apps/docs build",
         "build:icons": "pnpm -F @pkgs/icons build",
         "build": "pnpm build:client && pnpm build:server && pnpm build:chat",
         "publish": "npx wink-sftp -c sftp.json",
