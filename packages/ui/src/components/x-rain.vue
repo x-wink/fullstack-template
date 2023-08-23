@@ -34,62 +34,72 @@
         }>(),
         {
             charset: 'qwertyuiopasdfghjklzxcvbnm0123456789',
-            step: 100,
-            density: 20,
+            step: 67,
+            density: 3000,
             length: 0,
         }
     );
     const refsCanvas = ref<HTMLCanvasElement>();
-    const resolved = () => {
-        const cvs = refsCanvas.value!;
-        const ctx = cvs!.getContext('2d')!;
-        const ratio = devicePixelRatio ?? 1;
-        cvs.width = cvs.clientWidth * ratio;
-        cvs.height = cvs.clientHeight * ratio;
-        const style = getComputedStyle(cvs);
-        ctx.font = style.font;
-        const fontSize = Number(style.fontSize.replace('px', '')) * 1.2;
-        const cols = ~~(cvs.width / fontSize);
-        const length = props.length || ~~((window.innerHeight / fontSize) * 0.7);
-        const data = Array.from({ length: cols }, () =>
-            Array.from({ length: randomInt(0, length) }, () => randomChar())
-        );
-        const position = Array.from({ length: cols }, () => randomInt(-length * 2, length * 2));
-        return {
-            cvs,
-            ctx,
-            fontSize,
-            backgroundColor: style.backgroundColor,
-            color: style.color,
-            cols,
-            length,
-            data,
-            position,
-        };
-    };
     const randomInt = (min: number, max: number) => Math.round(Math.random() * (max - min) + min);
     const randomChar = () => props.charset[randomInt(0, props.charset.length - 1)];
     let cancelId = 0;
     onMounted(() => {
-        let { cvs, ctx, backgroundColor, color, fontSize, cols, length, data, position } = resolved();
+        const cvs = refsCanvas.value!;
+        const ctx = cvs!.getContext('2d')!;
+        const style = getComputedStyle(cvs);
+        const resolved = () => {
+            const ratio = devicePixelRatio ?? 1;
+            cvs.width = cvs.clientWidth * ratio;
+            cvs.height = cvs.clientHeight * ratio;
+            ctx.font = style.font;
+            const fontSize = Number(style.fontSize.replace('px', '')) * 1.2;
+            const cols = ~~(cvs.width / fontSize);
+            const length = props.length || ~~((window.innerHeight / fontSize) * 0.34);
+            const step = window.innerWidth < window.innerHeight ? props.step / 2 : props.step;
+            const data = Array.from({ length: cols }, () =>
+                Array.from({ length: randomInt(0, length) }, () => randomChar())
+            );
+            const position = Array.from({ length: cols }, () => randomInt(-length * 2, length * 2));
+            return {
+                cvs,
+                ctx,
+                fontSize,
+                backgroundColor: style.backgroundColor,
+                color: style.color,
+                cols,
+                length,
+                step,
+                data,
+                position,
+            };
+        };
+        let { backgroundColor, color, fontSize, cols, length, step, data, position } = resolved();
         const update = () => {
-            const res = resolved();
-            backgroundColor = res.backgroundColor;
-            color = res.color;
-            fontSize = res.fontSize;
-            cols = res.cols;
-            data = res.data;
-            position = res.position;
+            try {
+                const res = resolved();
+                backgroundColor = res.backgroundColor;
+                color = res.color;
+                fontSize = res.fontSize;
+                cols = res.cols;
+                data = res.data;
+                position = res.position;
+            } catch (e) {
+                // 画布不存在，不用处理
+            }
         };
         new ResizeObserver(update).observe(refsCanvas.value!);
         new MutationObserver(() => {
-            setTimeout(update, 1000);
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(update, { timeout: 1000 });
+            } else {
+                setTimeout(update, 1000);
+            }
         }).observe(refsCanvas.value!, { attributes: true, attributeFilter: ['style'] });
 
         let lasttime = 0;
         const render = (time = 0) => {
             cancelId = requestAnimationFrame(render);
-            if (time - lasttime > props.step) {
+            if (time - lasttime > step) {
                 lasttime = time;
 
                 ctx.clearRect(0, 0, cvs.width, cvs.height);
@@ -112,7 +122,10 @@
                             y = (position[i] + offset) * fontSize;
                         ctx.fillText(data[i][offset], x, y);
                     }
-                    if (position[i] * fontSize > cvs.height && randomInt(1, props.density) > props.density / 2) {
+                    if (
+                        position[i] * fontSize > cvs.height &&
+                        randomInt(1, props.density) < Math.min(50, props.density / 2)
+                    ) {
                         data[i] = Array.from({ length: randomInt(0, length) }, () => randomChar());
                         position[i] = randomInt(-data[i].length * 2, 0);
                     }
