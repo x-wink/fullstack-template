@@ -14,7 +14,8 @@
         "build": "vitepress build",
         "preview": "vitepress preview",
         "sftp": "npx wink-sftp -c sftp.json",
-        "release": "pnpm build && pnpm sftp"
+        "release": "pnpm build && pnpm sftp",
+        "gen": "ts-node-esm scripts/gen/main.ts"
     },
     "dependencies": {
         "@pkgs/ui": "workspace:^",

@@ -54,7 +54,7 @@
             ctx.font = style.font;
             const fontSize = Number(style.fontSize.replace('px', '')) * 1.2;
             const cols = ~~(cvs.width / fontSize);
-            const length = props.length || ~~((window.innerHeight / fontSize) * 0.34);
+            const length = props.length || ~~((window.innerHeight / fontSize) * 0.66);
             const step = window.innerWidth < window.innerHeight ? props.step / 2 : props.step;
             const data = Array.from({ length: cols }, () =>
                 Array.from({ length: randomInt(0, length) }, () => randomChar())

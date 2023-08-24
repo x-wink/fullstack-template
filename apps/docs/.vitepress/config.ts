@@ -29,6 +29,10 @@ export default defineConfig({
                         { text: '按钮', link: '/examples/button' },
                     ],
                 },
+                {
+                    text: '花里胡哨',
+                    items: [{ text: '代码雨', link: '/examples/rain' }],
+                },
             ],
             '/starter/': [
                 {
@@ -48,7 +52,7 @@ export default defineConfig({
         outline: 'deep',
         outlineTitle: '本页大纲',
         footer: {
-            message: '寻找小伙伴一起开源',
+            message: '欢迎大家交流学习，拥抱开源',
             copyright:
                 '<a data-v-3a6926c8="" href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2021019875号</a>',
         },
