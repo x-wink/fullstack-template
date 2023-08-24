@@ -13,11 +13,16 @@ const replace = (source: string, title: string, name: string) => {
 const root = 'src/examples';
 const main = () => {
     const [, , title, name] = process.argv;
-    const dir = `${root}/${name}`;
-    if (fs.existsSync(dir)) {
-        throw new Error(`目录已存在：${dir}`);
+    if (!title) {
+        throw new Error('第1个参数是中文名称，不能为空');
     }
-    fs.mkdirSync(dir);
+    if (!name) {
+        throw new Error('第2个参数是英文名称（文件夹名，横线分隔格式），不能为空');
+    }
+    const dir = `${root}/${name}`;
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
     fs.writeFileSync(`${root}/${name}/index.md`, replace(md, title, name));
     fs.writeFileSync(`${root}/${name}/use1.vue`, replace(use, title, name));
 };
