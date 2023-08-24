@@ -1,5 +1,4 @@
-export default /* tsx */ `
-<template>
+export default /* ts */ `<template>
     <X@@code />
 </template>
 <script setup lang="ts">

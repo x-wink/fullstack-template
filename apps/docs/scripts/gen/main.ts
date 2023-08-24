@@ -10,9 +10,14 @@ const name2Code = (name: string): string => {
 const replace = (source: string, title: string, name: string) => {
     return source.replaceAll('@@title', title).replaceAll('@@name', name).replaceAll('@@code', name2Code(name));
 };
-const root = '../../src/examples';
+const root = 'src/examples';
 const main = () => {
     const [, , title, name] = process.argv;
+    const dir = `${root}/${name}`;
+    if (fs.existsSync(dir)) {
+        throw new Error(`目录已存在：${dir}`);
+    }
+    fs.mkdirSync(dir);
     fs.writeFileSync(`${root}/${name}/index.md`, replace(md, title, name));
     fs.writeFileSync(`${root}/${name}/use1.vue`, replace(use, title, name));
 };

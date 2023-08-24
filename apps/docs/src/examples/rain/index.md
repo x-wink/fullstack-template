@@ -12,8 +12,6 @@ title: 代码雨
 
 ## 使用方式
 
-### 直接使用图标名称作为组件名
-
 <br />
 <RainUse1 />
 
@@ -48,10 +46,6 @@ title: 代码雨
 | 成员 | 说明 | 类型定义 |
 | :--: | :--: | :------: |
 |  -   |  -   |    -     |
-
-## 图标列表
-
-<IconList />
 
 <script setup>
 import RainUse1 from './use1.vue';

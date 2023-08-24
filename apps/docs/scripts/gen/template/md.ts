@@ -1,5 +1,4 @@
-export default /* md */ `
----
+export default /* md */ `---
 title: @@title
 ---
 
