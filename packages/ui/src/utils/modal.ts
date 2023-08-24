@@ -1,5 +1,4 @@
 import { createDynamicComponent } from './dynamicComponent';
-import XModal from '../components/x-modal.vue';
 export const showModal = (props: {
     title?: string;
     content: string;
@@ -8,16 +7,18 @@ export const showModal = (props: {
     confirmText?: string;
 }) => {
     return new Promise<void>((resolve, reject) => {
-        const instance = createDynamicComponent(XModal, {
-            ...props,
-            onClose(action: 'cancel' | 'confirm') {
-                instance.destroy();
-                if (action === 'confirm') {
-                    resolve();
-                } else {
-                    reject();
-                }
-            },
+        import('../components/modal/modal.vue').then((XModal) => {
+            const instance = createDynamicComponent(XModal, {
+                ...props,
+                onClose(action: 'cancel' | 'confirm') {
+                    instance.destroy();
+                    if (action === 'confirm') {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                },
+            });
         });
     });
 };

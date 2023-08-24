@@ -1,9 +1,11 @@
+// 基础组件
 export * from './icon';
 export * from './button';
+export * from './box';
+// 进阶组件
+export * from './popover';
+export * from './modal';
+export * from './menu';
+// 花里胡哨
 export * from './rain';
-export { default as XDialog } from './x-dialog.vue';
-export { default as XMarkdown } from './x-markdown.vue';
-export { default as XMenu } from './x-menu.vue';
-export { default as XModal } from './x-modal.vue';
-export * from './box';
-export * from './box';
+export * from './markdown';
