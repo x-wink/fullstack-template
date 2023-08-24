@@ -1,21 +1,21 @@
-export default /* md */ `---
-title: @@title
+---
+title: 盒子
 ---
 
-# @@title @@code
+# 盒子 Box
 
 ## 功能介绍
 
-@@title组件
+带边框呼吸灯效果的容器
 
 ## 使用方式
 
 <br />
-<@@codeUse1 />
+<BoxUse1 />
 
 ::: details 查看代码
 
-<<< @/examples/@@name/use1.vue
+<<< @/examples/box/use1.vue
 
 :::
 
@@ -46,6 +46,5 @@ title: @@title
 |  -   |  -   |    -     |
 
 <script setup>
-import @@codeUse1 from './use1.vue';
+import BoxUse1 from './use1.vue';
 </script>
-`;

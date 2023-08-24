@@ -9,7 +9,9 @@
         "url": "https://github.com/x-wink"
     },
     "main": "src/main.ts",
-    "scripts": {},
+    "scripts": {
+        "gen": "ts-node-esm scripts/gen/main.ts"
+    },
     "optionalDependencies": {
         "vue-router": "^4.1.6"
     },
