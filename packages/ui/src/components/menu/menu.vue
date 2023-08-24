@@ -1,19 +1,20 @@
 <template>
-    <ul class="x-menu flex col-center" :class="{ row: !props.vertical, col: props.vertical }">
-        <li
+    <div class="x-menu x-flex col-center" :class="{ row: !props.vertical, col: props.vertical }">
+        <div
             v-for="(item, index) in props.menus"
             :key="index"
+            class="x-menu-item"
             :class="{ active: props.active === index }"
             :title="item.title"
         >
-            <x-button class="flex row-center" text :title="item.title" @click="handleClick(item, index)">
+            <x-button class="x-flex row-center" text :title="item.title" @click="handleClick(item, index)">
                 <x-icon v-if="item.icon" :name="item.icon" />
                 <span v-if="!item.link && item.title">
                     {{ item.title }}
                 </span>
             </x-button>
-        </li>
-    </ul>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -55,22 +56,21 @@
 
 <style lang="less">
     .x-menu {
-        list-style: none !important;
         &.row {
-            li {
+            .x-menu-item {
                 margin: 0 var(--x-space-mini);
             }
         }
         &.col {
-            li {
-                + li {
+            .x-menu-item {
+                + .x-menu-item {
                     margin-top: 10px;
                 }
                 transform-origin: left center;
             }
             padding: 0 10px;
         }
-        li {
+        .x-menu-item {
             .x-button {
                 color: inherit;
             }

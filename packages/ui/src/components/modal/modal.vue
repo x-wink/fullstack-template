@@ -5,7 +5,7 @@
             <div class="content">
                 <slot>{{ props.content }}</slot>
             </div>
-            <div class="footer flex">
+            <div class="footer x-flex">
                 <x-button v-if="props.showCancel" class="cancel" danger @click="handleClose">
                     {{ props.cancelText }}
                 </x-button>
