@@ -1,5 +1,5 @@
 <template>
-    <XModal content="这是一个弹窗" :show-modal="false" />
+    <XModal content="这是一个弹窗" :modal="false" />
 </template>
 <script setup lang="ts">
     import { XModal } from '@pkgs/ui';

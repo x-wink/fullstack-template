@@ -1,5 +1,5 @@
 <template>
-    <XPopover v-model="visible">为方便展示，通过样式设为静态定位</XPopover>
+    <XPopover v-model="visible" static>普通弹出层</XPopover>
 </template>
 <script setup lang="ts">
     import { XPopover } from '@pkgs/ui';
@@ -8,9 +8,8 @@
 </script>
 <style scoped lang="less">
     .x-popover {
-        position: static;
-        background: var(--x-error);
-        padding: 20px;
-        margin: unset;
+        background: var(--x-primary);
+        padding: var(--x-space);
+        margin: var(--x-space-small);
     }
 </style>

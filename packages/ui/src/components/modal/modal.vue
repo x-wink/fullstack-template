@@ -1,5 +1,5 @@
 <template>
-    <x-popover v-model="visible" class="x-modal" show-modal>
+    <x-popover v-model="visible" class="x-modal" modal>
         <x-box>
             <div v-if="props.title" class="header">{{ props.title }}</div>
             <div class="content">
