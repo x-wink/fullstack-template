@@ -1,6 +1,6 @@
 <template>
     <button :class="classList" :disabled="props.disabled || props.loading">
-        <span class="x-button__icon">
+        <span v-if="props.loading || props.icon || slots.icon" class="x-button__icon">
             <XIcon v-if="props.loading" animation="spin" name="Loading" />
             <slot v-else name="icon">
                 <XIcon v-if="props.icon" :name="props.icon" />
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
     import { ButtonTheme, XIcon, IconName } from '../';
-    import { computed } from 'vue';
+    import { computed, useSlots } from 'vue';
 
     defineOptions({
         name: 'XButton',
@@ -42,6 +42,7 @@
             simple: false,
         }
     );
+    const slots = useSlots();
     const classList = computed(() => {
         return {
             'x-button': true,

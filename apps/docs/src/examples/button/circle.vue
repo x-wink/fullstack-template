@@ -10,8 +10,11 @@
 
 <style scoped lang="less">
     .themes {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
-        grid-gap: var(--x-space-mini);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        .x-button {
+            margin: var(--x-space-mini);
+        }
     }
 </style>
