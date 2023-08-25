@@ -28,8 +28,8 @@
         "release:docs": "pnpm -F @apps/docs run release",
         "start": "node ./dist/server/index.js",
         "preview": "pnpm build && pnpm start",
-        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
-        "prettier": "prettier --write ./**/*.{vue,ts,tsx,js,jsx,css,json,md,html}",
+        "lint": "eslint . --ext .vue,.ts,.tsx --fix --ignore-path .gitignore",
+        "prettier": "prettier --write ./**/*.{vue,ts,tsx,less,json,md,html}",
         "prepare": "husky install"
     },
     "devDependencies": {
@@ -48,10 +48,10 @@
         "typescript": "^5.0.4"
     },
     "lint-staged": {
-        "*.{js,jsx,ts,tsx,vue}": [
+        "*.{ts,tsx,vue}": [
             "pnpm lint"
         ],
-        "*.{js,jsx,ts,tsx,vue,html,css,less,md}": [
+        "*.{ts,tsx,vue,html,less,md,json}": [
             "pnpm prettier"
         ]
     }
