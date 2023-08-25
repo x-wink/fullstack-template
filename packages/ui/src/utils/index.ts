@@ -1,3 +1,3 @@
-export * from './dynamicComponent';
+export * from './dynamic';
 export * from './modal';
 export * from './install';

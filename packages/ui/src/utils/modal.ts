@@ -1,4 +1,4 @@
-import { createDynamicComponent } from './dynamicComponent';
+import { type DynamicComponentInstance, createDynamicComponent } from './dynamic';
 export const showModal = (props: {
     title?: string;
     content: string;
@@ -7,18 +7,19 @@ export const showModal = (props: {
     confirmText?: string;
 }) => {
     return new Promise<void>((resolve, reject) => {
-        import('../components/modal/modal.vue').then((XModal) => {
-            const instance = createDynamicComponent(XModal.default, {
-                ...props,
-                onClose(action: 'cancel' | 'confirm') {
-                    instance.destroy();
-                    if (action === 'confirm') {
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                },
-            });
+        let instance: DynamicComponentInstance;
+        createDynamicComponent(() => import('../components/modal/modal.vue'), {
+            ...props,
+            onClose(action: 'cancel' | 'confirm') {
+                instance?.destroy();
+                if (action === 'confirm') {
+                    resolve();
+                } else {
+                    reject();
+                }
+            },
+        }).then((res) => {
+            instance = res;
         });
     });
 };
