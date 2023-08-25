@@ -19,6 +19,8 @@
 
 <style scoped lang="less">
     .themes {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+        grid-gap: var(--x-space-mini);
     }
 </style>

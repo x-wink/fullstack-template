@@ -1,5 +1,7 @@
 @import './color.less';
 @fade: 20%;
+@light: #ccc;
+@dark: #444;
 :root {
     /* 颜色 */
     // 基础颜色
@@ -30,21 +32,37 @@
     --x-border: var(--x-gray);
     --x-shadow: var(--x-grey);
     // 亮色
-    --x-light-red: hardlight(@red, #ccc);
-    --x-light-orange: hardlight(@orange, #ccc);
-    --x-light-yellow: hardlight(@yellow, #ccc);
-    --x-light-olive: hardlight(@olive, #ccc);
-    --x-light-green: hardlight(@green, #ccc);
-    --x-light-cyan: hardlight(@cyan, #ccc);
-    --x-light-blue: hardlight(@blue, #ccc);
-    --x-light-purple: hardlight(@purple, #ccc);
-    --x-light-mauve: hardlight(@mauve, #ccc);
-    --x-light-pink: hardlight(@pink, #ccc);
-    --x-light-brown: hardlight(@brown, #ccc);
-    --x-light-black: hardlight(@black, #ccc);
-    --x-light-grey: hardlight(@grey, #ccc);
-    --x-light-gray: hardlight(@gray, #ccc);
-    --x-light-white: hardlight(@white, #ccc);
+    --x-light-red: hardlight(@red, @light);
+    --x-light-orange: hardlight(@orange, @light);
+    --x-light-yellow: hardlight(@yellow, @light);
+    --x-light-olive: hardlight(@olive, @light);
+    --x-light-green: hardlight(@green, @light);
+    --x-light-cyan: hardlight(@cyan, @light);
+    --x-light-blue: hardlight(@blue, @light);
+    --x-light-purple: hardlight(@purple, @light);
+    --x-light-mauve: hardlight(@mauve, @light);
+    --x-light-pink: hardlight(@pink, @light);
+    --x-light-brown: hardlight(@brown, @light);
+    --x-light-black: hardlight(@black, @light);
+    --x-light-grey: hardlight(@grey, @light);
+    --x-light-gray: hardlight(@gray, @light);
+    --x-light-white: hardlight(@white, @light);
+    // 暗色
+    --x-dark-red: hardlight(@red, @dark);
+    --x-dark-orange: hardlight(@orange, @dark);
+    --x-dark-yellow: hardlight(@yellow, @dark);
+    --x-dark-olive: hardlight(@olive, @dark);
+    --x-dark-green: hardlight(@green, @dark);
+    --x-dark-cyan: hardlight(@cyan, @dark);
+    --x-dark-blue: hardlight(@blue, @dark);
+    --x-dark-purple: hardlight(@purple, @dark);
+    --x-dark-mauve: hardlight(@mauve, @dark);
+    --x-dark-pink: hardlight(@pink, @dark);
+    --x-dark-brown: hardlight(@brown, @dark);
+    --x-dark-black: hardlight(@black, @dark);
+    --x-dark-grey: hardlight(@grey, @dark);
+    --x-dark-gray: hardlight(@gray, @dark);
+    --x-dark-white: hardlight(@white, @dark);
     // 透明色
     --x-fade-red: fade(@red, @fade);
     --x-fade-orange: fade(@orange, @fade);
