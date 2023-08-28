@@ -1,5 +1,5 @@
 <template>
-    <XPhotoWall :data="photos" :height="300" :skew="-10" :speed="20" />
+    <XPhotoWall :data="photos" :skew="-20" :speed="20" />
 </template>
 <script setup lang="ts">
     import { XPhotoWall } from '@pkgs/ui';

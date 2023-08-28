@@ -6,7 +6,7 @@
         }"
         :style="{
             height: props.height + 'px',
-            margin: `${Math.abs(props.skew) * 5}px auto`,
+            margin: `${(width / 100) * Math.abs(props.skew)}px auto`,
             [`--skew`]: `${props.skew}deg`,
             [`--duration`]: `${duration}s`,
         }"
@@ -16,7 +16,7 @@
             :key="index"
             class="photo x-flex row-center col-end"
             :style="{
-                transform: `rotateY(${(index * 360) / props.data.length}deg) translateZ(${props.height}px)`,
+                transform: `rotateY(${(index * 360) / props.data.length}deg) translateZ(${width * 0.5}px)`,
             }"
         >
             <img :alt="`Photo ${index + 1}`" :src="item" />
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { computed, getCurrentInstance, onMounted, ref } from 'vue';
 
     defineOptions({
         name: 'XPhotoWall',
@@ -46,6 +46,12 @@
         }
     );
     const duration = computed(() => 30 - Math.min(30, Math.max(0, props.speed)) || 0.1);
+    const width = ref(props.height);
+    onMounted(() => {
+        new ResizeObserver(([el]) => {
+            width.value = el.contentRect.width;
+        }).observe(getCurrentInstance()?.proxy?.$el);
+    });
 </script>
 
 <style scoped lang="less">
