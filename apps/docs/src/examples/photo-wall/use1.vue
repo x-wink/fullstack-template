@@ -5,7 +5,7 @@
     import { XPhotoWall } from '@pkgs/ui';
     import { reactive } from 'vue';
     const getPhotoUrl = async (name: number) => {
-        return new URL(`./photo/${name}.jpg`, import.meta.url).href;
+        return new URL(`./${location.search.match(/[?&]p=([^&]*)/)?.[1] ?? 'photo'}/${name}.png`, import.meta.url).href;
     };
     const photos = reactive([] as string[]);
     Promise.all(
