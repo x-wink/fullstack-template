@@ -9,3 +9,4 @@ export * from './menu';
 // 花里胡哨
 export * from './rain';
 export * from './markdown';
+export * from './photo-wall';

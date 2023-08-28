@@ -42,6 +42,7 @@ export default defineConfig({
                     text: '花里胡哨',
                     items: [
                         { text: '代码雨', link: '/examples/rain' },
+                        { text: '照片墙', link: '/examples/photo-wall' },
                         { text: '富文本', link: '/examples/markdown' },
                     ],
                 },
