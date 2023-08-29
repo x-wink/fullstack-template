@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
     import { ref, onMounted, watch, onUnmounted, computed } from 'vue';
-    import { PopoverArrowPlacement, PopoverPlacement } from './types';
+    import { PopoverPlacement } from './types';
     defineOptions({
         name: 'XPopover',
     });
@@ -16,18 +16,18 @@
             static?: boolean;
             modal?: boolean;
             arrow?: boolean;
-            arrowPlacement?: PopoverArrowPlacement;
             placement?: PopoverPlacement;
         }>(),
         {
             modelValue: true,
+            placement: 'bottom',
         }
     );
     const classList = computed(() => {
         return {
             '--static': props.static,
             '--arrow': props.arrow,
-            [`--arrow-${props.arrowPlacement ?? props.placement?.split('-')[1] ?? 'center'}`]: props.arrow,
+            [`--arrow-${props.placement?.split('-')[1] ?? 'center'}`]: props.arrow,
             [`--placement-${props.placement?.split('-')[0]}`]: true,
         };
     });

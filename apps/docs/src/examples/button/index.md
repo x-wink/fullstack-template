@@ -147,15 +147,15 @@ dddd，没啥好说的 🤐
 
 ### ButtonTheme `type`
 
-string 联合类型，可选值：
+按钮主题风格联合类型，可选值：
 
--   default
--   primary
--   second
--   info
--   success
--   warn
--   error
+<ul>
+    <li v-for="(item, index) in buttonThemes" :key="index">{{ item }}</li>
+</ul>
+
+### buttonThemes `const`
+
+按钮主题风格枚举列表，类型为 [`ButtonTheme[]`](#buttontheme-type)
 
 <script setup>
     import ButtonTheme from "./theme.vue";
@@ -167,4 +167,5 @@ string 联合类型，可选值：
     import ButtonLink from "./link.vue";
     import ButtonCircle from "./circle.vue";
     import ButtonRound from "./round.vue";
+    import { buttonThemes } from '@pkgs/ui';
 </script>

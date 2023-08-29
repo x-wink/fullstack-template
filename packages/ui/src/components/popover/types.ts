@@ -1,6 +1,3 @@
-export const popoverArrowPlacements = ['center', 'top', 'right', 'bottom', 'left'] as const;
-export type PopoverArrowPlacement = typeof popoverArrowPlacements[number];
-
 export const popoverPlacements = [
     'top-left',
     'top',
@@ -15,4 +12,13 @@ export const popoverPlacements = [
     'left',
     'left-bottom',
 ] as const;
-export type PopoverPlacement = typeof popoverPlacements[number];
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type ExtractPlacement<T extends string> = T extends `${infer Y}-${infer U}` ? [Y, U] : never;
+export type PopoverArrowDirection = ExtractPlacement<typeof popoverPlacements[number]>[0];
+type PopoverArrowDefinedPlacement = ExtractPlacement<typeof popoverPlacements[number]>[1] | 'center';
+export type PopoverArrowPlacement = PopoverArrowDefinedPlacement | 'center';
+export type PopoverPlacement = PopoverArrowDirection | `${PopoverArrowDirection}-${PopoverArrowDefinedPlacement}`;
+export const popoverArrowPlacements = Array.from(
+    new Set(popoverPlacements.map((item) => item.split('-')[1] ?? 'center'))
+) as PopoverArrowPlacement[];

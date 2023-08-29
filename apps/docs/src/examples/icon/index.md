@@ -71,6 +71,12 @@ title: 图标
 
 <IconList />
 
+## 附加内容
+
+### IconName `type`
+
+图标名称联合类型，可选值[点击这里](#图标列表)
+
 <script setup>
 import IconUse1 from './use1.vue';
 import IconUse2 from './use2.vue';
