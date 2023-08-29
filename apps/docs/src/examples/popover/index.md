@@ -36,13 +36,15 @@ title: 弹出层
 
 ### 属性
 
-|    名称    |    说明    |                    类型                    | 默认值  |
-| :--------: | :--------: | :----------------------------------------: | :-----: |
-| modalValue |    显示    |                  boolean                   | `true`  |
-|   static   |  静态展示  |                  boolean                   | `false` |
-|   modal    | 是否有蒙版 |                  boolean                   | `false` |
-|   arrow    | 是否有箭头 |                  boolean                   | `false` |
-| placement  |  箭头位置  | [PopoverPlacement](#popoverplacement-type) | bottom  |
+|    名称    |     说明     |                    类型                    | 默认值  |
+| :--------: | :----------: | :----------------------------------------: | :-----: |
+| modalValue |     显示     |                  boolean                   | `true`  |
+|   static   |   静态展示   |                  boolean                   | `false` |
+|   modal    |  是否有蒙版  |                  boolean                   | `false` |
+|   arrow    |  是否有箭头  |                  boolean                   | `false` |
+| placement  |   箭头位置   | [PopoverPlacement](#popoverplacement-type) | bottom  |
+|  position  |  弹出层位置  |              [number, number]              | [0, 0]  |
+|   offset   | 弹出层偏移量 |              [number, number]              | [0, 0]  |
 
 ### 事件
 
@@ -52,9 +54,9 @@ title: 弹出层
 
 ### 插槽
 
-| 名称 | 说明 | 类型定义 |
-| :--: | :--: | :------: |
-|  -   |  -   |    -     |
+|  名称   |      说明      | 类型定义 |
+| :-----: | :------------: | :------: |
+| default | 弹出层主体内容 |    -     |
 
 ### 实例
 
@@ -66,7 +68,7 @@ title: 弹出层
 
 ### PopoverPlacement `type`
 
-string 联合类型，可选值：
+弹出层箭头位置联合类型，可选值：
 
 <ul>
     <li v-for="(item, index) in popoverPlacements" :key="index">{{ item }}</li>

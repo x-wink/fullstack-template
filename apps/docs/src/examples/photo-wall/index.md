@@ -27,8 +27,8 @@ title: 照片墙
 | :----: | :----------------------: | :------------: | :------: |
 |  data  |      照片`url`列表       |    string[]    |   必填   |
 | active |       激活旋转动画       |    boolean     | `active` |
-| height |         照片高度         |     number     |  `200`   |
-|  skew  |      `X轴`倾斜角度       |     number     |   `0`    |
+| height |         照片高度         |     number     |   200    |
+|  skew  |      `X轴`倾斜角度       |     number     |    0     |
 | speed  | 旋转速度，有效范围`0~30` | number [0, 30] |   `0`    |
 
 ### 事件

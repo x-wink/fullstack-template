@@ -26,7 +26,7 @@
                 </XPopover>
             </div>
             <div class="center x-flex row-center col-center">
-                <XPopover class="x-flex row-center col-center" :modelValue="true" static>箭头位置</XPopover>
+                <div ref="refsTarget" class="target x-flex row-center col-center">箭头位置</div>
             </div>
             <div class="right x-flex col row-center col-start">
                 <XPopover
@@ -59,23 +59,25 @@
     import { XPopover, popoverPlacements } from '@pkgs/ui';
     import { ref } from 'vue';
     const visible = ref(true);
+
+    const refsTarget = ref<HTMLDivElement>();
 </script>
 <style scoped lang="less">
     .container {
         .center {
             width: var(--x-width-super);
+            .target {
+                width: 80%;
+                height: var(--x-width);
+                text-align: center;
+                background: var(--x-white);
+                color: var(--x-primary);
+            }
         }
     }
     .x-popover {
         background: var(--x-primary);
         padding: var(--x-space-small);
         margin: var(--x-space-small);
-        .center & {
-            width: 80%;
-            height: var(--x-width);
-            text-align: center;
-            background: var(--x-white);
-            color: var(--x-primary);
-        }
     }
 </style>

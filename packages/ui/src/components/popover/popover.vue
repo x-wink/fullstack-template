@@ -1,5 +1,5 @@
 <template>
-    <dialog ref="popover" class="x-popover" :class="classList">
+    <dialog ref="popover" class="x-popover" :class="classList" :style="popoverStyle">
         <slot></slot>
     </dialog>
 </template>
@@ -17,10 +17,14 @@
             modal?: boolean;
             arrow?: boolean;
             placement?: PopoverPlacement;
+            offset?: [number, number];
+            position?: [number, number];
         }>(),
         {
             modelValue: true,
             placement: 'bottom',
+            offset: () => [0, 0],
+            position: () => [0, 0],
         }
     );
     const classList = computed(() => {
@@ -30,6 +34,15 @@
             [`--arrow-${props.placement?.split('-')[1] ?? 'center'}`]: props.arrow,
             [`--placement-${props.placement?.split('-')[0]}`]: true,
         };
+    });
+    const popoverStyle = computed(() => {
+        return props.static
+            ? {}
+            : {
+                  left: props.position[0] + 'px',
+                  top: props.position[1] + 'px',
+                  transform: `translate(${props.offset[0]}px, ${props.offset[1]}px)`,
+              };
     });
 
     const popover = ref<HTMLDialogElement>();
@@ -49,7 +62,6 @@
     const handleToggle = () => {
         emits('update:modelValue', !props.modelValue);
     };
-
     onMounted(() => {
         popover.value!.addEventListener('close', handleClose);
         watch(
@@ -90,15 +102,9 @@
         background: none;
         color: white;
         position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin: auto;
 
         &.--static {
             position: relative;
-            margin: unset;
         }
 
         &::backdrop {
@@ -123,13 +129,16 @@
                     right: 0;
                     margin: auto;
                 }
+
                 &.--arrow-left::before {
                     right: var(--x-space-small);
                 }
+
                 &.--arrow-right::before {
                     left: var(--x-space-small);
                 }
             }
+
             &.--placement-left,
             &.--placement-right {
                 &.--arrow-center::before {
@@ -137,9 +146,11 @@
                     bottom: 0;
                     margin: auto;
                 }
+
                 &.--arrow-bottom::before {
                     top: var(--x-space-small);
                 }
+
                 &.--arrow-top::before {
                     bottom: var(--x-space-small);
                 }
@@ -151,18 +162,21 @@
                     transform: translateY(50%) rotate(45deg);
                 }
             }
+
             &.--placement-right {
                 &::before {
                     left: 0;
                     transform: translateX(-50%) rotate(45deg);
                 }
             }
+
             &.--placement-bottom {
                 &::before {
                     top: 0;
                     transform: translateY(-50%) rotate(45deg);
                 }
             }
+
             &.--placement-left {
                 &::before {
                     right: 0;
