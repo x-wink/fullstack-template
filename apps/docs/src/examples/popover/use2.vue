@@ -7,7 +7,7 @@
                 v-model="visible"
                 arrow
                 :placement="item"
-                static
+                :target="refsTarget"
             >
                 {{ item }}
             </XPopover>
@@ -20,13 +20,13 @@
                     v-model="visible"
                     arrow
                     :placement="item"
-                    static
+                    :target="refsTarget"
                 >
                     {{ item }}
                 </XPopover>
             </div>
             <div class="center x-flex row-center col-center">
-                <div ref="refsTarget" class="target x-flex row-center col-center">箭头位置</div>
+                <div ref="refsTarget" class="target x-flex row-center col-center">目标元素</div>
             </div>
             <div class="right x-flex col row-center col-start">
                 <XPopover
@@ -35,7 +35,7 @@
                     v-model="visible"
                     arrow
                     :placement="item"
-                    static
+                    :target="refsTarget"
                 >
                     {{ item }}
                 </XPopover>
@@ -48,7 +48,7 @@
                 v-model="visible"
                 arrow
                 :placement="item"
-                static
+                :target="refsTarget"
             >
                 {{ item }}
             </XPopover>
@@ -64,6 +64,7 @@
 </script>
 <style scoped lang="less">
     .container {
+        margin: 60px 0;
         .center {
             width: var(--x-width-super);
             .target {
@@ -74,10 +75,5 @@
                 color: var(--x-primary);
             }
         }
-    }
-    .x-popover {
-        background: var(--x-primary);
-        padding: var(--x-space-small);
-        margin: var(--x-space-small);
     }
 </style>

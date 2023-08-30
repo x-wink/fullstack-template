@@ -2,14 +2,12 @@
     <XPhotoWall :data="photos" :skew="-20" :speed="20" />
 </template>
 <script setup lang="ts">
-    import { XPhotoWall } from '@pkgs/ui';
+    import { XPhotoWall, isClientSide } from '@pkgs/ui';
     import { reactive } from 'vue';
     import {} from 'vitepress';
     const getPhotoUrl = async (name: number) => {
         return new URL(
-            `./${
-                (typeof window !== 'undefined' && location.search.match(/[?&]p=([^&]*)/)?.[1]) ?? 'photo'
-            }/${name}.png`,
+            `./${(isClientSide && location.search.match(/[?&]p=([^&]*)/)?.[1]) ?? 'photo'}/${name}.png`,
             import.meta.url
         ).href;
     };

@@ -21,7 +21,7 @@ title: 弹出层
 
 :::
 
-### 箭头位置
+### 弹出位置
 
 <br />
 <PopoverUse2 />
@@ -36,15 +36,16 @@ title: 弹出层
 
 ### 属性
 
-|    名称    |     说明     |                    类型                    | 默认值  |
-| :--------: | :----------: | :----------------------------------------: | :-----: |
-| modalValue |     显示     |                  boolean                   | `true`  |
-|   static   |   静态展示   |                  boolean                   | `false` |
-|   modal    |  是否有蒙版  |                  boolean                   | `false` |
-|   arrow    |  是否有箭头  |                  boolean                   | `false` |
-| placement  |   箭头位置   | [PopoverPlacement](#popoverplacement-type) | bottom  |
-|  position  |  弹出层位置  |              [number, number]              | [0, 0]  |
-|   offset   | 弹出层偏移量 |              [number, number]              | [0, 0]  |
+|    名称    |            说明             |                    类型                    | 默认值  |
+| :--------: | :-------------------------: | :----------------------------------------: | :-----: |
+| modalValue |            显示             |                  boolean                   | `true`  |
+|   static   |          静态展示           |                  boolean                   | `false` |
+|   modal    |         是否有蒙版          |                  boolean                   | `false` |
+|   arrow    |         是否有箭头          |                  boolean                   | `false` |
+| placement  |          箭头位置           | [PopoverPlacement](#popoverplacement-type) | bottom  |
+|  position  |         弹出层位置          |              [number, number]              | [0, 0]  |
+|   offset   |        弹出层偏移量         |              [number, number]              | [0, 0]  |
+|   target   | 定位目标，会覆盖 `position` |                HTMLElement                 |    -    |
 
 ### 事件
 

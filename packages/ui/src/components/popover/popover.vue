@@ -1,15 +1,20 @@
 <template>
-    <dialog ref="popover" class="x-popover" :class="classList" :style="popoverStyle">
-        <slot></slot>
-    </dialog>
+    <Teleport :disabled="props.static" to="body">
+        <dialog ref="popover" class="x-popover" :class="classList" :style="popoverStyle" v-bind="attrs">
+            <slot></slot>
+        </dialog>
+    </Teleport>
 </template>
 
 <script setup lang="ts">
-    import { ref, onMounted, watch, onUnmounted, computed } from 'vue';
+    import { computed, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
     import { PopoverPlacement } from './types';
+    import { isClientSide } from '../../utils';
     defineOptions({
         name: 'XPopover',
+        inheritAttrs: false,
     });
+    const attrs = useAttrs();
     const props = withDefaults(
         defineProps<{
             modelValue?: boolean;
@@ -19,6 +24,7 @@
             placement?: PopoverPlacement;
             offset?: [number, number];
             position?: [number, number];
+            target?: HTMLElement;
         }>(),
         {
             modelValue: true,
@@ -30,6 +36,7 @@
     const classList = computed(() => {
         return {
             '--static': props.static,
+            '--relative': !!props.target,
             '--arrow': props.arrow,
             [`--arrow-${props.placement?.split('-')[1] ?? 'center'}`]: props.arrow,
             [`--placement-${props.placement?.split('-')[0]}`]: true,
@@ -39,8 +46,8 @@
         return props.static
             ? {}
             : {
-                  left: props.position[0] + 'px',
-                  top: props.position[1] + 'px',
+                  left: pos.value[0] + 'px',
+                  top: pos.value[1] + 'px',
                   transform: `translate(${props.offset[0]}px, ${props.offset[1]}px)`,
               };
     });
@@ -48,6 +55,7 @@
     const popover = ref<HTMLDialogElement>();
     const emits = defineEmits<{
         'update:modelValue': [value: boolean];
+        'update:position': [value: [number, number]];
         open: [];
         close: [];
         change: [visible: boolean];
@@ -62,6 +70,95 @@
     const handleToggle = () => {
         emits('update:modelValue', !props.modelValue);
     };
+
+    const pos = ref(props.position);
+    const calculatePopupPosition = (
+        el: HTMLElement,
+        target: HTMLElement,
+        placement: PopoverPlacement
+    ): [number, number] => {
+        const targetRect = target.getBoundingClientRect();
+        const { width: targetWidth, height: targetHeight } = targetRect;
+
+        const width = el.offsetWidth;
+        const height = el.offsetHeight;
+
+        let left = targetRect.left + window.scrollX;
+        let top = targetRect.top + window.scrollY;
+
+        const [targetDir, popupDir = 'center'] = placement.split('-');
+
+        let vertical = false;
+        const arrowSize = props.arrow ? 10 : 0;
+        switch (targetDir) {
+            case 'top':
+                top -= height + arrowSize;
+                vertical = true;
+                break;
+            case 'right':
+                left += targetWidth + arrowSize;
+                break;
+            default:
+            case 'bottom':
+                top += targetHeight + arrowSize;
+                vertical = true;
+                break;
+            case 'left':
+                left -= width + arrowSize;
+                break;
+        }
+
+        switch (popupDir) {
+            case 'top':
+                break;
+            case 'right':
+                left += targetWidth - arrowSize * 2;
+                break;
+            case 'bottom':
+                top += targetHeight - height;
+                break;
+            case 'left':
+                left -= width - arrowSize * 2;
+                break;
+            default:
+            case 'center':
+                if (vertical) {
+                    left += (targetWidth - width) / 2;
+                } else {
+                    top += (targetHeight - height) / 2;
+                }
+                break;
+        }
+
+        left = Math.max(0, Math.min(document.body.offsetWidth - width, left));
+        top = Math.max(0, Math.min(document.body.offsetHeight - height, top));
+
+        return [left, top];
+    };
+    const updatePosition = () => {
+        if (props.target && popover.value) {
+            pos.value = calculatePopupPosition(popover.value, props.target, props.placement);
+            emits('update:position', pos.value);
+        }
+        requestAnimationFrame(updatePosition);
+    };
+    isClientSide && requestAnimationFrame(updatePosition);
+    // 不知道怎么监听目标元素位置变化，改为一直更新
+    // watch([() => props.target, popover], updatePosition);
+    // window.addEventListener('resize', updatePosition);
+    // const ro = new ResizeObserver(updatePosition);
+    // watch(
+    //     () => props.target,
+    //     (target, old) => {
+    //         if (old) {
+    //             ro.unobserve(old);
+    //         }
+    //         if (target) {
+    //             ro.observe(target);
+    //         }
+    //     }
+    // );
+
     onMounted(() => {
         popover.value!.addEventListener('close', handleClose);
         watch(
@@ -99,12 +196,19 @@
         border: none;
         border-radius: var(--x-border-radius);
         outline: none;
-        background: none;
         color: white;
         position: fixed;
+        z-index: 9999;
+        transition: left 0s, top 0s;
+        background: var(--x-primary);
+        padding: var(--x-space-small);
 
+        &.--relative {
+            position: absolute;
+        }
         &.--static {
             position: relative;
+            z-index: unset;
         }
 
         &::backdrop {
