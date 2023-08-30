@@ -1,5 +1,5 @@
 <template>
-    <x-popover v-model="visible" class="x-modal" modal>
+    <XPopupr v-model="visible" class="x-modal" modal>
         <x-box>
             <div v-if="props.title" class="header">{{ props.title }}</div>
             <div class="content">
@@ -12,11 +12,11 @@
                 <x-button class="confirm" theme="primary" @click="handleConfirm">{{ props.confirmText }}</x-button>
             </div>
         </x-box>
-    </x-popover>
+    </XPopupr>
 </template>
 
 <script setup lang="ts">
-    import { XPopover, XBox, XButton } from '../';
+    import { XPopup, XBox, XButton } from '../';
     import { ref } from 'vue';
     defineOptions({
         name: 'XModal',

@@ -3,7 +3,7 @@
         <slot>
             <XColorBlock class="picked" :color="props.modelValue" />
         </slot>
-        <div class="popover x-flex col">
+        <div class="popup x-flex col">
             <div class="settings x-flex">
                 <XColorSaturation v-model="color" :hue="hue" />
                 <XColorHue v-model="hue" />
@@ -66,7 +66,7 @@
         .picked {
             cursor: pointer;
         }
-        .popover {
+        .popup {
             width: 220px;
             padding: var(--x-space-small);
             background: var(--x-primary);

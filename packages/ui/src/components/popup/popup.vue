@@ -1,6 +1,6 @@
 <template>
     <Teleport :disabled="props.static" to="body">
-        <dialog ref="popover" class="x-popover" :class="classList" :style="popoverStyle" v-bind="attrs">
+        <dialog ref="popup" class="x-popup" :class="classList" :style="popupStyle" v-bind="attrs">
             <slot></slot>
         </dialog>
     </Teleport>
@@ -8,10 +8,10 @@
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
-    import { PopoverPlacement } from './types';
+    import { PopupPlacement } from './types';
     import { isClientSide } from '../../utils';
     defineOptions({
-        name: 'XPopover',
+        name: 'XPopup',
         inheritAttrs: false,
     });
     const attrs = useAttrs();
@@ -21,7 +21,7 @@
             static?: boolean;
             modal?: boolean;
             arrow?: boolean;
-            placement?: PopoverPlacement;
+            placement?: PopupPlacement;
             offset?: [number, number];
             position?: [number, number];
             target?: HTMLElement;
@@ -42,7 +42,7 @@
             [`--placement-${props.placement?.split('-')[0]}`]: true,
         };
     });
-    const popoverStyle = computed(() => {
+    const popupStyle = computed(() => {
         return props.static
             ? {}
             : {
@@ -52,7 +52,7 @@
               };
     });
 
-    const popover = ref<HTMLDialogElement>();
+    const popup = ref<HTMLDialogElement>();
     const emits = defineEmits<{
         'update:modelValue': [value: boolean];
         'update:position': [value: [number, number]];
@@ -75,7 +75,7 @@
     const calculatePopupPosition = (
         el: HTMLElement,
         target: HTMLElement,
-        placement: PopoverPlacement
+        placement: PopupPlacement
     ): [number, number] => {
         const targetRect = target.getBoundingClientRect();
         const { width: targetWidth, height: targetHeight } = targetRect;
@@ -136,15 +136,15 @@
         return [left, top];
     };
     const updatePosition = () => {
-        if (props.target && popover.value) {
-            pos.value = calculatePopupPosition(popover.value, props.target, props.placement);
+        if (props.target && popup.value) {
+            pos.value = calculatePopupPosition(popup.value, props.target, props.placement);
             emits('update:position', pos.value);
         }
         requestAnimationFrame(updatePosition);
     };
     isClientSide && requestAnimationFrame(updatePosition);
     // 不知道怎么监听目标元素位置变化，改为一直更新
-    // watch([() => props.target, popover], updatePosition);
+    // watch([() => props.target, popup], updatePosition);
     // window.addEventListener('resize', updatePosition);
     // const ro = new ResizeObserver(updatePosition);
     // watch(
@@ -160,18 +160,18 @@
     // );
 
     onMounted(() => {
-        popover.value!.addEventListener('close', handleClose);
+        popup.value!.addEventListener('close', handleClose);
         watch(
             () => props.modelValue,
             (visible) => {
                 visible ? emits('open') : emits('close');
                 emits('change', visible);
-                if (popover.value) {
+                if (popup.value) {
                     if (visible) {
-                        const show = props.modal && !props.static ? popover.value.showModal : popover.value.show;
-                        show.call(popover.value);
+                        const show = props.modal && !props.static ? popup.value.showModal : popup.value.show;
+                        show.call(popup.value);
                     } else {
-                        popover.value.close();
+                        popup.value.close();
                     }
                 }
             },
@@ -181,7 +181,7 @@
         );
     });
     onUnmounted(() => {
-        popover.value?.removeEventListener('close', handleClose);
+        popup.value?.removeEventListener('close', handleClose);
     });
 
     defineExpose({
@@ -192,7 +192,7 @@
 </script>
 
 <style lang="less">
-    .x-popover {
+    .x-popup {
         border: none;
         border-radius: var(--x-border-radius);
         outline: none;

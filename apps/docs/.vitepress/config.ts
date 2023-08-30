@@ -37,7 +37,7 @@ export default defineConfig({
                 {
                     text: '进阶组件',
                     items: [
-                        { text: '浮层', link: '/examples/popover' },
+                        { text: '浮层', link: '/examples/popup' },
                         { text: '弹窗', link: '/examples/modal' },
                         { text: '菜单', link: '/examples/menu' },
                     ],
