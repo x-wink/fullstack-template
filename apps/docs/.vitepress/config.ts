@@ -31,6 +31,10 @@ export default defineConfig({
                     ],
                 },
                 {
+                    text: '表单组件',
+                    items: [{ text: '取色器', link: '/examples/color-picker' }],
+                },
+                {
                     text: '进阶组件',
                     items: [
                         { text: '浮层', link: '/examples/popover' },

@@ -10,3 +10,5 @@ export * from './menu';
 export * from './rain';
 export * from './markdown';
 export * from './photo-wall';
+export * from './color-picker';
+export * from './color-picker';
