@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
+    import { computed, nextTick, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
     import { PopupPlacement } from './types';
-    import { isClientSide } from '../../utils';
+    import { isClientSide, useClickOutside } from '../../utils';
     defineOptions({
         name: 'XPopup',
         inheritAttrs: false,
@@ -25,6 +25,7 @@
             offset?: [number, number];
             position?: [number, number];
             target?: HTMLElement;
+            closeOnClickOutside?: boolean;
         }>(),
         {
             modelValue: true,
@@ -143,24 +144,12 @@
         requestAnimationFrame(updatePosition);
     };
     isClientSide && requestAnimationFrame(updatePosition);
-    // 不知道怎么监听目标元素位置变化，改为一直更新
-    // watch([() => props.target, popup], updatePosition);
-    // window.addEventListener('resize', updatePosition);
-    // const ro = new ResizeObserver(updatePosition);
-    // watch(
-    //     () => props.target,
-    //     (target, old) => {
-    //         if (old) {
-    //             ro.unobserve(old);
-    //         }
-    //         if (target) {
-    //             ro.observe(target);
-    //         }
-    //     }
-    // );
 
     onMounted(() => {
         popup.value!.addEventListener('close', handleClose);
+
+        const { invoke, revoke } = useClickOutside(popup.value!, handleClose);
+
         watch(
             () => props.modelValue,
             (visible) => {
@@ -170,8 +159,12 @@
                     if (visible) {
                         const show = props.modal && !props.static ? popup.value.showModal : popup.value.show;
                         show.call(popup.value);
+                        if (props.closeOnClickOutside) {
+                            nextTick(invoke);
+                        }
                     } else {
                         popup.value.close();
+                        revoke();
                     }
                 }
             },
