@@ -12,11 +12,11 @@
             </template>
             这里是弹窗内容
         </XPopover>
-        <XPopover v-model="visible" trigger="manual">
+        <XPopover v-model="visible" trigger="manual" @clickOutside="handleClose">
             <template #target>
-                <XButton theme="primary" @click="visible = !visible">手动控制</XButton>
+                <XButton theme="primary" @click="handleOpen">手动控制</XButton>
             </template>
-            这里是弹窗内容
+            将在3秒后自动关闭，点击外面立即关闭
         </XPopover>
     </div>
 </template>
@@ -24,6 +24,13 @@
     import { XButton, XPopover } from '@pkgs/ui';
     import { ref } from 'vue';
     const visible = ref(false);
+    const handleOpen = () => {
+        visible.value = true;
+        setTimeout(handleClose, 3000);
+    };
+    const handleClose = () => {
+        visible.value = false;
+    };
 </script>
 <style scoped lang="less">
     .container {
