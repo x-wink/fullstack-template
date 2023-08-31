@@ -1,5 +1,7 @@
 <template>
-    <canvas ref="refsCanvas" class="x-color-preview"></canvas>
+    <div class="x-color-preview" :style="{ height: `${props.height}px` }">
+        <canvas ref="refsCanvas"></canvas>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -52,3 +54,8 @@
         new ResizeObserver(render).observe(refsCanvas.value!.parentElement!);
     });
 </script>
+<style lang="less">
+    .x-color-preview {
+        width: 100%;
+    }
+</style>

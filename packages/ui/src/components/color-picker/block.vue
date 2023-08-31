@@ -14,8 +14,8 @@
             height?: string;
         }>(),
         {
-            width: '1em',
-            height: '1em',
+            width: '24px',
+            height: '24px',
         }
     );
     const blockStyle = computed(() => {

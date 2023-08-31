@@ -48,7 +48,7 @@
     const render = () => {
         if (refsCanvas.value) {
             const cvs = refsCanvas.value;
-            const ctx = cvs.getContext('2d')!;
+            const ctx = cvs.getContext('2d', { willReadFrequently: true })!;
             cvs.width = props.width;
             cvs.height = props.height;
 
@@ -102,10 +102,12 @@
         position: relative;
         width: max-content;
         aspect-ratio: 1;
+
         canvas {
             width: 100%;
             height: 100%;
         }
+
         .dot {
             border: 1px solid var(--x-white);
             border-radius: 50%;
