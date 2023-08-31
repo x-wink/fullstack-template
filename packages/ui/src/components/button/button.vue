@@ -67,7 +67,7 @@
         vertical-align: middle;
         font-size: inherit;
         line-height: 1;
-        outline: none;
+        outline: none !important;
         user-select: none;
         cursor: pointer;
 
@@ -95,9 +95,8 @@
                 border-color: extract(@bcs, @index);
 
                 &.--simple {
-                    color: if(@value =default, extract(@bcs, @index), extract(@simpleFcs, @index));
-                    background-color: extract(@simpleBgcs, @index);
-                    border-width: 2px;
+                    color: if(@value =default, extract(@bcs, @index), var(--x-white));
+                    background-color: transparent;
 
                     &:hover:not(:disabled) {
                         background-color: extract(@bgcs, @index);
@@ -107,12 +106,19 @@
 
                 &.--text, &.--link {
                     color: extract(@bgcs, @index);
-                    &:hover:not(:disabled) {
-                        color: extract(@simpleFcs, @index);
-                    }
                     &:active:not(:disabled) {
                         box-shadow: none;
-                        color: extract(@simpleBgcs, @index);
+                    }
+                }
+                &.--text{
+                    &:hover:not(:disabled) {
+                        color: if(@value =default, var(--x-gray), var(--x-white));
+                        background-color: extract(@simpleBgcs, @index);
+                    }
+                }
+                &.--link{
+                    &::after {
+                        border-bottom-color: extract(@bgcs, @index);
                     }
                 }
 
@@ -126,13 +132,6 @@
         &.--link {
             background-color: transparent;
             border-color: transparent;
-            font-weight: bold;
-            &:hover:not(:disabled) {
-                transform: scale(1.2);
-            }
-            &:active:not(:disabled) {
-                transform: scale(0.9);
-            }
         }
 
         &.--text {
@@ -142,10 +141,26 @@
         }
 
         &.--link {
-            text-decoration: underline;
-
+            position: relative;
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0;
+                height: 0;
+                width: 0;
+                border-bottom: 2px dashed var(--x-white);
+                transition: width 0.3s;
+            }
             &:hover:not(:disabled) {
-                text-decoration: none;
+                &::after {
+                    width: 70%;
+                }
+            }
+            &:active:not(:disabled) {
+                &::after {
+                    border-bottom-style: solid;
+                }
             }
             &:disabled {
                 font-style: italic;
@@ -173,11 +188,11 @@
         }
 
         &:hover {
-            filter: brightness(110%);
+            filter: brightness(120%);
         }
 
         &:active {
-            filter: brightness(90%);
+            filter: brightness(80%);
         }
 
         &:disabled {

@@ -30,7 +30,7 @@
     }
     .x-box {
         border: 2px solid var(--x-primary);
-        border-radius: 10px;
+        border-radius: var(--x-border-radius);
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(1.2px);
         overflow: hidden;

@@ -191,10 +191,10 @@
         border: none;
         border-radius: var(--x-border-radius);
         outline: none;
-        color: white;
         position: fixed;
         z-index: 9999;
         transition: left 0s, top 0s;
+        color: var(--x-white);
         background: var(--x-primary);
         padding: var(--x-space-small);
 
