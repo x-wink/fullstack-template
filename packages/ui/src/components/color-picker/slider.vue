@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, onMounted, onUnmounted, ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { createDragContainer, limitPrecision } from '../../utils';
 
     const props = withDefaults(
@@ -35,22 +35,14 @@
     });
     const position = computed(() => [0, value.value * (refsCanvas.value?.offsetHeight || props.height)]);
     const refsCanvas = ref<HTMLCanvasElement>();
-    const ro = new ResizeObserver(([cvs]) => {
-        props.render(cvs.target as HTMLCanvasElement);
-    });
+    const refsContainer = ref<HTMLDivElement>();
     onMounted(() => {
         if (refsCanvas.value) {
             props.render(refsCanvas.value);
-            ro.observe(refsCanvas.value);
+            new ResizeObserver(([cvs]) => {
+                props.render(cvs.target as HTMLCanvasElement);
+            }).observe(refsCanvas.value);
         }
-    });
-    onUnmounted(() => {
-        if (refsCanvas.value) {
-            ro.unobserve(refsCanvas.value);
-        }
-    });
-    const refsContainer = ref<HTMLDivElement>();
-    onMounted(() => {
         createDragContainer(refsContainer.value!, (x, y) => {
             value.value = limitPrecision(y / refsContainer.value!.clientHeight, props.precision);
         });
