@@ -23,58 +23,49 @@
 
 <script setup lang="ts">
     import { watch, ref, computed } from 'vue';
-    import { XPopover } from '../';
+    import { ColorPickerFormat, XPopover } from '../';
     import XColorBlock from './block.vue';
     import XColorSaturation from './saturation.vue';
     import XColorHue from './hue.vue';
     import XColorOpacity from './opacity.vue';
     import XColorPreview from './preview.vue';
-    import { parseCSSColor, rgbaToHex, RGB, RGBA } from './utils';
+    import { parseColor, rgba2Hex, RGB, RGBA, rgba2String } from '../../utils';
     defineOptions({
         name: 'XColorPicker',
     });
     const props = withDefaults(
         defineProps<{
-            fmt?: 'hex' | 'rgba' | ((val: RGBA) => string);
+            format?: ColorPickerFormat;
         }>(),
         {
-            fmt: 'hex',
+            format: 'hex',
         }
     );
     const emits = defineEmits<{
-        'update:modelValue': [value: string];
         change: [value: string, old: string];
     }>();
 
-    const modelValue = defineModel<string>({ required: true, default: '#00000000' });
+    const modelValue = defineModel<string>({ required: true });
 
-    const color = ref(parseCSSColor(modelValue.value));
-    const alpha = ref(color.value.a);
+    const color = ref(parseColor(modelValue.value));
     const hue = ref({ ...color.value, a: 1 } as RGB);
-    watch(
-        color,
-        (value, old) => {
-            emits('update:modelValue', rgbaToHex(value));
-            emits('change', rgbaToHex(value), rgbaToHex(old));
-        },
-        { deep: true }
-    );
+    const alpha = ref(color.value.a);
     watch(alpha, (value) => {
         color.value.a = value;
     });
 
     const handleFormat = (color: RGBA) => {
-        let fmt = props.fmt;
+        let fmt = props.format;
         if (fmt === 'hex') {
-            fmt = rgbaToHex;
+            fmt = rgba2Hex;
         } else if (fmt === 'rgba') {
-            fmt = ({ r, g, b, a }) => `rgba(${r}, ${g}, ${b}, ${a})`;
+            fmt = rgba2String;
         }
         return fmt(color);
     };
     const fmtColor = computed({
         get: () => handleFormat(color.value),
-        set: (value) => (color.value = parseCSSColor(value)),
+        set: (value) => (color.value = parseColor(value)),
     });
 
     watch(fmtColor, (value, old) => {

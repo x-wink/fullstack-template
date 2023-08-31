@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
     import { onMounted, ref, watch } from 'vue';
-    import { RGBA, rgbaToHex } from './utils';
+    import { RGBA, rgba2Hex } from '../../utils';
 
     defineOptions({
         name: 'XColorPreview',
@@ -45,7 +45,7 @@
                 }
             }
 
-            ctx.fillStyle = rgbaToHex(props.color);
+            ctx.fillStyle = rgba2Hex(props.color);
             ctx.fillRect(0, 0, cvs.width, cvs.height);
         }
     };

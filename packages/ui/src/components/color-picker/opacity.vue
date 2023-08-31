@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-    import { RGB } from './utils';
+    import { RGB } from '../../utils';
     import XColorSlider from './slider.vue';
     const props = defineProps<{
         hue: RGB;

@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
     import { computed, nextTick, onMounted, ref, watch } from 'vue';
-    import { RGB, RGBA, createDragContainer, getColor, getPosition, rgbaToHex } from './utils';
+    import { RGB, RGBA, createDragContainer, rgba2Hex, colorDiff } from '../../utils';
 
     defineOptions({
         name: 'XColorSaturation',
@@ -56,7 +56,7 @@
 
             const saturationGradient = ctx.createLinearGradient(0, 0, cvs.width, 0);
             saturationGradient.addColorStop(0, 'hsl(0, 0%, 100%)');
-            saturationGradient.addColorStop(1, rgbaToHex(props.hue));
+            saturationGradient.addColorStop(1, rgba2Hex(props.hue));
             ctx.fillStyle = saturationGradient;
             ctx.fillRect(0, 0, cvs.width, cvs.height);
 
@@ -68,6 +68,43 @@
             ctx.fillStyle = brightnessGradient;
             ctx.fillRect(0, 0, cvs.width, cvs.height);
         }
+    };
+    const getPosition = (cvs: HTMLCanvasElement, color: RGB) => {
+        const ctx = cvs.getContext('2d')!;
+
+        const imageData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+        const data = imageData.data;
+
+        let closestDiff = Infinity;
+        let x = -1;
+        let y = -1;
+
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+
+            const diff = colorDiff(color, { r, g, b });
+
+            if (diff < closestDiff) {
+                closestDiff = diff;
+                x = (i / 4) % cvs.width;
+                y = Math.floor(i / (4 * cvs.width));
+            }
+        }
+        return [x, y];
+    };
+    const getColor = (cvs: HTMLCanvasElement, x: number, y: number) => {
+        const ctx = cvs.getContext('2d')!;
+        x = Math.min(cvs.width - 0.1, x);
+        y = Math.min(cvs.height - 0.1, y);
+        const imageData = ctx.getImageData(x, y, 1, 1);
+        const data = imageData.data;
+
+        const r = data[0];
+        const g = data[1];
+        const b = data[2];
+        return { r, g, b };
     };
     watch(
         [refsCanvas, () => props.width, () => props.height, () => props.hue],
@@ -109,10 +146,10 @@
         }
 
         .dot {
+            box-shadow: 0 0 2px 2px var(--x-black);
             border: 1px solid var(--x-white);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 2px 2px var(--x-fade-black);
 
             position: absolute;
             transform: translate(-50%, -50%);

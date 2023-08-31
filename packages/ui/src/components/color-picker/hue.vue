@@ -4,13 +4,13 @@
 
 <script setup lang="ts">
     import { computed } from 'vue';
-    import { RGB, color2Hue, hue2Color, rgbaToHex } from './utils';
+    import { RGB, color2Hue, hue2Color, rgba2Hex } from '../../utils';
     import XColorSlider from './slider.vue';
 
     const color = defineModel<RGB>({ required: true });
 
     const hue = computed({
-        get: () => color2Hue(rgbaToHex(color.value)),
+        get: () => color2Hue(rgba2Hex(color.value)),
         set: (value) => (color.value = hue2Color(value)),
     });
 

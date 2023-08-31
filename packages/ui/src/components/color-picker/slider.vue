@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, ref } from 'vue';
-    import { createDragContainer, limitPrecision } from './utils';
+    import { createDragContainer, limitPrecision } from '../../utils';
 
     const props = withDefaults(
         defineProps<{

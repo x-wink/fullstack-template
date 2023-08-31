@@ -4,3 +4,6 @@ export * from './install';
 export * from './env';
 export * from './func';
 export * from './event';
+export * from './data';
+export * from './color';
+export * from './dom';
