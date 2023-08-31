@@ -1,15 +1,15 @@
 <template>
     <XPopup
+        v-bind="attrs"
         v-model="visible"
         arrow
         class="x-popover"
-        v-bind="attrs"
-        close-on-click-outside
+        :close-on-click-outside="props.trigger === 'click'"
         :target="refsTarget"
         @mouseenter="handleEnterPopover"
         @mouseleave="handleLeavePopover"
     >
-        <slot>弹出层</slot>
+        <slot></slot>
     </XPopup>
     <div ref="refsTarget" class="x-popover-target" v-on="triggerEvent">
         <slot name="target"></slot>
@@ -33,7 +33,6 @@
             dalay?: number;
         }>(),
         {
-            modelValue: false,
             trigger: 'hover',
             dalay: 100,
         }
@@ -42,28 +41,36 @@
         'update:modelValue': [value: boolean];
     }>();
 
-    const visible = ref(props.modelValue);
+    const visible = ref(false);
     watch(visible, (value) => {
         emits('update:modelValue', value);
     });
+    watch(
+        () => props.modelValue,
+        (value) => {
+            visible.value = value;
+        }
+    );
 
     const refsTarget = ref<HTMLDivElement>();
 
     const active = ref(false);
     const triggerEvent = computed(() => {
-        return props.trigger === 'click'
-            ? {
-                  click: handleActive,
-              }
-            : props.trigger === 'hover'
-            ? {
-                  mouseenter: handleActive,
-                  mouseleave: handleClose,
-              }
-            : {
-                  foucs: handleActive,
-                  blur: handleClose,
-              };
+        return typeof props.modelValue === 'undefined'
+            ? props.trigger === 'click'
+                ? {
+                      click: handleActive,
+                  }
+                : props.trigger === 'hover'
+                ? {
+                      mouseenter: handleActive,
+                      mouseleave: handleClose,
+                  }
+                : {
+                      foucs: handleActive,
+                      blur: handleClose,
+                  }
+            : {};
     });
     const handleActive = () => {
         active.value = true;

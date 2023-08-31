@@ -1,15 +1,15 @@
 <template>
     <Teleport :disabled="props.static" to="body">
-        <dialog ref="popup" class="x-popup" :class="classList" :style="popupStyle" v-bind="attrs">
+        <dialog v-bind="attrs" ref="popup" class="x-popup" :class="classList" :style="popupStyle">
             <slot></slot>
         </dialog>
     </Teleport>
 </template>
 
 <script setup lang="ts">
-    import { computed, nextTick, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
-    import { PopupPlacement } from './types';
+    import { computed, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue';
     import { isClientSide, useClickOutside } from '../../utils';
+    import { PopupPlacement } from './types';
     defineOptions({
         name: 'XPopup',
         inheritAttrs: false,
@@ -28,7 +28,6 @@
             closeOnClickOutside?: boolean;
         }>(),
         {
-            modelValue: true,
             placement: 'bottom',
             offset: () => [0, 0],
             position: () => [0, 0],
@@ -56,20 +55,33 @@
     const popup = ref<HTMLDialogElement>();
     const emits = defineEmits<{
         'update:modelValue': [value: boolean];
-        'update:position': [value: [number, number]];
+        clickOutside: [];
         open: [];
         close: [];
         change: [visible: boolean];
     }>();
 
+    const visible = ref(props.modelValue);
+    watch(visible, (value) => {
+        emits('update:modelValue', value);
+        value ? emits('open') : emits('close');
+        emits('change', value);
+    });
+    watch(
+        () => props.modelValue,
+        (value) => {
+            visible.value = value;
+        }
+    );
     const handleOpen = () => {
-        emits('update:modelValue', true);
+        visible.value = true;
     };
     const handleClose = () => {
-        emits('update:modelValue', false);
+        visible.value = false;
     };
     const handleToggle = () => {
-        emits('update:modelValue', !props.modelValue);
+        visible.value = !visible.value;
+        return visible.value;
     };
 
     const pos = ref(props.position);
@@ -139,39 +151,37 @@
     const updatePosition = () => {
         if (props.target && popup.value) {
             pos.value = calculatePopupPosition(popup.value, props.target, props.placement);
-            emits('update:position', pos.value);
         }
         requestAnimationFrame(updatePosition);
     };
     isClientSide && requestAnimationFrame(updatePosition);
 
+    const { observe, unobserve } = useClickOutside(() => {
+        emits('clickOutside');
+        props.closeOnClickOutside && handleClose();
+    });
+    watch(
+        [visible, popup],
+        ([visible, el]) => {
+            if (el) {
+                if (visible) {
+                    const show = props.modal && !props.static ? el.showModal : el.show;
+                    show.call(el);
+                    setTimeout(() => {
+                        observe(() => el);
+                    }, 100);
+                } else {
+                    el.close();
+                    unobserve(() => el);
+                }
+            }
+        },
+        {
+            immediate: true,
+        }
+    );
     onMounted(() => {
         popup.value!.addEventListener('close', handleClose);
-
-        const { invoke, revoke } = useClickOutside(popup.value!, handleClose);
-
-        watch(
-            () => props.modelValue,
-            (visible) => {
-                visible ? emits('open') : emits('close');
-                emits('change', visible);
-                if (popup.value) {
-                    if (visible) {
-                        const show = props.modal && !props.static ? popup.value.showModal : popup.value.show;
-                        show.call(popup.value);
-                        if (props.closeOnClickOutside) {
-                            nextTick(invoke);
-                        }
-                    } else {
-                        popup.value.close();
-                        revoke();
-                    }
-                }
-            },
-            {
-                immediate: true,
-            }
-        );
     });
     onUnmounted(() => {
         popup.value?.removeEventListener('close', handleClose);

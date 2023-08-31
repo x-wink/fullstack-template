@@ -1,6 +1,8 @@
 <template>
     <div class="container x-flex row-center">
-        <div ref="refsTarget" class="target x-flex row-center col-center">目标元素</div>
+        <div ref="refsTarget" class="target x-flex row-center col-center" @click="visible = !visible">
+            点击目标元素{{ visible ? '隐藏' : '显示' }}
+        </div>
         <XPopup
             v-for="(item, index) in popupPlacements"
             :key="index"
@@ -24,6 +26,7 @@
     .container {
         margin: 60px 0;
         .target {
+            border-radius: var(--x-border-radius);
             width: var(--x-width-super);
             height: var(--x-width);
             text-align: center;

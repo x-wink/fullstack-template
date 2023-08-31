@@ -1,17 +1,26 @@
-import { createSharedComposable } from '.';
-export const useClickOutside = createSharedComposable((el: HTMLElement, fn: (e?: MouseEvent) => void) => {
-    const handleClick = (event: MouseEvent) => {
-        if (el.contains(event.target as HTMLElement)) {
-            fn(event);
+import { onMounted, onUnmounted } from 'vue';
+export const useClickOutside = (fn: (e?: MouseEvent) => void) => {
+    const els = [] as HTMLElement[];
+    const handleClick = (e: MouseEvent) => {
+        if (els.some((el) => !el.contains(e.target as HTMLElement))) {
+            fn(e);
+            console.info('outside');
         }
     };
+    onMounted(() => {
+        window.addEventListener('click', handleClick);
+    });
+    onUnmounted(() => {
+        window.removeEventListener('click', handleClick);
+    });
     return {
-        invoke: () => {
-            console.info('invoke');
-            window.addEventListener('click', handleClick);
+        observe: (target: HTMLElement | (() => HTMLElement)) => {
+            const el = target instanceof Function ? target() : target;
+            els.push(el);
         },
-        revoke: () => {
-            window.removeEventListener('click', handleClick);
+        unobserve: (target: HTMLElement | (() => HTMLElement)) => {
+            const el = target instanceof Function ? target() : target;
+            els.splice(els.indexOf(el), 1);
         },
     };
-});
+};

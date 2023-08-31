@@ -32,6 +32,17 @@ title: 浮层
 
 :::
 
+### 点击外面隐藏
+
+<br />
+<PopupUse3 />
+
+::: details 查看代码
+
+<<< @/examples/popup/use3.vue
+
+:::
+
 ## API 参考
 
 ### 属性
@@ -49,9 +60,12 @@ title: 浮层
 
 ### 事件
 
-| 名称 | 说明 | 触发时机 | 回调类型 |
-| :--: | :--: | :------: | :------: |
-|  -   |  -   |    -     |    -     |
+|     名称     |       说明       |   触发时机   |          回调类型          |
+| :----------: | :--------------: | :----------: | :------------------------: |
+| clickOutside | 方便手动控制显隐 | 点击浮层外面 |         () => void         |
+|     open     |        -         |   浮层显示   |         () => void         |
+|    close     |        -         |   浮层隐藏   |         () => void         |
+|    change    |        -         | 浮层显隐切换 | (visible: boolean) => void |
 
 ### 插槽
 
@@ -61,9 +75,11 @@ title: 浮层
 
 ### 实例
 
-| 成员 | 说明 | 类型定义 |
-| :--: | :--: | :------: |
-|  -   |  -   |    -     |
+|  成员  | 说明 |   类型定义    |
+| :----: | :--: | :-----------: |
+|  open  | 显示 |  () => void   |
+| close  | 隐藏 |  () => void   |
+| toggle | 切换 | () => boolean |
 
 ## 附加内容
 
@@ -82,5 +98,6 @@ title: 浮层
 <script setup>
 import PopupUse1 from './use1.vue';
 import PopupUse2 from './use2.vue';
+import PopupUse3 from './use3.vue';
 import { popupPlacements } from '@pkgs/ui';
 </script>
