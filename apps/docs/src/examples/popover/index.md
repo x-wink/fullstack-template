@@ -29,10 +29,10 @@ title: 弹出气泡
 
 ### 属性
 
-|  名称   |   说明   |        类型        | 默认值 |
-| :-----: | :------: | :----------------: | :----: |
-| trigger | 触发方式 | [PopoverTrigger]() | hover  |
-|  dalay  | 关闭延时 |       number       |  100   |
+|  名称   |   说明   |                  类型                  | 默认值 |
+| :-----: | :------: | :------------------------------------: | :----: |
+| trigger | 触发方式 | [PopoverTrigger](#popovertrigger-type) | hover  |
+|  dalay  | 关闭延时 |                 number                 |  100   |
 
 ### 事件
 
@@ -52,6 +52,21 @@ title: 弹出气泡
 | :--: | :--: | :------: |
 |  -   |  -   |    -     |
 
+## 附加内容
+
+### PopoverTrigger `type`
+
+气泡触发方式联合类型，可选值：
+
+<ul>
+    <li v-for="(item, index) in popoverTriggers" :key="index">{{ item }}</li>
+</ul>
+
+### popoverTriggers `const`
+
+气泡触发方式枚举数组，类型为 `PopoverTrigger[]`
+
 <script setup>
-import PopoverUse1 from './use1.vue';
+    import { popoverTriggers } from '@pkgs/ui';
+    import PopoverUse1 from './use1.vue';
 </script>

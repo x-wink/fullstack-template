@@ -41,7 +41,11 @@ export default (configEnv: ConfigEnv) => {
             },
         },
         plugins: [
-            vue(),
+            vue({
+                script: {
+                    defineModel: true,
+                },
+            }),
             AutoImport({
                 include: [/\.[jt]sx?$/, /\.vue\??/],
                 imports: [

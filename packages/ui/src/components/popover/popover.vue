@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, ref, useAttrs, watch } from 'vue';
+    import { computed, ref, useAttrs } from 'vue';
     import { XPopup } from '../popup';
     import { PopoverTrigger } from './types';
     import { debounce } from '../../utils';
@@ -28,7 +28,6 @@
     const attrs = useAttrs();
     const props = withDefaults(
         defineProps<{
-            modelValue?: boolean;
             trigger?: PopoverTrigger;
             dalay?: number;
         }>(),
@@ -37,39 +36,22 @@
             dalay: 100,
         }
     );
-    const emits = defineEmits<{
-        'update:modelValue': [value: boolean];
-    }>();
 
-    const visible = ref(false);
-    watch(visible, (value) => {
-        emits('update:modelValue', value);
-    });
-    watch(
-        () => props.modelValue,
-        (value) => {
-            visible.value = value;
-        }
-    );
+    const visible = defineModel<boolean>({ required: false, default: false, local: true });
 
     const refsTarget = ref<HTMLDivElement>();
 
     const active = ref(false);
     const triggerEvent = computed(() => {
-        return typeof props.modelValue === 'undefined'
-            ? props.trigger === 'click'
-                ? {
-                      click: handleActive,
-                  }
-                : props.trigger === 'hover'
-                ? {
-                      mouseenter: handleActive,
-                      mouseleave: handleClose,
-                  }
-                : {
-                      foucs: handleActive,
-                      blur: handleClose,
-                  }
+        return props.trigger === 'click'
+            ? {
+                  click: handleActive,
+              }
+            : props.trigger === 'hover'
+            ? {
+                  mouseenter: handleActive,
+                  mouseleave: handleClose,
+              }
             : {};
     });
     const handleActive = () => {

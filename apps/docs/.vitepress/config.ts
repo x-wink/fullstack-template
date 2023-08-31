@@ -122,4 +122,9 @@ export default defineConfig({
             host: '0.0.0.0',
         },
     },
+    vue: {
+        script: {
+            defineModel: true,
+        },
+    },
 });

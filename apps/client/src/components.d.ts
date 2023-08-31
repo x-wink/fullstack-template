@@ -13,7 +13,10 @@ declare module '@vue/runtime-core' {
         RouterView: typeof import('vue-router')['RouterView'];
         XBox: typeof import('@pkgs/ui')['XBox'];
         XButton: typeof import('@pkgs/ui')['XButton'];
+        XIcon: typeof import('@pkgs/ui')['XIcon'];
+        XMarkdown: typeof import('@pkgs/ui')['XMarkdown'];
         XMenu: typeof import('@pkgs/ui')['XMenu'];
+        XPopupr: typeof import('@pkgs/ui')['XPopupr'];
         XRain: typeof import('@pkgs/ui')['XRain'];
     }
 }

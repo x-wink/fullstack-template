@@ -17,7 +17,6 @@
     const attrs = useAttrs();
     const props = withDefaults(
         defineProps<{
-            modelValue?: boolean;
             static?: boolean;
             modal?: boolean;
             arrow?: boolean;
@@ -54,25 +53,18 @@
 
     const popup = ref<HTMLDialogElement>();
     const emits = defineEmits<{
-        'update:modelValue': [value: boolean];
         clickOutside: [];
         open: [];
         close: [];
         change: [visible: boolean];
     }>();
 
-    const visible = ref(props.modelValue);
+    const visible = defineModel<boolean>({ required: true, default: false, local: true });
     watch(visible, (value) => {
-        emits('update:modelValue', value);
         value ? emits('open') : emits('close');
         emits('change', value);
     });
-    watch(
-        () => props.modelValue,
-        (value) => {
-            visible.value = value;
-        }
-    );
+
     const handleOpen = () => {
         visible.value = true;
     };

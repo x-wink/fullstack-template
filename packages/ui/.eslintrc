@@ -1,4 +1,7 @@
 {
     "root": true,
-    "extends": ["@xwink/eslint-config/vue"]
+    "extends": ["@xwink/eslint-config/vue"],
+    "globals": {
+        "defineModel": "readonly"
+    }
 }
