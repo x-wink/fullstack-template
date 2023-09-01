@@ -128,18 +128,29 @@
     .x-input {
         width: fit-content;
         height: var(--x-height);
-        padding: 0 var(--x-space-mini);
+        &__prefix,
+        &__suffix {
+            .x-button {
+                height: 100%;
+                border-radius: 0;
+            }
+        }
         &__prefix {
-            padding-right: var(--x-space-mini);
+            &:not(:has(.x-button)) {
+                padding-left: var(--x-space-mini);
+            }
         }
         &__suffix {
-            padding-left: var(--x-space-mini);
+            &:not(:has(.x-button)) {
+                padding-right: var(--x-space-mini);
+            }
         }
 
         &__wrapper {
             overflow: hidden;
             height: 100%;
             width: var(--x-width);
+            padding: 0 var(--x-space-mini);
 
             input {
                 width: 100%;

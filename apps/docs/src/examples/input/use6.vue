@@ -1,12 +1,14 @@
 <template>
-    v-model.lazy: {{ value1 }}
+    <p>v-model.lazy: {{ value1 }}</p>
     <XInput v-model.lazy="value1" clearable placeholder="input改为change" />
     <br />
-    v-model.number: {{ value2 * 2 }}
-    <XInput v-model.number="value2" placeholder="返回number" />
+
+    <p>v-model.number: {{ value2 * 2 }}</p>
+    <XInput v-model.number="value2" clearable placeholder="返回number" />
     <br />
-    v-model.trim: "{{ value3 }}"
-    <XInput v-model.trim="value3" placeholder="去除首尾空格" />
+
+    <p>v-model.trim: "{{ value3 }}"</p>
+    <XInput v-model.trim="value3" clearable placeholder="去除首尾空格" />
 </template>
 <script setup lang="ts">
     import { XInput } from '@pkgs/ui';

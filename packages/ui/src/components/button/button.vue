@@ -64,7 +64,6 @@
         align-items: center;
         white-space: nowrap;
         text-align: center;
-        vertical-align: middle;
         font-size: inherit;
         line-height: 0;
         outline: none !important;
