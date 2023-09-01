@@ -32,7 +32,10 @@ export default defineConfig({
                 },
                 {
                     text: '表单组件',
-                    items: [{ text: '颜色选择器', link: '/examples/color-picker' }],
+                    items: [
+                        { text: '文本输入框', link: '/examples/input' },
+                        { text: '颜色选择器', link: '/examples/color-picker' },
+                    ],
                 },
                 {
                     text: '进阶组件',

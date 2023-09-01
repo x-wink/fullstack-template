@@ -66,7 +66,7 @@
         text-align: center;
         vertical-align: middle;
         font-size: inherit;
-        line-height: 1;
+        line-height: 0;
         outline: none !important;
         user-select: none;
         cursor: pointer;
@@ -204,8 +204,10 @@
             cursor: wait;
         }
 
-        .x-button__icon + span:not(:empty) {
-            margin-left: var(--x-space-mini);
+        &__icon {
+            + span:not(:empty) {
+                margin-left: var(--x-space-mini);
+            }
         }
     }
 </style>

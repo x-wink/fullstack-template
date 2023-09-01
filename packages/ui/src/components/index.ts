@@ -13,3 +13,4 @@ export * from './photo-wall';
 export * from './color-picker';
 export * from './color-picker';
 export * from './popover';
+export * from './input';
