@@ -54,6 +54,44 @@ title: 文本输入框
 
 :::
 
+### 前缀后缀
+
+<br />
+<InputUse5 />
+
+::: details 查看代码
+
+<<< @/examples/input/use5.vue
+
+:::
+
+### `v-model` 修饰符
+
+::: info
+
+element-plus 居然不支持，差评 😅
+
+:::
+<br />
+<InputUse6 />
+
+::: details 查看代码
+
+<<< @/examples/input/use6.vue
+
+:::
+
+### 密码输入框
+
+<br />
+<InputUse7 />
+
+::: details 查看代码
+
+<<< @/examples/input/use7.vue
+
+:::
+
 ## API 参考
 
 ::: info
@@ -66,13 +104,17 @@ title: 文本输入框
 
 ### 属性
 
-|    名称     |                     说明                     |  类型   | 默认值  |
-| :---------: | :------------------------------------------: | :-----: | :-----: |
-| modalValue  |                     内容                     | string  |  必填   |
-|  clearable  | 清空内容按钮，有内容在聚焦或鼠标进入时才显示 | boolean | `false` |
-| placeholder |                  原生占位符                  |    -    |    -    |
-|  maxlength  |            原生最大长度，超出截取            |    -    |    -    |
-|  minlength  |           原生最小长度，不足补空格           |    -    |    -    |
+|     名称     |                     说明                     |  类型   | 默认值  |
+| :----------: | :------------------------------------------: | :-----: | :-----: |
+|  modalValue  |                     内容                     | string  |  必填   |
+|  clearable   | 清空内容按钮，有内容在聚焦或鼠标进入时才显示 | boolean | `false` |
+|    prefix    |                     前缀                     | string  |    -    |
+|    suffix    |                     后缀                     | string  |    -    |
+| showPassword |   切换显示密码按钮，`type=password` 时生效   | boolean |  false  |
+|     type     |                   原生类型                   |    -    |    -    |
+| placeholder  |                  原生占位符                  |    -    |    -    |
+|  maxlength   |            原生最大长度，超出截取            |    -    |    -    |
+|  minlength   |           原生最小长度，不足补空格           |    -    |    -    |
 
 ### 事件
 
@@ -86,9 +128,10 @@ title: 文本输入框
 
 ### 插槽
 
-| 名称 | 说明 | 类型定义 |
-| :--: | :--: | :------: |
-|  -   |  -   |    -     |
+|  名称  | 说明 | 类型定义 |
+| :----: | :--: | :------: |
+| prefix | 前缀 |    -     |
+| suffix | 后缀 |    -     |
 
 ### 实例
 
@@ -102,4 +145,7 @@ import InputUse1 from './use1.vue';
 import InputUse2 from './use2.vue';
 import InputUse3 from './use3.vue';
 import InputUse4 from './use4.vue';
+import InputUse5 from './use5.vue';
+import InputUse6 from './use6.vue';
+import InputUse7 from './use7.vue';
 </script>

@@ -1,7 +1,15 @@
 <template>
-    <XBox :id="props.id" class="x-input" :class="props.class" :style="props.style">
+    <XBox class="x-input x-flex" v-bind="rootAttrs">
+        <div v-if="hasPrefix" class="x-input__prefix">
+            <slot name="prefix">
+                {{ props.prefix }}
+            </slot>
+        </div>
         <div class="x-input__wrapper x-flex col-center">
-            <input ref="refsInput" v-model="modelValue" type="text" v-bind="attrs" />
+            <input v-if="modelModifiers.lazy" ref="refsInput" v-model.lazy="modelValue" v-bind="inputAttrs" />
+            <input v-else-if="modelModifiers.number" ref="refsInput" v-model.number="modelValue" v-bind="inputAttrs" />
+            <input v-else-if="modelModifiers.trim" ref="refsInput" v-model.trim="modelValue" v-bind="inputAttrs" />
+            <input v-else ref="refsInput" v-model="modelValue" v-bind="inputAttrs" />
             <XButton
                 v-if="props.clearable"
                 circle
@@ -12,38 +20,85 @@
                 theme="error"
                 @click="handleClear"
             />
+            <XButton
+                v-if="isPassword && props.showPassword"
+                circle
+                class="x-input__show"
+                :class="{ '--active': !!modelValue }"
+                :icon="passwordVisible ? 'Hide' : 'View'"
+                text
+                theme="info"
+                @click="handlePasswordVisible"
+            />
+        </div>
+        <div v-if="hasSuffix" class="x-input__suffix">
+            <slot name="suffix">
+                {{ props.suffix }}
+            </slot>
         </div>
     </XBox>
 </template>
 
 <script setup lang="ts">
-    import { useAttrs, StyleValue, watch, ref } from 'vue';
+    import { useAttrs, watch, ref, computed, useSlots } from 'vue';
     import { XBox, XButton } from '../';
     defineOptions({
         name: 'XInput',
         inheritAttrs: false,
     });
     const attrs = useAttrs();
+    const rootAttrs = computed(() => {
+        return {
+            id: attrs.id,
+            class: attrs.class,
+            style: attrs.style,
+        };
+    });
+    const inputAttrs = computed(() => {
+        return {
+            ...attrs,
+            id: void 0,
+            class: void 0,
+            style: void 0,
+            type: passwordVisible.value ? 'text' : ((attrs.type ?? 'text') as string),
+        };
+    });
     const props = withDefaults(
         defineProps<{
             clearable?: boolean;
-            id?: string;
-            class?: any;
-            style?: StyleValue;
+            prefix?: string;
+            suffix?: string;
+            showPassword?: boolean;
         }>(),
         {}
     );
-    const modelValue = defineModel<string>({ required: true });
+    const slots = useSlots();
+    const hasPrefix = computed(() => typeof props.prefix !== 'undefined' || slots.prefix);
+    const hasSuffix = computed(() => typeof props.suffix !== 'undefined' || slots.suffix);
+
+    const isPassword = computed(() => attrs.type === 'password');
+    const passwordVisible = ref(false);
+    const handlePasswordVisible = () => {
+        passwordVisible.value = !passwordVisible.value;
+    };
+
+    const modelModifiers = computed(() => (attrs.modelModifiers ?? {}) as Record<'lazy' | 'number' | 'trim', boolean>);
+    const modelValue = defineModel<string | number>({ required: true, local: true });
     watch(
         modelValue,
         (value) => {
+            const isNumber = typeof value === 'number';
+            value = String(value);
             const max = Number(attrs.maxlength),
                 min = Number(attrs.minlength);
             if (!Number.isNaN(max) && value.length > max) {
-                modelValue.value = value.substring(0, max);
+                value = value.substring(0, max);
             } else if (!Number.isNaN(min) && value.length < min) {
-                modelValue.value = value.padEnd(min);
+                value = value.padEnd(min, isNumber ? '0' : ' ');
+            } else {
+                return;
             }
+            modelValue.value = isNumber ? +value : value;
         },
         {
             immediate: true,
@@ -71,17 +126,30 @@
 
 <style lang="less">
     .x-input {
-        width: var(--x-width);
+        width: fit-content;
+        height: var(--x-height);
+        padding: 0 var(--x-space-mini);
+        &__prefix {
+            padding-right: var(--x-space-mini);
+        }
+        &__suffix {
+            padding-left: var(--x-space-mini);
+        }
+
         &__wrapper {
             overflow: hidden;
-            padding: 0 var(--x-space-mini);
+            height: 100%;
+            width: var(--x-width);
+
             input {
                 width: 100%;
-                height: var(--x-height);
-                line-height: var(--x-height);
+                height: 100%;
                 flex-shrink: 1;
+                font-size: inherit;
             }
-            .x-input__clear {
+
+            .x-input__clear,
+            .x-input__show {
                 transform: scale(0) rotate(90deg);
                 margin-left: -1em;
                 padding: 1px;
@@ -89,9 +157,11 @@
                 min-height: fit-content;
             }
         }
+
         &:focus-within,
         &:hover {
-            .x-input__clear {
+            .x-input__clear,
+            .x-input__show {
                 &.--active {
                     transform: scale(1);
                     margin-left: var(--x-space-mini);
