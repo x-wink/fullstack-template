@@ -14,6 +14,6 @@
     import { XInput } from '@pkgs/ui';
     import { ref } from 'vue';
     const value1 = ref('');
-    const value2 = ref();
+    const value2 = ref(0);
     const value3 = ref('');
 </script>

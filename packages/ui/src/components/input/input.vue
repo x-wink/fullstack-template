@@ -6,12 +6,26 @@
             </slot>
         </div>
         <div class="x-input__wrapper x-flex col-center">
-            <input v-if="modelModifiers.lazy" ref="refsInput" v-model.lazy="modelValue" v-bind="inputAttrs" />
-            <input v-else-if="modelModifiers.number" ref="refsInput" v-model.number="modelValue" v-bind="inputAttrs" />
-            <input v-else-if="modelModifiers.trim" ref="refsInput" v-model.trim="modelValue" v-bind="inputAttrs" />
-            <input v-else ref="refsInput" v-model="modelValue" v-bind="inputAttrs" />
+            <input
+                v-if="modelModifiers.lazy"
+                ref="refsInput"
+                v-model.lazy="modelValue"
+                autocomplete="off"
+                :class="{ '--controls': props.showControls }"
+                v-bind="inputAttrs"
+                @change="handleChange"
+            />
+            <input
+                v-else
+                ref="refsInput"
+                v-model="modelValue"
+                autocomplete="off"
+                :class="{ '--controls': props.showControls }"
+                v-bind="inputAttrs"
+                @change="handleChange"
+            />
             <XButton
-                v-if="props.clearable"
+                v-if="props.clearable && attrs.type !== 'number'"
                 circle
                 class="x-input__clear"
                 :class="{ '--active': !!modelValue }"
@@ -40,8 +54,9 @@
 </template>
 
 <script setup lang="ts">
-    import { useAttrs, watch, ref, computed, useSlots } from 'vue';
+    import { computed, onMounted, ref, useAttrs, useSlots, watch } from 'vue';
     import { XBox, XButton } from '../';
+    import { limitPrecision } from '../../utils';
     defineOptions({
         name: 'XInput',
         inheritAttrs: false,
@@ -61,6 +76,7 @@
             class: void 0,
             style: void 0,
             type: passwordVisible.value ? 'text' : ((attrs.type ?? 'text') as string),
+            precision: props.precision,
         };
     });
     const props = withDefaults(
@@ -69,8 +85,14 @@
             prefix?: string;
             suffix?: string;
             showPassword?: boolean;
+            showControls?: boolean;
+            stepStrictly?: number;
+            precision?: number;
         }>(),
-        {}
+        {
+            stepStrictly: 0,
+            precision: 0,
+        }
     );
     const slots = useSlots();
     const hasPrefix = computed(() => typeof props.prefix !== 'undefined' || slots.prefix);
@@ -83,27 +105,79 @@
     };
 
     const modelModifiers = computed(() => (attrs.modelModifiers ?? {}) as Record<'lazy' | 'number' | 'trim', boolean>);
-    const modelValue = defineModel<string | number>({ required: true, local: true });
+    const modelValue = defineModel<string | number>({ required: true });
+
+    const refsInput = ref<HTMLInputElement>();
     watch(
         modelValue,
         (value) => {
-            const isNumber = typeof value === 'number';
-            value = String(value);
-            const max = Number(attrs.maxlength),
-                min = Number(attrs.minlength);
-            if (!Number.isNaN(max) && value.length > max) {
-                value = value.substring(0, max);
-            } else if (!Number.isNaN(min) && value.length < min) {
-                value = value.padEnd(min, isNumber ? '0' : ' ');
-            } else {
-                return;
+            const isNumber = modelModifiers.value.number || attrs.type === 'number';
+            // 处理值类型
+            if (!isNumber && typeof value === 'number') {
+                value = String(value);
+            } else if (isNumber && typeof value !== 'number') {
+                value = Number(value);
             }
-            modelValue.value = isNumber ? +value : value;
+            // 处理长度限制，参考MDN文档，长度限制只对以下类型的输入框生效
+            if (typeof value === 'string') {
+                if (['text', 'search', 'url', 'tel', 'email', 'password'].includes((attrs.type as string) ?? 'text')) {
+                    const max = Number(attrs.maxlength),
+                        min = Number(attrs.minlength);
+                    if (value.length > max) {
+                        value = value.substring(0, max);
+                    } else if (value.length < min) {
+                        value = value.padEnd(min);
+                    }
+                }
+            } else if (typeof value === 'number') {
+                // 处理值范围，参考MDN文档，值范围只对以下类型的输入框生效
+                if (
+                    ['date', 'month', 'week', 'time', 'datetime-local', 'number', 'range'].includes(
+                        attrs.type as string
+                    )
+                ) {
+                    const max = Number(attrs.max),
+                        min = Number(attrs.min);
+                    if (value > max) {
+                        value = max;
+                    } else if (value < min) {
+                        value = min;
+                    }
+                }
+            }
+
+            if (modelValue.value !== value) {
+                modelValue.value = value;
+            }
         },
         {
             immediate: true,
         }
     );
+    const handleChange = () => {
+        let value = modelValue.value;
+        if (typeof value === 'number') {
+            // 处理严格步进
+            if (props.stepStrictly >= 0) {
+                const mod = value % props.stepStrictly;
+                if (mod) {
+                    const offset = Math.round(mod / props.stepStrictly) * props.stepStrictly;
+                    value = value - mod + offset;
+                }
+            }
+            // 处理精度
+            if (props.precision >= 0) {
+                value = limitPrecision(value, props.precision);
+                if (refsInput.value) {
+                    refsInput.value.value = value.toFixed(props.precision);
+                }
+            }
+        }
+        if (modelValue.value !== value) {
+            modelValue.value = value;
+        }
+    };
+    onMounted(handleChange);
 
     const emits = defineEmits<{
         clear: [];
@@ -113,7 +187,6 @@
         emits('clear');
     };
 
-    const refsInput = ref<HTMLInputElement>();
     defineExpose({
         focus: () => {
             refsInput.value?.focus();
@@ -128,6 +201,9 @@
     .x-input {
         width: fit-content;
         height: var(--x-height);
+        color: fieldtext;
+        background-color: field;
+
         &__prefix,
         &__suffix {
             .x-button {
@@ -135,11 +211,13 @@
                 border-radius: 0;
             }
         }
+
         &__prefix {
             &:not(:has(.x-button)) {
                 padding-left: var(--x-space-mini);
             }
         }
+
         &__suffix {
             &:not(:has(.x-button)) {
                 padding-right: var(--x-space-mini);
@@ -155,8 +233,25 @@
             input {
                 width: 100%;
                 height: 100%;
-                flex-shrink: 1;
+                line-height: inherit;
                 font-size: inherit;
+                color: inherit;
+                background-color: transparent;
+                border: none;
+                padding: 0;
+                outline: none;
+
+                &::-webkit-inner-spin-button,
+                &::-webkit-outer-spin-button {
+                    appearance: none;
+                }
+
+                &.--controls {
+                    &::-webkit-inner-spin-button,
+                    &::-webkit-outer-spin-button {
+                        appearance: auto;
+                    }
+                }
             }
 
             .x-input__clear,

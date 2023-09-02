@@ -1,16 +1,16 @@
 ---
-title: 文本输入框
+title: 输入框
 ---
 
-# 文本输入框 Input
+# 输入框 Input
 
 ## 功能介绍
 
-文本输入框组件
+输入框组件，用于接收用户内容输入
 
 ## 使用方式
 
-### 普通输入框
+### 文本输入框
 
 <br />
 <InputUse1 />
@@ -92,6 +92,17 @@ element-plus 居然不支持，差评 😅
 
 :::
 
+### 数字输入框
+
+<br />
+<InputUse8 />
+
+::: details 查看代码
+
+<<< @/examples/input/use8.vue
+
+:::
+
 ## API 参考
 
 ::: info
@@ -99,6 +110,13 @@ element-plus 居然不支持，差评 😅
 支持所有 `input` 元素原生属性、事件  
 `id`、`class`、`style`会传递到根元素上  
 其他的属性和事件监听全部传递到内部 `input` 元素上
+
+:::
+
+::: warning
+
+目前针对 `type` 属性只特殊处理了 `text`、`password`、`number` 三种  
+其他类型保持浏览器默认行为，推荐使用其他组件代替
 
 :::
 
@@ -148,4 +166,5 @@ import InputUse4 from './use4.vue';
 import InputUse5 from './use5.vue';
 import InputUse6 from './use6.vue';
 import InputUse7 from './use7.vue';
+import InputUse8 from './use8.vue';
 </script>
