@@ -1,34 +1,27 @@
 <template>
-    <XBox class="x-input x-flex" v-bind="rootAttrs">
+    <XBox class="x-input x-flex" :class="{ 'x-input-number': isNumber }" v-bind="rootAttrs">
         <div v-if="hasPrefix" class="x-input__prefix">
             <slot name="prefix">
                 {{ props.prefix }}
             </slot>
         </div>
+        <div v-if="props.showControls" class="x-input__prefix">
+            <XButton icon="Minus" theme="primary" @click="handleStep(-1)" />
+        </div>
         <div class="x-input__wrapper x-flex col-center">
             <input
-                v-if="modelModifiers.lazy"
+                v-if="modelModifiers.lazy || isNumber"
                 ref="refsInput"
-                v-model.lazy="modelValue"
+                v-model.lazy="internalValue"
                 autocomplete="off"
-                :class="{ '--controls': props.showControls }"
                 v-bind="inputAttrs"
-                @change="handleChange"
             />
-            <input
-                v-else
-                ref="refsInput"
-                v-model="modelValue"
-                autocomplete="off"
-                :class="{ '--controls': props.showControls }"
-                v-bind="inputAttrs"
-                @change="handleChange"
-            />
+            <input v-else ref="refsInput" v-model="internalValue" autocomplete="off" v-bind="inputAttrs" />
             <XButton
-                v-if="props.clearable && attrs.type !== 'number'"
+                v-if="props.clearable && !isNumber"
                 circle
                 class="x-input__clear"
-                :class="{ '--active': !!modelValue }"
+                :class="{ '--active': !!internalValue }"
                 icon="Close"
                 text
                 theme="error"
@@ -38,12 +31,15 @@
                 v-if="isPassword && props.showPassword"
                 circle
                 class="x-input__show"
-                :class="{ '--active': !!modelValue }"
+                :class="{ '--active': !!internalValue }"
                 :icon="passwordVisible ? 'Hide' : 'View'"
                 text
                 theme="info"
                 @click="handlePasswordVisible"
             />
+        </div>
+        <div v-if="props.showControls" class="x-input__suffix">
+            <XButton icon="Plus" theme="primary" @click="handleStep(1)" />
         </div>
         <div v-if="hasSuffix" class="x-input__suffix">
             <slot name="suffix">
@@ -54,9 +50,8 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, onMounted, ref, useAttrs, useSlots, watch } from 'vue';
+    import { computed, ref, useAttrs, useSlots, watch } from 'vue';
     import { XBox, XButton } from '../';
-    import { limitPrecision } from '../../utils';
     defineOptions({
         name: 'XInput',
         inheritAttrs: false,
@@ -75,8 +70,13 @@
             id: void 0,
             class: void 0,
             style: void 0,
-            type: passwordVisible.value ? 'text' : ((attrs.type ?? 'text') as string),
-            precision: props.precision,
+            type: isNumber.value ? 'number' : passwordVisible.value ? 'text' : ((attrs.type ?? 'text') as string),
+            ...(isNumber.value
+                ? {
+                      step: step.value,
+                      precision: props.precision,
+                  }
+                : {}),
         };
     });
     const props = withDefaults(
@@ -86,107 +86,93 @@
             suffix?: string;
             showPassword?: boolean;
             showControls?: boolean;
-            stepStrictly?: number;
+            stepStrictly?: boolean;
             precision?: number;
         }>(),
         {
-            stepStrictly: 0,
             precision: 0,
         }
     );
     const slots = useSlots();
     const hasPrefix = computed(() => typeof props.prefix !== 'undefined' || slots.prefix);
     const hasSuffix = computed(() => typeof props.suffix !== 'undefined' || slots.suffix);
+    const isPassword = computed(() => inputAttrs.value.type === 'password');
+    const isNumber = computed(() => modelModifiers.value.number || attrs.type === 'number');
 
-    const isPassword = computed(() => attrs.type === 'password');
+    const modelModifiers = computed(() => (attrs.modelModifiers ?? {}) as Record<'lazy' | 'number' | 'trim', boolean>);
+    const step = computed(() => +((attrs.step as string) ?? 1));
+
     const passwordVisible = ref(false);
     const handlePasswordVisible = () => {
         passwordVisible.value = !passwordVisible.value;
     };
 
-    const modelModifiers = computed(() => (attrs.modelModifiers ?? {}) as Record<'lazy' | 'number' | 'trim', boolean>);
-    const modelValue = defineModel<string | number>({ required: true });
-
-    const refsInput = ref<HTMLInputElement>();
+    const externalValue = defineModel<string | number>({ required: true });
+    const internalValue = ref(String(externalValue.value));
+    watch(externalValue, (value) => {
+        internalValue.value = String(value);
+    });
     watch(
-        modelValue,
+        internalValue,
         (value) => {
-            const isNumber = modelModifiers.value.number || attrs.type === 'number';
-            // 处理值类型
-            if (!isNumber && typeof value === 'number') {
-                value = String(value);
-            } else if (isNumber && typeof value !== 'number') {
-                value = Number(value);
-            }
-            // 处理长度限制，参考MDN文档，长度限制只对以下类型的输入框生效
-            if (typeof value === 'string') {
-                if (['text', 'search', 'url', 'tel', 'email', 'password'].includes((attrs.type as string) ?? 'text')) {
-                    const max = Number(attrs.maxlength),
-                        min = Number(attrs.minlength);
-                    if (value.length > max) {
-                        value = value.substring(0, max);
-                    } else if (value.length < min) {
-                        value = value.padEnd(min);
+            if (isNumber.value) {
+                // 处理值范围
+                const max = Number(attrs.max),
+                    min = Number(attrs.min);
+                if (+value > max) {
+                    value = String(max);
+                } else if (+value < min) {
+                    value = String(min);
+                }
+                // 处理严格步进
+                if (props.stepStrictly) {
+                    const mod = +value % step.value;
+                    if (mod) {
+                        const offset = Math.round(mod / step.value) * step.value;
+                        value = +value - mod + offset + '';
                     }
                 }
-            } else if (typeof value === 'number') {
-                // 处理值范围，参考MDN文档，值范围只对以下类型的输入框生效
-                if (
-                    ['date', 'month', 'week', 'time', 'datetime-local', 'number', 'range'].includes(
-                        attrs.type as string
-                    )
-                ) {
-                    const max = Number(attrs.max),
-                        min = Number(attrs.min);
-                    if (value > max) {
-                        value = max;
-                    } else if (value < min) {
-                        value = min;
-                    }
+                // 处理精度
+                value = Number(value).toFixed(props.precision);
+            } else {
+                // 处理长度范围
+                const max = Number(attrs.maxlength),
+                    min = Number(attrs.minlength);
+                if (value.length > max) {
+                    value = value.substring(0, max);
+                } else if (value.length < min) {
+                    value = value.padEnd(min);
                 }
             }
 
-            if (modelValue.value !== value) {
-                modelValue.value = value;
+            // 更新值
+            if (internalValue.value !== value) {
+                internalValue.value = value;
+            }
+            const emitValue = isNumber.value ? Number(value) : value;
+            if (externalValue.value !== emitValue) {
+                externalValue.value = emitValue;
             }
         },
         {
             immediate: true,
         }
     );
-    const handleChange = () => {
-        let value = modelValue.value;
-        if (typeof value === 'number') {
-            // 处理严格步进
-            if (props.stepStrictly >= 0) {
-                const mod = value % props.stepStrictly;
-                if (mod) {
-                    const offset = Math.round(mod / props.stepStrictly) * props.stepStrictly;
-                    value = value - mod + offset;
-                }
-            }
-            // 处理精度
-            if (props.precision >= 0) {
-                value = limitPrecision(value, props.precision);
-                if (refsInput.value) {
-                    refsInput.value.value = value.toFixed(props.precision);
-                }
-            }
-        }
-        if (modelValue.value !== value) {
-            modelValue.value = value;
-        }
-    };
-    onMounted(handleChange);
 
     const emits = defineEmits<{
         clear: [];
     }>();
+
+    const handleStep = (direction: number) => {
+        externalValue.value = +externalValue.value + step.value * direction;
+    };
+
     const handleClear = () => {
-        modelValue.value = '';
+        internalValue.value = '';
         emits('clear');
     };
 
+    const refsInput = ref<HTMLInputElement>();
     defineExpose({
         focus: () => {
             refsInput.value?.focus();
@@ -203,6 +189,14 @@
         height: var(--x-height);
         color: fieldtext;
         background-color: field;
+
+        &-number {
+            text-align: center;
+
+            .x-input__wrapper {
+                width: var(--x-width-mini);
+            }
+        }
 
         &__prefix,
         &__suffix {
@@ -236,6 +230,7 @@
                 line-height: inherit;
                 font-size: inherit;
                 color: inherit;
+                text-align: inherit;
                 background-color: transparent;
                 border: none;
                 padding: 0;
@@ -244,13 +239,6 @@
                 &::-webkit-inner-spin-button,
                 &::-webkit-outer-spin-button {
                     appearance: none;
-                }
-
-                &.--controls {
-                    &::-webkit-inner-spin-button,
-                    &::-webkit-outer-spin-button {
-                        appearance: auto;
-                    }
                 }
             }
 

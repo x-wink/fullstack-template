@@ -1,4 +1,1 @@
-export const limitPrecision = (val: number, precision = 2) => {
-    const p = 10 ** precision;
-    return Math.round(val * p) / p;
-};
+export const limitPrecision = (value: number | string, precision = 2) => +Number(value).toFixed(precision);
