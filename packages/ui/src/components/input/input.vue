@@ -87,7 +87,7 @@
             showPassword?: boolean;
             showControls?: boolean;
             stepStrictly?: boolean;
-            precision?: number;
+            precision?: number | string;
         }>(),
         {
             precision: 0,
@@ -133,7 +133,7 @@
                     }
                 }
                 // 处理精度
-                value = Number(value).toFixed(props.precision);
+                value = Number(value).toFixed(+props.precision);
             } else {
                 // 处理长度范围
                 const max = Number(attrs.maxlength),

@@ -14,3 +14,4 @@ export * from './color-picker';
 export * from './color-picker';
 export * from './popover';
 export * from './input';
+export * from './input-number';

@@ -34,6 +34,7 @@ export default defineConfig({
                     text: '表单组件',
                     items: [
                         { text: '输入框', link: '/examples/input' },
+                        { text: '数字输入框', link: '/examples/input-number' },
                         { text: '颜色选择器', link: '/examples/color-picker' },
                     ],
                 },

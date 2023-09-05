@@ -95,23 +95,7 @@ element-plus 居然不支持，差评 😅
 
 ### 数字输入框
 
-::: info
-
-我尝试使用输入框原生的步进器，结果发现与精度限制发生冲突  
-点击步进器会触发 `input` 事件，导致输入框值闪烁一下  
-数字输入框的限制逻辑应该在 `change` 事件中处理，否则会影响用户输入  
-数字输入框强制使用 [lazy 修饰符](#v-model-修饰符)
-
-:::
-
-<br />
-<InputUse8 />
-
-::: details 查看代码
-
-<<< @/examples/input/use8.vue
-
-:::
+基于输入框进行的单独封装，[前往查看](/examples/input-number/index.md)
 
 ## API 参考
 
@@ -138,10 +122,7 @@ element-plus 居然不支持，差评 😅
 |  clearable   | 清空内容按钮，有内容在聚焦或鼠标进入时才显示 | boolean | `false` |
 |    prefix    |                     前缀                     | string  |    -    |
 |    suffix    |                     后缀                     | string  |    -    |
-| showPassword |            显示密码输入框切换按钮            | boolean |  false  |
-| showControls |             显示数字输入框步进器             | boolean |  false  |
-| stepStrictly |     严格步进，限制数值必须为步进值整倍数     | boolean |  false  |
-|  precision   |            数值精度，保留小数位数            | number  |    0    |
+| showPassword |            显示密码输入框切换按钮            | boolean | `false` |
 |     type     |                   原生类型                   |    -    |    -    |
 | placeholder  |                  原生占位符                  |    -    |    -    |
 |  maxlength   |            原生最大长度，超出截取            |    -    |    -    |
@@ -179,5 +160,4 @@ import InputUse4 from './use4.vue';
 import InputUse5 from './use5.vue';
 import InputUse6 from './use6.vue';
 import InputUse7 from './use7.vue';
-import InputUse8 from './use8.vue';
 </script>
