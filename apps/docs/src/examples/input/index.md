@@ -116,17 +116,17 @@ element-plus 居然不支持，差评 😅
 
 ### 属性
 
-|     名称     |                     说明                     |  类型   | 默认值  |
-| :----------: | :------------------------------------------: | :-----: | :-----: |
-|  modalValue  |                     内容                     | string  |  必填   |
-|  clearable   | 清空内容按钮，有内容在聚焦或鼠标进入时才显示 | boolean | `false` |
-|    prefix    |                     前缀                     | string  |    -    |
-|    suffix    |                     后缀                     | string  |    -    |
-| showPassword |            显示密码输入框切换按钮            | boolean | `false` |
-|     type     |                   原生类型                   |    -    |    -    |
-| placeholder  |                  原生占位符                  |    -    |    -    |
-|  maxlength   |            原生最大长度，超出截取            |    -    |    -    |
-|  minlength   |           原生最小长度，不足补空格           |    -    |    -    |
+|     名称     |                     说明                     |             类型             | 默认值  |
+| :----------: | :------------------------------------------: | :--------------------------: | :-----: |
+|  modalValue  |                     内容                     |            string            |  必填   |
+|  clearable   | 清空内容按钮，有内容在聚焦或鼠标进入时才显示 |           boolean            | `false` |
+|    prefix    |                     前缀                     |            string            |    -    |
+|    suffix    |                     后缀                     |            string            |    -    |
+| showPassword |            显示密码输入框切换按钮            |           boolean            | `false` |
+|     type     |                   原生类型                   | [InputType](#inputtype-type) |  text   |
+| placeholder  |                  原生占位符                  |              -               |    -    |
+|  maxlength   |            原生最大长度，超出截取            |              -               |    -    |
+|  minlength   |           原生最小长度，不足补空格           |              -               |    -    |
 
 ### 事件
 
@@ -152,7 +152,22 @@ element-plus 居然不支持，差评 😅
 | focus | 使输入框聚焦 | () => void |
 | blur  | 使输入框失焦 | () => void |
 
+## 附加内容
+
+### InputType `type`
+
+输入框类型联合类型，可选值：
+
+<ul>
+    <li v-for="(item, index) in inputTypes" :key="index">{{ item }}</li>
+</ul>
+
+### inputTypes `const`
+
+输入框类型枚举列表，类型为 [`InputType[]`](#inputtype-type)
+
 <script setup>
+import { inputTypes } from '@pkgs/ui';
 import InputUse1 from './use1.vue';
 import InputUse2 from './use2.vue';
 import InputUse3 from './use3.vue';
