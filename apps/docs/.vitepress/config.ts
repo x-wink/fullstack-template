@@ -29,6 +29,7 @@ export default defineConfig({
                         { text: '文本', link: '/examples/text' },
                         { text: '按钮', link: '/examples/button' },
                         { text: '盒子', link: '/examples/box' },
+                        { text: '滚动条', link: '/examples/scrollbar' },
                     ],
                 },
                 {
