@@ -1,21 +1,22 @@
 <template>
-    <div class="x-scrollbar" :style="scrollbarStyle" @mousewheel="handleWheel">
+    <div class="x-scrollbar" :style="scrollbarStyle" @mousewheel="handleMouseWheel">
         <div ref="refsContainer" class="x-scrollbar__container" @scroll="handleScroll">
             <div ref="refsWrapper" class="x-scrollbar__wrapper">
                 <slot></slot>
             </div>
         </div>
         <div v-show="horizontalVisible" class="x-scrollbar__bar horizontal">
-            <div class="x-scrollbar__thumb" :style="horizontalThumbStyle"></div>
+            <div ref="refsHorizontalThumb" class="x-scrollbar__thumb" :style="horizontalThumbStyle"></div>
         </div>
         <div v-show="verticalVisible" class="x-scrollbar__bar vertical">
-            <div class="x-scrollbar__thumb" :style="verticalThumbStyle"></div>
+            <div ref="refsVerticalThumb" class="x-scrollbar__thumb" :style="verticalThumbStyle"></div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
+    import { createDragableElement } from '../../utils';
 
     defineOptions({
         name: 'XScrollbar',
@@ -77,7 +78,7 @@
         verticalThumb.size = Math.max(0.1, offsetHeight / scrollHeight);
     };
 
-    const handleWheel = (e: WheelEvent) => {
+    const handleMouseWheel = (e: WheelEvent) => {
         if (verticalVisible.value || horizontalVisible.value) {
             e.preventDefault();
             if (verticalVisible.value) {
@@ -97,14 +98,29 @@
     };
 
     let ro: ResizeObserver;
+    const refsHorizontalThumb = ref<HTMLDivElement>();
+    const refsVerticalThumb = ref<HTMLDivElement>();
+    let draggables = [] as (() => void)[];
     onMounted(() => {
         update();
         ro = new ResizeObserver(update);
         ro.observe(refsContainer.value!);
         ro.observe(refsWrapper.value!);
+
+        draggables.push(
+            createDragableElement(refsHorizontalThumb.value!, refsContainer.value!, (x) => {
+                refsContainer.value!.scrollTo(x * refsContainer.value!.scrollWidth, refsContainer.value!.scrollTop);
+            })
+        );
+        draggables.push(
+            createDragableElement(refsVerticalThumb.value!, refsContainer.value!, (x, y) => {
+                refsContainer.value!.scrollTo(refsContainer.value!.scrollLeft, y * refsContainer.value!.scrollHeight);
+            })
+        );
     });
     onUnmounted(() => {
         ro.disconnect();
+        draggables.forEach((item) => item());
     });
 </script>
 
@@ -145,11 +161,17 @@
             }
         }
         &__thumb {
-            cursor: pointer;
-            border-radius: inherit;
-            background: var(--x-primary);
             width: 100%;
             height: 100%;
+            border-radius: inherit;
+            background-color: var(--x-primary);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            &:hover,
+            &:active {
+                opacity: 1;
+            }
         }
     }
 </style>
