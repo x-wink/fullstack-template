@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ButtonTheme, XIcon, IconName } from '../';
+    import { ThemeColor, XIcon, IconName } from '../';
     import { computed, useSlots } from 'vue';
 
     defineOptions({
@@ -21,7 +21,7 @@
     });
     const props = withDefaults(
         defineProps<{
-            theme?: ButtonTheme;
+            theme?: ThemeColor;
             icon?: IconName;
             text?: boolean;
             link?: boolean;

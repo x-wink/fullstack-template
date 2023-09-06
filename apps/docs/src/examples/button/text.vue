@@ -1,11 +1,11 @@
 <template>
     <div class="themes">
-        <XButton v-for="(item, index) in buttonThemes" :key="index" text :theme="item">{{ item }}</XButton>
+        <XButton v-for="(item, index) in themeColors" :key="index" text :theme="item">{{ item }}</XButton>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { XButton, buttonThemes } from '@pkgs/ui';
+    import { XButton, themeColors } from '@pkgs/ui';
 </script>
 
 <style scoped lang="less">

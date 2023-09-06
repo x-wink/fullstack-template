@@ -113,17 +113,17 @@ dddd，没啥好说的 🤐
 
 ### 属性
 
-|   名称   |   说明   |                     类型                     |   默认值    |
-| :------: | :------: | :------------------------------------------: | :---------: |
-|  theme   | 主题风格 |       [ButtonTheme](#buttontheme-type)       |   default   |
-|   icon   |   图标   | [IconName](/examples/icon/index.md#图标列表) | `undefined` |
-|  simple  | 简约风格 |                   boolean                    |   `false`   |
-| disabled | 禁用状态 |                   boolean                    |   `false`   |
-| loading  | 加载状态 |                   boolean                    |   `false`   |
-|   text   | 文本按钮 |                   boolean                    |   `false`   |
-|   link   | 链接按钮 |                   boolean                    |   `false`   |
-|  circle  | 圆形按钮 |                   boolean                    |   `false`   |
-|  round   | 圆角按钮 |                   boolean                    |   `false`   |
+|   名称   |   说明   |                         类型                          |   默认值    |
+| :------: | :------: | :---------------------------------------------------: | :---------: |
+|  theme   | 主题风格 | [ThemeColor](/examples/text/index.md#themecolor-type) |   default   |
+|   icon   |   图标   |     [IconName](/examples/icon/index.md#图标列表)      | `undefined` |
+|  simple  | 简约风格 |                        boolean                        |   `false`   |
+| disabled | 禁用状态 |                        boolean                        |   `false`   |
+| loading  | 加载状态 |                        boolean                        |   `false`   |
+|   text   | 文本按钮 |                        boolean                        |   `false`   |
+|   link   | 链接按钮 |                        boolean                        |   `false`   |
+|  circle  | 圆形按钮 |                        boolean                        |   `false`   |
+|  round   | 圆角按钮 |                        boolean                        |   `false`   |
 
 ### 事件
 
@@ -143,20 +143,6 @@ dddd，没啥好说的 🤐
 | :--: | :--: | :------: |
 |  -   |  -   |    -     |
 
-## 附加内容
-
-### ButtonTheme `type`
-
-按钮主题风格联合类型，可选值：
-
-<ul>
-    <li v-for="(item, index) in buttonThemes" :key="index">{{ item }}</li>
-</ul>
-
-### buttonThemes `const`
-
-按钮主题风格枚举列表，类型为 [`ButtonTheme[]`](#buttontheme-type)
-
 <script setup>
     import ButtonTheme from "./theme.vue";
     import ButtonSimple from "./simple.vue";
@@ -167,5 +153,4 @@ dddd，没啥好说的 🤐
     import ButtonLink from "./link.vue";
     import ButtonCircle from "./circle.vue";
     import ButtonRound from "./round.vue";
-    import { buttonThemes } from '@pkgs/ui';
 </script>

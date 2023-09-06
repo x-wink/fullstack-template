@@ -6,6 +6,7 @@
         "vue/prop-name-casing": "warn"
     },
     "globals": {
-        "defineModel": "readonly"
+        "defineModel": "readonly",
+        "HTMLElementTagNameMap": "readonly"
     }
 }

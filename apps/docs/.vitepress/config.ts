@@ -26,6 +26,7 @@ export default defineConfig({
                     text: '基础组件',
                     items: [
                         { text: '图标', link: '/examples/icon' },
+                        { text: '文本', link: '/examples/text' },
                         { text: '按钮', link: '/examples/button' },
                         { text: '盒子', link: '/examples/box' },
                     ],
