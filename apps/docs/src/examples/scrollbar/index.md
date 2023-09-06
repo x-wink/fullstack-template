@@ -10,12 +10,47 @@ title: 滚动条
 
 ## 使用方式
 
+### 限制高度
+
 <br />
 <ScrollbarUse1 />
 
 ::: details 查看代码
 
 <<< @/examples/scrollbar/use1.vue
+
+:::
+
+### 限制宽度
+
+<br />
+<ScrollbarUse2 />
+
+::: details 查看代码
+
+<<< @/examples/scrollbar/use2.vue
+
+:::
+
+### 最大高度
+
+<br />
+<ScrollbarUse3 />
+
+::: details 查看代码
+
+<<< @/examples/scrollbar/use3.vue
+
+:::
+
+### 最大宽度
+
+<br />
+<ScrollbarUse4 />
+
+::: details 查看代码
+
+<<< @/examples/scrollbar/use4.vue
 
 :::
 
@@ -47,4 +82,7 @@ title: 滚动条
 
 <script setup>
 import ScrollbarUse1 from './use1.vue';
+import ScrollbarUse2 from './use2.vue';
+import ScrollbarUse3 from './use3.vue';
+import ScrollbarUse4 from './use4.vue';
 </script>

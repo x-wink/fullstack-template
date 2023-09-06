@@ -1,6 +1,6 @@
 <template>
-    <div class="x-scrollbar" @mousewheel="handleWheel">
-        <div ref="refsContainer" class="x-scrollbar__container" :style="containerStyle" @scroll="handleScroll">
+    <div class="x-scrollbar" :style="scrollbarStyle" @mousewheel="handleWheel">
+        <div ref="refsContainer" class="x-scrollbar__container" @scroll="handleScroll">
             <div ref="refsWrapper" class="x-scrollbar__wrapper">
                 <slot></slot>
             </div>
@@ -20,12 +20,22 @@
     defineOptions({
         name: 'XScrollbar',
     });
-    const props = defineProps<{
-        maxWidth?: string;
-        maxHeight?: string;
-    }>();
-    const containerStyle = computed(() => {
+    const props = withDefaults(
+        defineProps<{
+            width?: string;
+            height?: string;
+            maxWidth?: string;
+            maxHeight?: string;
+        }>(),
+        {
+            width: 'auto',
+            height: 'auto',
+        }
+    );
+    const scrollbarStyle = computed(() => {
         return {
+            width: props.width,
+            height: props.height,
             maxWidth: props.maxWidth,
             maxHeight: props.maxHeight,
         };
@@ -60,12 +70,11 @@
 
     const update = () => {
         console.info('update');
-        const { offsetWidth: cw, offsetHeight: ch } = refsContainer.value!;
-        const { offsetWidth: ww, offsetHeight: wh } = refsWrapper.value!;
-        horizontalVisible.value = cw < ww;
-        horizontalThumb.size = cw / ww;
-        verticalVisible.value = ch < wh;
-        verticalThumb.size = ch / wh;
+        const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = refsContainer.value!;
+        horizontalVisible.value = offsetWidth < scrollWidth;
+        horizontalThumb.size = Math.max(0.1, offsetWidth / scrollWidth);
+        verticalVisible.value = offsetHeight < scrollHeight;
+        verticalThumb.size = Math.max(0.1, offsetHeight / scrollHeight);
     };
 
     const handleWheel = (e: WheelEvent) => {
@@ -103,17 +112,22 @@
     .x-scrollbar {
         position: relative;
         overflow: hidden;
-        width: 100%;
-        height: 100%;
         &__container {
-            overflow: hidden;
+            max-width: inherit;
+            max-height: inherit;
             width: 100%;
             height: 100%;
+            overflow: auto;
+            &::-webkit-scrollbar {
+                display: none;
+            }
         }
-        // &__wrapper {
-        //     width: auto;
-        //     height: auto;
-        // }
+        &__wrapper {
+            min-width: 100%;
+            min-height: 100%;
+            width: fit-content;
+            height: fit-content;
+        }
         &__bar {
             position: absolute;
             border-radius: var(--x-border-radius);

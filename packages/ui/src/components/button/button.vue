@@ -208,5 +208,8 @@
                 margin-left: var(--x-space-mini);
             }
         }
+        & + & {
+            margin-left: var(--x-space-small);
+        }
     }
 </style>
