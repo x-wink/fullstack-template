@@ -158,14 +158,15 @@
         });
     }
 
-    defineExpose({
+    const api = {
         update,
         scrollBy,
         scrollTo,
         scrollX,
         scrollY,
         refsContainer,
-    });
+    };
+    defineExpose(api);
 </script>
 
 <style lang="less">

@@ -21,7 +21,7 @@ title: 弹出气泡
 
 ## API 参考
 
-::: info
+::: tip
 
 基础 API 参考前往 [浮层 Popup](/examples/popup) 查看
 

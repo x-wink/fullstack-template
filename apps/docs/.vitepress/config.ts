@@ -18,7 +18,7 @@ export default defineConfig({
         nav: [
             { text: '首页', link: '/' },
             { text: '示例', link: '/examples/icon' },
-            { text: '入门', link: '/starter/install' },
+            { text: '入门', link: '/guide/install' },
         ],
         sidebar: {
             '/examples/': [
@@ -58,12 +58,13 @@ export default defineConfig({
                     ],
                 },
             ],
-            '/starter/': [
+            '/guide/': [
                 {
-                    text: '快速使用',
+                    text: '快速入门',
                     items: [
-                        { text: '安装依赖', link: '/starter/install' },
-                        { text: '引入依赖', link: '/starter/import' },
+                        { text: '安装依赖', link: '/guide/install' },
+                        { text: '引入依赖', link: '/guide/import' },
+                        { text: 'TypeScript', link: '/guide/typescript' },
                     ],
                 },
             ],

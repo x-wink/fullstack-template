@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <ul>
-            <li v-for="(item, index) in iconNames" :key="index">
+            <li v-for="(item, index) in icons" :key="index">
                 <XIcon :name="item" />
                 <p>{{ item }}</p>
             </li>
@@ -10,8 +10,7 @@
 </template>
 
 <script setup lang="ts">
-    import { XIcon, type IconNames, icons } from '@pkgs/ui';
-    const iconNames = icons as IconNames[];
+    import { XIcon, icons } from '@pkgs/ui';
 </script>
 
 <style scoped lang="less">

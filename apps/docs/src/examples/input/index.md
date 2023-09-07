@@ -67,7 +67,7 @@ title: 输入框
 
 ### `v-model` 修饰符
 
-::: info
+::: tip
 
 element-plus 居然不支持，差评 😅  
 当存在 `number` 修饰符的时候会自动转换为[数字输入框](#数字输入框)
@@ -99,7 +99,7 @@ element-plus 居然不支持，差评 😅
 
 ## API 参考
 
-::: info
+::: tip
 
 支持所有 `input` 元素原生属性、事件  
 `id`、`class`、`style`会传递到根元素上  

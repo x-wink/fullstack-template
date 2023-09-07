@@ -6,7 +6,7 @@ title: 图标
 
 ## 功能介绍
 
-::: info
+::: tip
 `WINK UI` 从 `ElementPlus` 扒了所有图标过来使用
 :::
 

@@ -8,9 +8,9 @@
     </XScrollbar>
 </template>
 <script setup lang="ts">
-    import { XInputNumber, XScrollbar } from '@pkgs/ui';
+    import { XInputNumber, XScrollbar, ScrollbarInstance } from '@pkgs/ui';
     import { ref, watch } from 'vue';
-    const refsScroll = ref();
+    const refsScroll = ref<ScrollbarInstance>();
     const top = ref(0);
     watch(top, (y) => {
         refsScroll.value!.scrollY(y);
