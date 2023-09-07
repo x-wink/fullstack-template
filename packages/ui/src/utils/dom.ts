@@ -41,12 +41,16 @@ export const createDragContainer = (container: HTMLElement, cb: (x: number, y: n
  * @param cb 拖拽回调，参数为鼠标坐标xy相对于容器宽高的值，相对值不会超出0~1范围
  * @returns 注销可拖拽元素，取消监听事件
  */
-export const createDragableElement = (el: HTMLElement, container: HTMLElement, cb: (x: number, y: number) => void) => {
+export const createDragableElement = (
+    el: HTMLElement,
+    container: HTMLElement,
+    hooks: { start?: () => void; end?: () => void; move: (x: number, y: number) => void }
+) => {
     let isDragging = false;
     const startDrag = (event: MouseEvent) => {
         event.preventDefault();
         isDragging = true;
-        drag(event);
+        hooks.start?.();
     };
     const drag = (event: MouseEvent) => {
         if (isDragging) {
@@ -54,11 +58,15 @@ export const createDragableElement = (el: HTMLElement, container: HTMLElement, c
             const x = event.clientX - containerRect.left;
             const y = event.clientY - containerRect.top;
 
-            cb(Math.min(Math.max(x / containerRect.width, 0), 1), Math.min(Math.max(y / containerRect.height, 0), 1));
+            hooks.move(
+                Math.min(Math.max(x / containerRect.width, 0), 1),
+                Math.min(Math.max(y / containerRect.height, 0), 1)
+            );
         }
     };
     const stopDrag = () => {
         isDragging = false;
+        hooks.end?.();
     };
     el.addEventListener('mousedown', startDrag);
     window.addEventListener('mousemove', drag);

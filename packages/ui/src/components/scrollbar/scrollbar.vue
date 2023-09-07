@@ -1,34 +1,55 @@
 <template>
-    <div class="x-scrollbar" :style="scrollbarStyle" @mousewheel="handleMouseWheel">
-        <div ref="refsContainer" class="x-scrollbar__container" @scroll="handleScroll">
-            <div ref="refsWrapper" class="x-scrollbar__wrapper">
+    <div
+        class="x-scrollbar"
+        :style="scrollbarStyle"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+        @mousewheel="handleMouseWheel"
+    >
+        <div ref="refsContainer" class="x-scrollbar__container" :class="containerClass" @scroll="handleScroll">
+            <component :is="props.tag" ref="refsWrapper" class="x-scrollbar__wrapper">
                 <slot></slot>
-            </div>
+            </component>
         </div>
-        <div v-show="horizontalVisible" class="x-scrollbar__bar horizontal">
-            <div ref="refsHorizontalThumb" class="x-scrollbar__thumb" :style="horizontalThumbStyle"></div>
-        </div>
-        <div v-show="verticalVisible" class="x-scrollbar__bar vertical">
-            <div ref="refsVerticalThumb" class="x-scrollbar__thumb" :style="verticalThumbStyle"></div>
-        </div>
+        <template v-if="!props.native">
+            <Bar
+                :container="refsContainer"
+                :position="horizontalBar.position"
+                :size="horizontalBar.size"
+                :visible="horizontalBar.exists && (props.always || mouseInContainer)"
+            />
+            <Bar
+                :container="refsContainer"
+                :position="verticalBar.position"
+                :size="verticalBar.size"
+                vertical
+                :visible="verticalBar.exists && (props.always || mouseInContainer)"
+            />
+        </template>
     </div>
 </template>
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
-    import { createDragableElement } from '../../utils';
+    import Bar from './bar.vue';
+    import { HTMLElementTagName } from '../';
 
     defineOptions({
         name: 'XScrollbar',
     });
     const props = withDefaults(
         defineProps<{
+            tag?: HTMLElementTagName;
             width?: string;
             height?: string;
             maxWidth?: string;
             maxHeight?: string;
+            always?: boolean;
+            noresize?: boolean;
+            native?: boolean;
         }>(),
         {
+            tag: 'div',
             width: 'auto',
             height: 'auto',
         }
@@ -41,86 +62,109 @@
             maxHeight: props.maxHeight,
         };
     });
-
-    const refsContainer = ref<HTMLDivElement>();
-    const refsWrapper = ref<HTMLDivElement>();
-
-    const horizontalVisible = ref(false);
-    const horizontalThumb = reactive({
-        size: 0,
-        position: 0,
-    });
-    const horizontalThumbStyle = computed(() => {
+    const containerClass = computed(() => {
         return {
-            width: `${horizontalThumb.size * 100}%`,
-            transform: `translateX(${horizontalThumb.position * 100}%)`,
+            '--native': props.native,
         };
     });
 
-    const verticalVisible = ref(false);
-    const verticalThumb = reactive({
-        size: 0,
-        position: 0,
-    });
-    const verticalThumbStyle = computed(() => {
-        return {
-            height: `${verticalThumb.size * 100}%`,
-            transform: `translateY(${verticalThumb.position * 100}%)`,
-        };
-    });
-
-    const update = () => {
-        console.info('update');
-        const { offsetHeight, scrollHeight, offsetWidth, scrollWidth } = refsContainer.value!;
-        horizontalVisible.value = offsetWidth < scrollWidth;
-        horizontalThumb.size = Math.max(0.1, offsetWidth / scrollWidth);
-        verticalVisible.value = offsetHeight < scrollHeight;
-        verticalThumb.size = Math.max(0.1, offsetHeight / scrollHeight);
+    const mouseInContainer = ref(false);
+    const handleMouseEnter = () => {
+        mouseInContainer.value = true;
+    };
+    const handleMouseLeave = () => {
+        mouseInContainer.value = false;
     };
 
+    const horizontalBar = reactive({
+        exists: false,
+        size: 0,
+        position: 0,
+    });
+    const verticalBar = reactive({
+        exists: false,
+        size: 0,
+        position: 0,
+    });
+
+    const scrollBy = (x: number, y: number) => {
+        refsContainer.value?.scrollBy(x, y);
+    };
+    const scrollTo = (x: number, y: number) => {
+        refsContainer.value?.scrollTo(x, y);
+    };
+    const scrollX = (x: number) => {
+        refsContainer.value?.scrollTo(x, refsContainer.value.scrollTop);
+    };
+    const scrollY = (y: number) => {
+        refsContainer.value?.scrollTo(refsContainer.value.scrollLeft, y);
+    };
+
+    const refsContainer = ref<HTMLElement>();
+    const refsWrapper = ref<HTMLElement>();
     const handleMouseWheel = (e: WheelEvent) => {
-        if (verticalVisible.value || horizontalVisible.value) {
+        if (horizontalBar.exists || verticalBar.exists) {
             e.preventDefault();
-            if (verticalVisible.value) {
-                refsContainer.value?.scrollBy(0, e.deltaY);
-            } else if (horizontalVisible.value) {
-                refsContainer.value?.scrollBy(e.deltaY, 0);
+            if (verticalBar.exists) {
+                scrollBy(0, e.deltaY);
+            } else if (horizontalBar.exists) {
+                scrollBy(e.deltaY, 0);
             }
         }
     };
 
+    const emits = defineEmits<{
+        scroll: [x: number, y: number];
+    }>();
+    let lastLeft = 0,
+        lastTop = 0;
     const handleScroll = () => {
-        const { scrollTop, scrollHeight, offsetHeight, scrollLeft, scrollWidth, offsetWidth } = refsContainer.value!;
-        horizontalThumb.position =
-            ((scrollLeft / (scrollWidth - offsetWidth)) * (1 - horizontalThumb.size)) / horizontalThumb.size;
-        verticalThumb.position =
-            ((scrollTop / (scrollHeight - offsetHeight)) * (1 - verticalThumb.size)) / verticalThumb.size;
+        const { scrollLeft, scrollTop } = refsContainer.value!;
+        if (!props.native) {
+            internalUpdate(true);
+        }
+        emits('scroll', scrollLeft - lastLeft, scrollTop - lastTop);
+        lastLeft = scrollLeft;
+        lastTop = scrollTop;
     };
 
-    let ro: ResizeObserver;
-    const refsHorizontalThumb = ref<HTMLDivElement>();
-    const refsVerticalThumb = ref<HTMLDivElement>();
-    let draggables = [] as (() => void)[];
-    onMounted(() => {
-        update();
-        ro = new ResizeObserver(update);
-        ro.observe(refsContainer.value!);
-        ro.observe(refsWrapper.value!);
+    const internalUpdate = (onlyPosition = false) => {
+        const { offsetWidth, offsetHeight, scrollWidth, scrollHeight, scrollLeft, scrollTop } = refsContainer.value!;
+        if (!onlyPosition) {
+            horizontalBar.exists = offsetWidth < scrollWidth;
+            horizontalBar.size = Math.max(0.1, offsetWidth / scrollWidth);
+            verticalBar.exists = offsetHeight < scrollHeight;
+            verticalBar.size = Math.max(0.1, offsetHeight / scrollHeight);
+        }
 
-        draggables.push(
-            createDragableElement(refsHorizontalThumb.value!, refsContainer.value!, (x) => {
-                refsContainer.value!.scrollTo(x * refsContainer.value!.scrollWidth, refsContainer.value!.scrollTop);
-            })
-        );
-        draggables.push(
-            createDragableElement(refsVerticalThumb.value!, refsContainer.value!, (x, y) => {
-                refsContainer.value!.scrollTo(refsContainer.value!.scrollLeft, y * refsContainer.value!.scrollHeight);
-            })
-        );
-    });
-    onUnmounted(() => {
-        ro.disconnect();
-        draggables.forEach((item) => item());
+        horizontalBar.position =
+            ((scrollLeft / (scrollWidth - offsetWidth)) * (1 - horizontalBar.size)) / horizontalBar.size;
+        verticalBar.position =
+            ((scrollTop / (scrollHeight - offsetHeight)) * (1 - verticalBar.size)) / verticalBar.size;
+    };
+    const update = () => {
+        internalUpdate();
+    };
+    if (!props.noresize && !props.native) {
+        let ro: ResizeObserver;
+        onMounted(() => {
+            update();
+            ro = new ResizeObserver(update);
+            ro.observe(refsContainer.value!);
+            ro.observe(refsWrapper.value!);
+        });
+        onUnmounted(() => {
+            ro.disconnect();
+        });
+    }
+
+    defineExpose({
+        update,
+        scrollBy,
+        scrollTo,
+        scrollX,
+        scrollY,
+        refsContainer,
     });
 </script>
 
@@ -134,8 +178,10 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            &::-webkit-scrollbar {
-                display: none;
+            &:not(.--native) {
+                &::-webkit-scrollbar {
+                    display: none;
+                }
             }
         }
         &__wrapper {
@@ -143,35 +189,6 @@
             min-height: 100%;
             width: fit-content;
             height: fit-content;
-        }
-        &__bar {
-            position: absolute;
-            border-radius: var(--x-border-radius);
-            &.horizontal {
-                width: 100%;
-                height: var(--x-border-radius);
-                bottom: var(--x-space-mini);
-                left: 0;
-            }
-            &.vertical {
-                width: var(--x-border-radius);
-                height: 100%;
-                right: var(--x-space-mini);
-                top: 0;
-            }
-        }
-        &__thumb {
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-            background-color: var(--x-primary);
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-            &:hover,
-            &:active {
-                opacity: 1;
-            }
         }
     }
 </style>
