@@ -8,7 +8,7 @@ else
 	echo "服务停止成功："$PID
 fi
 MAIN=/apps/$APP/server/index.js
-LOG=/dev/null
+LOG=/apps/$APP/out.log
 chmod a+x $MAIN
 echo "开始启动服务"
 nohup node --max-old-space-size=1024 $MAIN >$LOG 2>&1 &

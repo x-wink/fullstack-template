@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "nodemon index.ts",
         "build": "set NODE_OPTIONS=--openssl-legacy-provider && tsc --noEmit && ncc build ./index.ts -o ../../dist/chat && pnpm copy-run",
-        "copy-run": "ts-node ../../scripts/copy.ts ../../scripts/run-server.sh ../../dist/run-server.sh"
+        "copy-run": "ts-node ../../scripts/copy.ts ../../scripts/run-chat.sh ../../dist/run-chat.sh"
     },
     "devDependencies": {
         "@types/express": "^4.17.17",
