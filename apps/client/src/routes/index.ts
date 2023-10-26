@@ -43,6 +43,17 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/games',
+        name: 'Games',
+        children: [
+            {
+                path: 'russia-block',
+                name: 'RussiaBlock',
+                component: () => import('@/games/russia-block/index.vue'),
+            },
+        ],
+    },
 ] as RouteRecordRaw[];
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

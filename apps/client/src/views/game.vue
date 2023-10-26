@@ -1,6 +1,11 @@
 <template>
     <ul class="game-list">
-        <li v-for="(item, index) in list" :key="index" class="game-item flex col row-center col-center">
+        <li
+            v-for="(item, index) in list"
+            :key="index"
+            class="game-item flex col row-center col-center"
+            @click="handleClick(item.code)"
+        >
             <div class="img">
                 <img src="/favicon.ico" />
             </div>
@@ -21,6 +26,11 @@
             code: 'Backgammon',
         },
     ]);
+
+    const router = useRouter();
+    const handleClick = (code: string) => {
+        router.push({ name: code });
+    };
 </script>
 
 <style scoped lang="less">
