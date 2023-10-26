@@ -43,6 +43,18 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/game',
+        name: 'Game',
+        redirect: { name: 'FiveGame' },
+        children: [
+            {
+                path: 'five',
+                name: 'FiveGame',
+                component: () => import('@/games/five.vue'),
+            },
+        ],
+    },
 ] as RouteRecordRaw[];
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

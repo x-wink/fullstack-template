@@ -5,11 +5,15 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export {};
+export {}
 
 declare module '@vue/runtime-core' {
-    export interface GlobalComponents {
-        RouterLink: typeof import('vue-router')['RouterLink'];
-        RouterView: typeof import('vue-router')['RouterView'];
-    }
+  export interface GlobalComponents {
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
+    XBox: typeof import('@pkgs/ui')['XBox']
+    XButton: typeof import('@pkgs/ui')['XButton']
+    XMenu: typeof import('@pkgs/ui')['XMenu']
+    XRain: typeof import('@pkgs/ui')['XRain']
+  }
 }
