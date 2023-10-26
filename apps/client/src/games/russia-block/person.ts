@@ -46,26 +46,80 @@ export class Control {
         this.stop = stop;
     }
     init(player: Person): void {
+        const up = () => {
+            if (player.current?.transform().collision(player.boxes)) {
+                player.current.direction--;
+            }
+        };
+        const right = () => {
+            if (player.current?.right().collision(player.boxes)) {
+                player.current.left();
+            }
+        };
+        const left = () => {
+            if (player.current?.left().collision(player.boxes)) {
+                player.current.right();
+            }
+        };
+        const down = (done = true) => {
+            if (done) {
+                player.current?.done(player.boxes);
+            } else if (player.current?.down().collision(player.boxes)) {
+                player.current.y--;
+            }
+        };
+
+        let startX = 0,
+            startY = 0,
+            needUp = false;
+        window.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startX = e.changedTouches[0].pageX;
+            startY = e.changedTouches[0].pageY;
+            needUp = false;
+            const move = (e: TouchEvent) => {
+                e.preventDefault();
+                const moveEndX = e.changedTouches[0].pageX;
+                const moveEndY = e.changedTouches[0].pageY;
+                const X = moveEndX - startX,
+                    Y = moveEndY - startY;
+                if (Math.abs(X) > Math.abs(Y) && X > 0) {
+                    right();
+                } else if (Math.abs(X) > Math.abs(Y) && X < 0) {
+                    left();
+                } else if (Math.abs(Y) > Math.abs(X) && Y > 0) {
+                    down(false);
+                } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {
+                    needUp = true;
+                } else {
+                    console.info('滑了个寂寞');
+                }
+            };
+            const end = () => {
+                if (needUp) {
+                    up();
+                }
+                window.removeEventListener('touchmove', move);
+                window.removeEventListener('touchend', end);
+            };
+            window.addEventListener('touchmove', move);
+            window.addEventListener('touchend', end);
+        });
+
         window.addEventListener('keydown', (e) => {
             if (player.current) {
                 switch (e.key) {
                     case this.up:
-                        if (player.current.transform().collision(player.boxes)) {
-                            player.current.direction--;
-                        }
+                        up();
                         break;
                     case this.right:
-                        if (player.current.right().collision(player.boxes)) {
-                            player.current.left();
-                        }
+                        right();
                         break;
                     case this.down:
-                        player.current.done(player.boxes);
+                        down();
                         break;
                     case this.left:
-                        if (player.current.left().collision(player.boxes)) {
-                            player.current.right();
-                        }
+                        left();
                         break;
                     case this.stop:
                         player.stop();
