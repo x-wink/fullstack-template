@@ -48,7 +48,6 @@
         margin: 0;
         user-select: none;
         box-sizing: border-box;
-        transition: all 0.3s;
         &::before,
         &::after {
             box-sizing: border-box;

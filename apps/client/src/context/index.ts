@@ -11,6 +11,6 @@ export const useContext = createSharedComposable(() => {
         /**
          * 是否竖屏
          */
-        isPortrait: computed(() => portrait),
+        isPortrait: computed(() => portrait.value),
     };
 });
