@@ -2,14 +2,14 @@
     <div class="game-controls" :style="style">
         <div class="directions">
             <template v-for="(item, index) in keys" :key="index">
-                <button v-if="item" @click.stop="emits('press', item.key)" @touckstart="emits('press', item.key)">
+                <button v-if="item" @click.stop="emits('press', item.key)">
                     {{ item.text }}
                 </button>
                 <span v-else></span>
             </template>
         </div>
         <div class="buttons">
-            <button @click.stop="emits('press', 'stop')" @touchstart="emits('press', 'stop')">暂停</button>
+            <button @click.stop="emits('press', 'stop')">暂停</button>
         </div>
     </div>
 </template>
@@ -48,7 +48,8 @@
 
 <style scoped lang="less">
     .game-controls {
-        position: absolute;
+        position: fixed;
+        z-index: 9999;
 
         .directions {
             width: var(--size);

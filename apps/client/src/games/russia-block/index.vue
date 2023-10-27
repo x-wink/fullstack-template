@@ -2,7 +2,7 @@
     <div class="russia-block flex col">
         <div v-if="game.status === 0" class="stop">
             游戏暂停
-            <button @click="game.start()" @touchstart="game.start()">继续游戏</button>
+            <button @click="game.start()">继续游戏</button>
         </div>
         <div class="next flex row-center">
             <Container v-for="(next, index) in game.next" :key="index" :boxes="next.boxes" />
@@ -15,7 +15,7 @@
         >
             <div v-if="player.status === 0" class="gameover">
                 <p>游戏结束</p>
-                <button @click="game.reset(player)" @touchstart="game.reset(player)">重新开始</button>
+                <button @click="game.reset(player)">重新开始</button>
             </div>
             <div class="info">
                 <p class="name">昵称: {{ player.name }}</p>
@@ -25,14 +25,14 @@
             </div>
             <Container :boxes="player.boxes" :col="config.col" :current="player.current" :row="config.row" />
         </div>
-        <Controls @press="handlePress" />
+        <Controls v-show="game.status === GameStatus.run" @press="handlePress" />
     </div>
 </template>
 
 <script setup lang="ts">
     import Container from './container.vue';
     import Controls from '../controls/index.vue';
-    import { Config, Game } from './core';
+    import { Config, Game, GameStatus } from './core';
     import Robot from './robot';
     import { Person } from './person';
     import { Control, Keys } from '../controls/core';
@@ -99,7 +99,6 @@
         }
     }
     .russia-block {
-        transition: all 0.3s;
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -107,9 +106,10 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        position: relative;
         .stop {
             z-index: 999;
-            position: fixed;
+            position: absolute;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
