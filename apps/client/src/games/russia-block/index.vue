@@ -2,7 +2,7 @@
     <div class="russia-block flex col">
         <div v-if="game.status === 0" class="stop">
             游戏暂停
-            <button @click="game.start()">继续游戏</button>
+            <button @click="game.start()" @touchstart="game.start()">继续游戏</button>
         </div>
         <div class="next flex row-center">
             <Container v-for="(next, index) in game.next" :key="index" :boxes="next.boxes" />
@@ -15,7 +15,7 @@
         >
             <div v-if="player.status === 0" class="gameover">
                 <p>游戏结束</p>
-                <button @click="game.reset(player)">重新开始</button>
+                <button @click="game.reset(player)" @touchstart="game.reset(player)">重新开始</button>
             </div>
             <div class="info">
                 <p class="name">昵称: {{ player.name }}</p>
@@ -25,32 +25,66 @@
             </div>
             <Container :boxes="player.boxes" :col="config.col" :current="player.current" :row="config.row" />
         </div>
+        <Controls @press="handlePress" />
     </div>
 </template>
 
 <script setup lang="ts">
     import Container from './container.vue';
+    import Controls from '../controls/index.vue';
     import { Config, Game } from './core';
     import Robot from './robot';
-    import { Control, Person } from './person';
+    import { Person } from './person';
+    import { Control, Keys } from '../controls/core';
 
     const proxy = getCurrentInstance()!.proxy;
     const config = reactive(new Config(20, 10, 40));
     const game = reactive(new Game(config, proxy));
 
+    // Robot是AI玩家，自定义AI需要早mod下面编写AI类并继承Player，通过实现Player的onFetch函数进行逻辑操作
+    const robot = reactive(new Robot('WINK', 'wink'));
+    // Person为真人玩家
+    const person = reactive(new Person('玩家', game.stop.bind(game)));
+    game.add(robot);
+    game.add(person);
+
+    //
+    const control = new Control(
+        { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft', stop: ' ' },
+        {
+            stop: () => {
+                game.stop();
+            },
+            ok: () => {
+                if (person.current?.transform().collision(person.boxes)) {
+                    person.current.direction--;
+                }
+            },
+            up: () => {
+                if (person.current?.transform().collision(person.boxes)) {
+                    person.current.direction--;
+                }
+            },
+            right: () => {
+                if (person.current?.right().collision(person.boxes)) {
+                    person.current.left();
+                }
+            },
+            left: () => {
+                if (person.current?.left().collision(person.boxes)) {
+                    person.current.right();
+                }
+            },
+            down: () => {
+                person.current?.done(person.boxes);
+            },
+        }
+    );
+    const handlePress = (key: Keys) => {
+        control.emit(key);
+    };
+
     onMounted(() => {
-        // Robot是AI玩家，自定义AI需要早mod下面编写AI类并继承Player，通过实现Player的onFetch函数进行逻辑操作
-        const robot = reactive(new Robot('WINK', 'wink'));
-        // Person为真人玩家，Control设置键位
-        const person = reactive(
-            new Person(
-                '玩家',
-                new Control('ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft', ' '),
-                game.stop.bind(game)
-            )
-        );
-        game.add(robot);
-        game.add(person);
         game.resetAll();
     });
 </script>

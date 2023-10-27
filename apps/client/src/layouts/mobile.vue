@@ -23,6 +23,7 @@
     import Aside from './aside.vue';
     import Footer from './footer.vue';
     import Content from './content.vue';
+    document.title = '汗流浃背了吧老弟';
 </script>
 
 <style scoped lang="less">
