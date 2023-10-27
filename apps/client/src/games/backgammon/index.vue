@@ -7,8 +7,8 @@
             <p class="name">{{ ai.name }}</p>
             <div class="box" :class="{ white: ai.color === Game.white, black: ai.color === Game.black }"></div>
         </div>
-        <div class="grid">
-            <div v-for="row in config.row" :key="row" class="row">
+        <div ref="refsGrid" class="grid">
+            <div v-for="row in config.row" :key="row" class="row" :class="{ ignore: row === config.row }">
                 <div
                     v-for="col in config.col"
                     :key="col"
@@ -41,8 +41,10 @@
     const config = {
         row: 15,
         col: 15,
-        size: 36,
+        size: Number.MAX_SAFE_INTEGER,
     };
+
+    const refsGrid = ref<HTMLElement>();
 
     const playerColor = Game.randomColor(),
         aiColor = Game.otherColor(playerColor);
@@ -56,10 +58,16 @@
     const handleClick = (index: number) => {
         if (game.current === player.color) {
             game.set(index, player.color);
-            ai.invoke();
+            setTimeout(() => {
+                ai.invoke();
+            }, 0);
         }
     };
     const handleStart = () => {
+        const w = refsGrid.value!.offsetWidth,
+            h = refsGrid.value!.offsetHeight;
+        config.size = Math.min(w / config.col, h / config.row);
+        console.info(config.size);
         game.restart();
         if (ai.color === game.current) {
             ai.invoke();
@@ -70,10 +78,18 @@
 
 <style scoped lang="less">
     .five-container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        -webkit-tap-highlight-color: transparent;
         .grid {
             position: relative;
             padding: 20px;
             margin: 10px;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: hidden;
+            flex-shrink: 1;
             border: 3px solid #fff;
             background: rgb(180, 155, 72);
             .result {
@@ -98,6 +114,9 @@
             }
             .row {
                 display: flex;
+                &.ignore {
+                    aspect-ratio: unset;
+                }
             }
         }
         .box {
@@ -139,9 +158,11 @@
                 background: none;
                 &.row {
                     height: 0px;
+                    aspect-ratio: unset;
                 }
                 &.col {
                     width: 0px;
+                    aspect-ratio: unset;
                 }
             }
             &.white {
@@ -171,6 +192,8 @@
                 flex-direction: column-reverse;
             }
             .box {
+                width: 30px;
+                height: 30px;
                 border: none;
                 &::before {
                     transform: translate(25%, 25%);
