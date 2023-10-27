@@ -2,7 +2,8 @@
     <header class="header flex row-between">
         <div class="left flex col-center">
             <h2 class="title">X-WINK</h2>
-            <x-menu :active="currentMenu" class="modules" :menus="menus" />
+            <p v-if="isPortrait">游戏大厅</p>
+            <x-menu v-else :active="currentMenu" class="modules" :menus="menus" />
         </div>
         <div class="center"></div>
         <div class="right">
@@ -12,6 +13,9 @@
 </template>
 
 <script setup lang="ts">
+    import { useContext } from '@/context';
+    const { isPortrait } = useContext();
+
     const route = useRoute();
     const router = useRouter();
     const menus = router
@@ -53,9 +57,9 @@
         align-items: center;
         .title {
             min-width: fit-content;
+            margin-right: var(--x-space);
         }
         .modules {
-            margin-left: var(--x-space);
             flex-wrap: wrap;
         }
         .links {

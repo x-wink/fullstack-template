@@ -6,5 +6,5 @@
     },
     "eslint.enable": true,
     "eslint.validate": ["javascript", "typescript", "vue", "javascriptreact", "typescriptreact"],
-    "git.enableSmartCommit": false
+    "git.enableSmartCommit": true
 }

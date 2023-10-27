@@ -1,36 +1,23 @@
 <template>
-    <XRain background />
-    <XBox class="layout flex col">
-        <Header />
-        <main class="main">
-            <Aside>
-                <Suspense>
-                    <router-view name="aside" />
-                </Suspense>
-            </Aside>
-            <Content>
-                <Suspense>
-                    <router-view />
-                </Suspense>
-            </Content>
-        </main>
-        <Footer />
-    </XBox>
+    <div>
+        <Mobile v-if="isPortrait" />
+        <Pc v-else />
+    </div>
 </template>
 
 <script setup lang="ts">
-    import Header from './header.vue';
-    import Aside from './aside.vue';
-    import Footer from './footer.vue';
-    import Content from './content.vue';
+    import { useContext } from '@/context';
+    import Mobile from './mobile.vue';
+    import Pc from './pc.vue';
+    const { isPortrait } = useContext();
 </script>
 
 <style scoped lang="less">
-    .x-rain {
+    > :deep(.x-rain) {
         font-size: 2rem;
         color: var(--x-primary);
     }
-    .layout {
+    > :deep(.layout) {
         perspective: none;
         width: 90%;
         height: calc(98% - 20px);

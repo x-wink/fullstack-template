@@ -44,10 +44,14 @@ const routes = [
         ],
     },
     {
-        path: '/game',
-        name: 'Game',
-        redirect: { name: 'FiveGame' },
+        path: '/games',
+        name: 'Games',
         children: [
+            {
+                path: 'russia-block',
+                name: 'RussiaBlock',
+                component: () => import('@/games/russia-block/index.vue'),
+            },
             {
                 path: 'five',
                 name: 'FiveGame',
