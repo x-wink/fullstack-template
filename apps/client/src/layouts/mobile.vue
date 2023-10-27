@@ -25,4 +25,11 @@
     import Content from './content.vue';
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+    .layout.mobile {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #000;
+    }
+</style>

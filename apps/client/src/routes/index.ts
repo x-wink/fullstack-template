@@ -53,9 +53,9 @@ const routes = [
                 component: () => import('@/games/russia-block/index.vue'),
             },
             {
-                path: 'five',
-                name: 'FiveGame',
-                component: () => import('@/games/five.vue'),
+                path: 'backgammon',
+                name: 'Backgammon',
+                component: () => import('@/games/backgammon/index.vue'),
             },
         ],
     },

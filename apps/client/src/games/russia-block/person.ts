@@ -70,13 +70,18 @@ export class Control {
         };
 
         let startX = 0,
-            startY = 0,
-            needUp = false;
-        window.addEventListener('touchstart', (e) => {
+            startY = 0;
+        document.body.addEventListener('click', () => {
+            up();
+        });
+        document.body.addEventListener('touchstart', (e) => {
             e.preventDefault();
             startX = e.changedTouches[0].pageX;
             startY = e.changedTouches[0].pageY;
-            needUp = false;
+            let needUp = false,
+                needDown = false,
+                needLeft = false,
+                needRight = false;
             const move = (e: TouchEvent) => {
                 e.preventDefault();
                 const moveEndX = e.changedTouches[0].pageX;
@@ -84,11 +89,11 @@ export class Control {
                 const X = moveEndX - startX,
                     Y = moveEndY - startY;
                 if (Math.abs(X) > Math.abs(Y) && X > 0) {
-                    right();
+                    needRight = true;
                 } else if (Math.abs(X) > Math.abs(Y) && X < 0) {
-                    left();
+                    needLeft = true;
                 } else if (Math.abs(Y) > Math.abs(X) && Y > 0) {
-                    down(false);
+                    needDown = true;
                 } else if (Math.abs(Y) > Math.abs(X) && Y < 0) {
                     needUp = true;
                 } else {
@@ -98,15 +103,21 @@ export class Control {
             const end = () => {
                 if (needUp) {
                     up();
+                } else if (needRight) {
+                    right();
+                } else if (needLeft) {
+                    left();
+                } else if (needDown) {
+                    down(false);
                 }
-                window.removeEventListener('touchmove', move);
-                window.removeEventListener('touchend', end);
+                document.body.removeEventListener('touchmove', move);
+                document.body.removeEventListener('touchend', end);
             };
-            window.addEventListener('touchmove', move);
-            window.addEventListener('touchend', end);
+            document.body.addEventListener('touchmove', move);
+            document.body.addEventListener('touchend', end);
         });
 
-        window.addEventListener('keydown', (e) => {
+        document.body.addEventListener('keydown', (e) => {
             if (player.current) {
                 switch (e.key) {
                     case this.up:

@@ -41,14 +41,14 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(var(--size), 1fr));
         grid-template-rows: repeat(auto-fill, minmax(var(--size), 1fr));
-        gap: 20px;
+        gap: var(--x-space);
         .game-item {
             padding: var(--x-space);
             border: 1px solid var(--x-primary);
             border-radius: var(--x-border-radius);
             white-space: nowrap;
             .img {
-                width: 80%;
+                width: 30%;
                 aspect-ratio: 1;
                 object-fit: contain;
                 img {

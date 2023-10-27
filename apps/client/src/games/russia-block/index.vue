@@ -5,24 +5,7 @@
             <button @click="game.start()">继续游戏</button>
         </div>
         <div class="next flex row-center">
-            <div v-for="(next, index) in game.next" :key="index" class="scene">
-                <div
-                    v-for="(row, y) in next.boxes"
-                    :key="y"
-                    class="row flex"
-                    :style="{ height: `${100 / row.length}%` }"
-                >
-                    <div
-                        v-for="(box, x) in row"
-                        :key="x"
-                        class="box"
-                        :class="{ active: box > 0 }"
-                        :style="{
-                            backgroundColor: color[box],
-                        }"
-                    ></div>
-                </div>
-            </div>
+            <Container v-for="(next, index) in game.next" :key="index" :boxes="next.boxes" />
         </div>
         <div
             v-for="(player, p) in game.player"
@@ -40,26 +23,14 @@
                 <p class="name">速度: {{ player.level }}</p>
                 <h1 class="score">成绩: {{ player.score }}</h1>
             </div>
-            <div class="scene">
-                <div v-for="y in config.row" :key="y" class="row flex" :style="{ height: `${100 / config.row}%` }">
-                    <div
-                        v-for="x in config.col"
-                        :key="x"
-                        class="box"
-                        :class="{ active: calcBoxActive(player, (y - 1) * config.col + x - 1) }"
-                        :style="{
-                            backgroundColor: calcBoxColor(player, (y - 1) * config.col + x - 1),
-                        }"
-                    ></div>
-                </div>
-            </div>
+            <Container :boxes="player.boxes" :col="config.col" :current="player.current" :row="config.row" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { Config, Game, Point, Shape } from './core';
-    import Player from './player';
+    import Container from './container.vue';
+    import { Config, Game } from './core';
     import Robot from './robot';
     import { Control, Person } from './person';
 
@@ -82,29 +53,6 @@
         game.add(person);
         game.resetAll();
     });
-
-    // 颜色列表
-    const color = computed(() => Shape.color);
-    // 计算格子颜色
-    const calcBoxColor = (player: Player, i: number) => {
-        let res = 'transparent';
-        let value = player.boxes.flat()[i];
-        if (!value && player.current) {
-            value = player.current.contain(new Point(i % config.col, Math.floor(i / config.col)));
-        }
-        res = unref(color)[value];
-        return res;
-    };
-    // 计算格子是否激活
-    const calcBoxActive = (player: Player, i: number) => {
-        let res = player.boxes.flat()[i] > 0;
-        if (!res && player.current) {
-            if (player.current.contain(new Point(i % config.col, Math.floor(i / config.col))) !== 0) {
-                res = true;
-            }
-        }
-        return res;
-    };
 </script>
 
 <style scoped lang="less">
@@ -152,11 +100,6 @@
             width: 100%;
             height: 50px;
             flex-shrink: 0;
-            .scene {
-                background-color: rgba(0, 0, 0, 0.3);
-                margin-left: 10px;
-                aspect-ratio: 1;
-            }
         }
         .player {
             position: relative;
@@ -197,28 +140,6 @@
                 align-items: center;
                 .score {
                     animation: scale 1s linear 0s infinite alternate;
-                }
-            }
-        }
-        .scene {
-            width: fit-content;
-            height: 100%;
-            overflow: hidden;
-            border: 2px solid gray;
-            background-color: rgba(0, 0, 0, 0.3);
-            + .scene {
-                margin-left: 20px;
-            }
-            .row {
-                width: fit-content;
-                .box {
-                    height: 100%;
-                    aspect-ratio: 1;
-                    border: 0.1px solid rgba(255, 255, 255, 0.1);
-                    box-sizing: border-box;
-                    &.active {
-                        border: 2px outset white;
-                    }
                 }
             }
         }

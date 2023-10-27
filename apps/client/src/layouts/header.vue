@@ -2,12 +2,12 @@
     <header class="header flex row-between">
         <div class="left flex col-center">
             <h2 class="title">X-WINK</h2>
-            <p v-if="isPortrait">游戏大厅</p>
+            <p v-if="isPortrait" @click="goHome">游戏大厅</p>
             <x-menu v-else :active="currentMenu" class="modules" :menus="menus" />
         </div>
         <div class="center"></div>
         <div class="right">
-            <x-menu class="links" :menus="links" />
+            <x-menu v-if="!isPortrait" class="links" :menus="links" />
         </div>
     </header>
 </template>
@@ -49,6 +49,10 @@
             link: true,
         },
     ]);
+
+    const goHome = () => {
+        router.push({ name: 'Home' });
+    };
 </script>
 
 <style scoped lang="less">

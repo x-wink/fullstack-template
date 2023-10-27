@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-    import { Game, Player, Robot } from './five';
+    import { Game, Player, Robot } from './core';
     const config = {
         row: 15,
         col: 15,
