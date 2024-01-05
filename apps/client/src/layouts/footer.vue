@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer"><a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备15112102号-1</a></footer>
+    <footer class="footer"><a href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2024041408号-1</a></footer>
 </template>
 
 <script setup lang="ts"></script>
