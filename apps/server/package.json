@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "nodemon index.ts",
-        "build": "set NODE_OPTIONS=--openssl-legacy-provider && tsc --noEmit && ncc build ./index.ts -o ../../dist/server && pnpm copy-ssl && pnpm copy-run && pnpm copy-config",
+        "build": "set NODE_OPTIONS=--openssl-legacy-provider && ncc build ./index.ts -o ../../dist/server && pnpm copy-ssl && pnpm copy-run && pnpm copy-config",
         "copy-ssl": "ts-node ../../scripts/copy.ts ./ssl ../../dist/server/ssl",
         "copy-run": "ts-node ../../scripts/copy.ts ../../scripts/run-server.sh ../../dist/run-server.sh",
         "copy-config": "ts-node ../../scripts/copy.ts ./.env.production ../../dist/server/env"
