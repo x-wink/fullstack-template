@@ -1,75 +1,70 @@
-<h1 align="center">欢迎使用全栈项目模板 👋</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/x-wink/fullstack-template#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-</p>
+# 😉 全栈开发项目模板
 
-> `monorepo`风格项目  
-> 后端使用`express`、`mysql`  
-> 前端使用`vue3`、`vite`
+> 这是一个全栈开发项目模板
 
-## ⬇️ 使用方式
+<!-- 通用 -->
+
+![名称](https://img.shields.io/github/package-json/name/x-wink/fullstack-template?style=for-the-badge)
+![版本](https://img.shields.io/github/package-json/v/x-wink/fullstack-template?style=for-the-badge&filename=package.json)
+
+![关键字](https://img.shields.io/github/package-json/keywords/x-wink/fullstack-template?style=for-the-badge)
+![许可](https://img.shields.io/github/package-json/license/x-wink/fullstack-template?style=for-the-badge)
+
+<!-- GITHUB信息 -->
+
+![收藏](https://img.shields.io/github/stars/x-wink/fullstack-template?style=flat-square&logo=github)
+![借鉴](https://img.shields.io/github/forks/x-wink/fullstack-template?style=flat-square&logo=github)
+![问题](https://img.shields.io/github/issues/x-wink/fullstack-template?style=flat-square&logo=github)
+![请求](https://img.shields.io/github/issues-pr/x-wink/fullstack-template?style=flat-square&logo=github)
+
+## 💎 使用方式
 
 ```cmd
 npx degit x-wink/fullstack-template#main my-project
 cd my-project
 pnpm install
+pnpm run admin
 ```
+
+## 📖 快速入门
+
+> 暂无
+
+## 📦 进阶使用
+
+> 暂无
+
+## 📄 待办列表
+
+> 暂无
+
+## 🆘问题求助
+
+> 暂无
 
 ## 🎯 框架依赖
 
--   [mysql](https://github.com/mysqljs/mysql) `MySQL`数据库协议
--   [wink-dao](https://github.com/x-wink/wink-dao) 数据持久层框架
--   [express](https://expressjs.com/) `HTTP`服务框架
--   [dotenv](https://github.com/motdotla/dotenv)配置文件
--   [lodash](https://github.com/lodash/lodash)工具库
--   [log4js](https://github.com/log4js-node/log4js-node)日志
--   [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)`JWT`身份令牌
-
----
-
--   [Vue3](https://cn.vuejs.org/) 渐进式 JavaScript 框架
 -   [Vite](https://cn.vitejs.dev/) 脚手架
-
----
-
--   [Pnpm](https://pnpm.io/installation) 快速的，节省磁盘空间的包管理工具
+-   [Vitest](https://cn.vitest.dev/) 测试框架
 -   [Typescript](https://www.tslang.cn) JavaScript 的超集
 -   [Eslint](https://eslint.bootcss.com/) 可组装的 JavaScript 和 JSX 检查工具
 -   [Prettier](https://prettier.io/) 代码格式化程序
 -   [LintStaged](https://github.com/okonet/lint-staged#readme) 针对暂存的 git 文件运行检查
 -   [Husky](https://typicode.github.io/husky) 改善你的提交
 -   [CommitLint](https://github.com/conventional-changelog/commitlint#readme) 检查代码提交消息
--   [@xwink/eslint-config](https://github.com/x-wink/eslint-config) 共享 Eslint 配置文件
--   [@xwink/sftp](https://github.com/x-wink/sftp) 远程部署 SFTP 命令行工具
 
-## 👍 使用说明
+## 👨‍🎨 作者
 
--   项目分为前端和后端两个项目，分别是`apps/client`和`apps/server`
--   后端实体类、持久层、服务层、控制层分别对应文件夹`entity`、`dao`、`service`、`controller`
--   `.env`文件为配置文件，因开源原因开发环境会使用`.env.local`文件（不会上传到`git`），可在`utils/config.ts`中修改
--   配置文件中全部都是字符串，目前会自动将数值转为数字类型，目录（属性名以`dir.`开头）会相对于`.env`文件补全路径，`xxx.xxx=xxx`形式的属性会解析成对象结构
--   前端项目编译后生成产物到`dist/client`目录，会被后端服务当做静态资源，可直接部署不需要`nginx`
--   后端项目编译后会将`ssl`文件夹下的证书、`.env.production`生产环境配置、`scripts/run.sh`启动脚本复制到产物`dist/server`目录
--   编译完成后通过`sftp`上传到远程服务器，配置文件为项目根目录`sftp.json`
+> XWINK
 
-## 👤 Author
-
-**向文可**
-
--   Email: 13202090601@163.com
+-   Email: 1041367524@qq.com
 -   Github: [@x-wink](https://github.com/x-wink)
+-   Homepage: https://xwink.fun
 
-## 🤝 Contributing
+## 🤝 贡献
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/x-wink/fullstack-template/issues).
+> 欢迎大家随时[点击这里](https://github.com/x-wink/fullstack-template/issues)为我提供贡献、问题和功能建议
 
-## Show your support
+## 😘 感谢支持
 
-Give a ⭐️ if this project helped you!
-
----
-
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+> 如果觉得项目对你有帮助，就帮我点个小星星吧~ ⭐️

@@ -1,17 +1,12 @@
 {
     "name": "@pkgs/jwt",
     "version": "1.0.0",
-    "description": "",
     "main": "src/index.ts",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC",
+    "types": "src/index.ts",
     "dependencies": {
-        "jsonwebtoken": "^9.0.0"
+        "jose": "^4.14.6"
     },
     "devDependencies": {
-        "@types/jsonwebtoken": "^9.0.2"
+        "@vercel/ncc": "^0.36.1"
     }
 }

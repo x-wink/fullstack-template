@@ -1,0 +1,10 @@
+{
+    "root": true,
+    "extends": ["@xwink/eslint-config/vue"],
+    "parserOptions": {
+        "parser": {
+            "ts": "@typescript-eslint/parser",
+            "<template>": "espree"
+        }
+    }
+}

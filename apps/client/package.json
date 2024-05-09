@@ -1,42 +1,34 @@
 {
     "name": "@apps/client",
-    "version": "1.0.0",
     "private": true,
+    "version": "1.0.0",
     "type": "module",
-    "author": {
-        "name": "向文可",
-        "email": "1041367524@qq.com",
-        "url": "https://github.com/saatana97"
-    },
     "scripts": {
         "dev": "vite",
+        "build": "vite build",
         "preview": "vite preview",
-        "build": "npm run type-check && vite build",
-        "type-check": "vue-tsc --noEmit",
-        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path .gitignore",
-        "prettier": "prettier --write ./**/*.{vue,ts,tsx,js,jsx,css,json,md}"
+        "sftp": "npx wink-sftp -c sftp.json",
+        "release": "pnpm build && pnpm sftp"
     },
     "dependencies": {
-        "axios": "^1.3.4",
-        "mitt": "^3.0.0",
-        "qs": "^6.11.1",
-        "vant": "^4.1.2",
-        "vue": "^3.2.45",
-        "vue-router": "^4.1.6"
+        "@amap/amap-jsapi-loader": "^1.0.1",
+        "@pkgs/apis": "workspace:^",
+        "@pkgs/components": "workspace:^",
+        "@pkgs/jwt": "workspace:^",
+        "@pkgs/model": "workspace:^",
+        "@pkgs/stores": "workspace:^",
+        "dayjs": "^1.11.10",
+        "jsqr": "^1.4.0",
+        "vant": "^4.8.0",
+        "vue": "^3.3.4",
+        "vue-router": "4"
     },
     "devDependencies": {
-        "@types/qs": "^6.9.7",
-        "@vitejs/plugin-legacy": "^3.0.1",
-        "@vitejs/plugin-vue": "^4.0.0",
-        "@vue/eslint-config-prettier": "^7.0.0",
-        "@vue/eslint-config-typescript": "^11.0.0",
-        "@vue/tsconfig": "^0.1.3",
-        "eslint": "^8.22.0",
-        "eslint-plugin-vue": "^9.3.0",
-        "less": "^4.1.3",
-        "prettier": "^2.7.1",
-        "terser": "^5.16.5",
-        "vite": "^4.0.0",
-        "vue-tsc": "^1.0.12"
+        "@vitejs/plugin-legacy": "^5.3.2",
+        "@vitejs/plugin-vue": "^4.2.3",
+        "less": "^4.2.0",
+        "unplugin-auto-import": "^0.16.6",
+        "unplugin-vue-components": "^0.25.2",
+        "vite": "^4.4.5"
     }
 }

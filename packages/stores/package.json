@@ -1,0 +1,17 @@
+{
+    "name": "@pkgs/stores",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "src/index",
+    "types": "src/index",
+    "peerDependencies": {
+        "vue": "^3.3.4",
+        "vue-router": "4"
+    },
+    "dependencies": {
+        "@pkgs/apis": "workspace:^",
+        "@pkgs/jwt": "workspace:^",
+        "@pkgs/model": "workspace:^",
+        "pinia": "^2.1.6"
+    }
+}

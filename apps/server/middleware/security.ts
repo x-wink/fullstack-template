@@ -1,27 +1,32 @@
-import { Request, RequestHandler } from 'express';
-import { Res } from '../entity';
-import { verify } from '../utils';
+import type { Request, RequestHandler } from 'express';
+import { Res } from '@pkgs/model';
+import { useSession, verify } from '../utils';
+import { exprised } from '@pkgs/jwt';
 
 export const security = (whiteList: string[]): RequestHandler[] => {
-    const getToken = (req: Request) =>
-        req.query.authorization ?? req.headers.authorization ?? req.cookies?.authorization;
+    const allowGuest = (req: Request) => whiteList.some((item) => req.url.startsWith(item));
     return [
         // 过滤未授权请求，放行白名单
         (req, res, next) => {
-            const token = getToken(req);
-            if (token || whiteList.some((item) => req.url.startsWith(item))) {
+            const { getToken } = useSession(req);
+            if (allowGuest(req) || getToken()) {
                 next();
             } else {
                 res.send(Res.forbidden());
             }
         },
         // 校验token
-        (req, res, next) => {
-            const token = getToken(req);
-            if (!token || verify(token)) {
-                next();
+        async (req, res, next) => {
+            const { getToken } = useSession(req);
+            const token = getToken();
+            if (allowGuest(req) || !token || (await verify(token))) {
+                if (token && exprised(token)) {
+                    res.send(Res.forbidden('登录信息已过期，请重新登录'));
+                } else {
+                    next();
+                }
             } else {
-                res.send(Res.forbidden());
+                res.send(Res.forbidden('身份校验失败'));
             }
         },
     ];

@@ -1,8 +1,11 @@
-import { fileURLToPath, URL } from 'node:url';
-
-import legacy from '@vitejs/plugin-legacy';
+/* eslint-disable no-console */
 import vue from '@vitejs/plugin-vue';
-import { loadEnv, type ConfigEnv, UserConfig } from 'vite';
+import { resolve } from 'path';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import legacy from '@vitejs/plugin-legacy';
+import type { UserConfig } from 'vite';
+import { loadEnv, type ConfigEnv } from 'vite';
 
 // https://vitejs.dev/config/
 export default (configEnv: ConfigEnv) => {
@@ -13,29 +16,94 @@ export default (configEnv: ConfigEnv) => {
         base: env.VITE_BASE_URL,
         server: {
             host: '0.0.0.0',
-            port: 5173,
+            port: 9900,
             open: false,
             proxy: {
                 [env.VITE_API_BASE_URL]: {
-                    target: env.VITE_PROXY_TARGET,
+                    target: env.VITE_API_PROXY_TARGET,
                     changeOrigin: true,
                     rewrite: (path: string) => path.replace(new RegExp('^' + env.VITE_API_BASE_URL), ''),
                 },
             },
         },
-        build: {
-            outDir: '../../dist/client',
-            emptyOutDir: true,
-        },
         resolve: {
             alias: {
-                '@': fileURLToPath(new URL('./src', import.meta.url)),
+                '@': resolve(__dirname, './src'),
             },
         },
         plugins: [
-            vue(),
+            {
+                name: 'vite-plugin-build-time',
+                transformIndexHtml(html: string) {
+                    return html.replaceAll('@{build-time}', new Date().toLocaleString());
+                },
+            },
+            vue({
+                script: {
+                    defineModel: true,
+                },
+            }),
+            AutoImport({
+                include: [/\.tsx?$/, /\.vue\??/],
+                imports: [
+                    'vue',
+                    'vue-router',
+                    {
+                        from: '@pkgs/stores',
+                        imports: ['useUserStore', 'useLayoutStore'],
+                    },
+                    {
+                        from: '@pkgs/apis',
+                        imports: [
+                            {
+                                name: '*',
+                                as: 'api',
+                            },
+                        ],
+                    },
+                    {
+                        from: '@pkgs/components',
+                        imports: ['SeatInstance'],
+                        type: true,
+                    },
+                ],
+                eslintrc: {
+                    enabled: true,
+                    filepath: './src/.eslintrc',
+                    globalsPropValue: true,
+                },
+                dts: './src/auto-imports.d.ts',
+            }),
+            Components({
+                dirs: [],
+                resolvers: [
+                    (name: string) => {
+                        if (name.startsWith('X')) {
+                            return {
+                                name,
+                                from: '@pkgs/components',
+                            };
+                        } else if (name.startsWith('Common')) {
+                            return {
+                                name,
+                                from: '@/components',
+                            };
+                        }
+                    },
+                ],
+                dts: './src/auto-components.d.ts',
+            }),
             legacy({
-                targets: ['defaults', 'not IE 11', 'chrome 52'],
+                targets: [
+                    'last 2 versions and not dead',
+                    '> 0.3%',
+                    'Firefox ESR',
+                    'Chrome >= 70',
+                    'Android >= 56',
+                    'ios_saf >= 11',
+                    'safari >= 11',
+                    'not IE 11',
+                ],
             }),
         ],
     } as UserConfig;

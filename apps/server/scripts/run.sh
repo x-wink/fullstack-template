@@ -1,4 +1,4 @@
-APP=myapp
+APP=study-room
 echo "尝试停止服务"
 PID=$(ps -ef | grep node | grep $APP | awk '{print $2}')
 if [ -z "${PID}" ]; then
@@ -7,8 +7,9 @@ else
 	kill -9 $PID
 	echo "服务停止成功："$PID
 fi
-MAIN=/apps/$APP/server/index.js
+MAIN=/apps/$APP/index.js
 LOG=/dev/null
+LOG=/apps/$APP/out.log
 chmod a+x $MAIN
 echo "开始启动服务"
 nohup node --max-old-space-size=3072 $MAIN >$LOG 2>&1 &

@@ -1,0 +1,21 @@
+{
+    "name": "@pkgs/apis",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "types": "src/index.ts",
+    "peerDependencies": {
+        "@pkgs/model": "workspace:^"
+    },
+    "optionalDependencies": {
+        "element-plus": "^2.3.14",
+        "vant": "^4.8.0"
+    },
+    "dependencies": {
+        "@pkgs/stores": "workspace:^",
+        "axios": "^1.5.0",
+        "qs": "^6.11.2"
+    },
+    "devDependencies": {
+        "@types/qs": "^6.9.8"
+    }
+}

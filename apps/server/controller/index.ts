@@ -1,13 +1,22 @@
-import { testController } from './test';
-import { userController } from './user';
-import { fileController } from './file';
-import { Application, Router, json } from 'express';
+import systemSetup from './system';
+import reserveSetup from './reserve';
+import signSetup from './sign';
+import cleaningSetup from './cleaning';
+import feedbackSetup from './feedback';
+import wechatSetup from './wechat';
+import messageSetup from './message';
+import type { Application } from 'express';
+import { Router, json } from 'express';
 import { config } from '../utils';
-export const setup = (app: Application) => {
+export default (app: Application) => {
     const router = Router();
     router.use(json());
-    router.use('/test', testController);
-    router.use('/user', userController);
-    router.use('/file', fileController);
+    systemSetup(router);
+    reserveSetup(router);
+    signSetup(router);
+    cleaningSetup(router);
+    feedbackSetup(router);
+    wechatSetup(router);
+    messageSetup(router);
     app.use(config.publish.base, router);
 };
