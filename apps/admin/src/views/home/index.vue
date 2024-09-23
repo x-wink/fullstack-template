@@ -9,12 +9,22 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
+        <div class="right">
+            <h3>资料文件</h3>
+            <br />
+            <ul>
+                <li>
+                    <a :href="doc" target="_blank">市传研院研究生办公区域管理规定</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
     import banner1 from '@/assets/banner1.jpg';
     import banner2 from '@/assets/banner2.jpg';
+    import doc from '@/assets/市传研院研究生办公区域管理规定.docx?url';
     const banners = [banner1, banner2];
 </script>
 

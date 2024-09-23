@@ -19,6 +19,14 @@ export const router = createRouter({
                     redirect: { name: 'UserManage' },
                     children: [
                         {
+                            name: 'Demo',
+                            path: 'demo',
+                            component: () => import('@/views/system/demo/index.vue'),
+                            meta: {
+                                guest: true,
+                            },
+                        },
+                        {
                             name: 'UserManage',
                             path: 'user',
                             redirect: { name: 'SearchUser' },
@@ -93,151 +101,6 @@ export const router = createRouter({
                                     name: 'SearchLog',
                                     path: 'list',
                                     component: () => import('@/views/system/log/list.vue'),
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    name: 'ReserveManage',
-                    path: 'reserve',
-                    redirect: { name: 'SearchReserve' },
-                    children: [
-                        {
-                            name: 'RoomManage',
-                            path: 'room',
-                            redirect: { name: 'SearchRoom' },
-                            children: [
-                                {
-                                    name: 'SearchRoom',
-                                    path: 'list',
-                                    component: () => import('@/views/reserve/room/list.vue'),
-                                },
-                                {
-                                    name: 'CreateRoom',
-                                    path: 'form',
-                                    component: () => import('@/views/reserve/room/form.vue'),
-                                },
-                                {
-                                    name: 'UpdateRoom',
-                                    path: 'form/:id',
-                                    component: () => import('@/views/reserve/room/form.vue'),
-                                },
-                                {
-                                    name: 'RoomRecord',
-                                    path: 'record/:id',
-                                    component: () => import('@/views/reserve/room/record.vue'),
-                                },
-                            ],
-                        },
-                        {
-                            name: 'TimeManage',
-                            path: 'time',
-                            redirect: { name: 'SearchTime' },
-                            children: [
-                                {
-                                    name: 'SearchTime',
-                                    path: 'list',
-                                    component: () => import('@/views/reserve/time/list.vue'),
-                                },
-                                {
-                                    name: 'CreateTime',
-                                    path: 'form',
-                                    component: () => import('@/views/reserve/time/form.vue'),
-                                },
-                                {
-                                    name: 'UpdateTime',
-                                    path: 'form/:id',
-                                    component: () => import('@/views/reserve/time/form.vue'),
-                                },
-                            ],
-                        },
-                        {
-                            name: 'BookingManage',
-                            path: 'booking',
-                            redirect: { name: 'SearchBooking' },
-                            children: [
-                                {
-                                    name: 'SearchBooking',
-                                    path: 'list',
-                                    component: () => import('@/views/reserve/booking/list.vue'),
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    name: 'SignManage',
-                    path: 'sign',
-                    redirect: { name: 'SearchSign' },
-                    children: [
-                        {
-                            name: 'SearchSign',
-                            path: 'list',
-                            component: () => import('@/views/sign/list.vue'),
-                        },
-                    ],
-                },
-                {
-                    name: 'FeedbackManage',
-                    path: 'feedback',
-                    redirect: { name: 'SearchFeedback' },
-                    children: [
-                        {
-                            name: 'SearchFeedback',
-                            path: 'list',
-                            component: () => import('@/views/feedback/list.vue'),
-                        },
-                    ],
-                },
-                {
-                    name: 'CleaningManage',
-                    path: 'cleaning',
-                    redirect: { name: 'SearchCleaning' },
-                    children: [
-                        {
-                            name: 'SearchCleaning',
-                            path: 'list',
-                            component: () => import('@/views/cleaning/list.vue'),
-                        },
-                        {
-                            name: 'CreateCleaning',
-                            path: 'form',
-                            component: () => import('@/views/cleaning/form.vue'),
-                        },
-                        {
-                            name: 'UpdateCleaning',
-                            path: 'form/:id',
-                            component: () => import('@/views/cleaning/form.vue'),
-                        },
-                    ],
-                },
-                {
-                    name: 'ApprovalManage',
-                    path: 'approval',
-                    redirect: { name: 'SearchSignupApproval' },
-                    children: [
-                        {
-                            name: 'SignupApproval',
-                            path: 'signup',
-                            redirect: { name: 'SearchSignupApproval' },
-                            children: [
-                                {
-                                    name: 'SearchSignupApproval',
-                                    path: 'list',
-                                    component: () => import('@/views/approval/signup/list.vue'),
-                                },
-                            ],
-                        },
-                        {
-                            name: 'BookingApproval',
-                            path: 'booking',
-                            redirect: { name: 'SearchBookingApproval' },
-                            children: [
-                                {
-                                    name: 'SearchBookingApproval',
-                                    path: 'list',
-                                    component: () => import('@/views/approval/booking/list.vue'),
                                 },
                             ],
                         },

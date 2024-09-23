@@ -13,12 +13,9 @@
     "dependencies": {
         "@amap/amap-jsapi-loader": "^1.0.1",
         "@pkgs/apis": "workspace:^",
-        "@pkgs/components": "workspace:^",
         "@pkgs/jwt": "workspace:^",
         "@pkgs/model": "workspace:^",
         "@pkgs/stores": "workspace:^",
-        "dayjs": "^1.11.10",
-        "jsqr": "^1.4.0",
         "vant": "^4.8.0",
         "vue": "^3.3.4",
         "vue-router": "4"

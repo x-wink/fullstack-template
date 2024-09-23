@@ -3,6 +3,7 @@ import http from 'http';
 import { config, env, useLogger } from './utils';
 import setupControllers from './controller';
 import { preSetup, postSetup } from './middleware';
+import { setupTasks } from './tasks';
 // 配置服务
 const app = express();
 preSetup(app);
@@ -15,5 +16,6 @@ const {
 } = config;
 logger.info(config);
 http.createServer(app).listen(port, () => {
+    setupTasks();
     logger.info(`HTTP服务启动成功【${env}】 >> http://${domain}:${port}`);
 });

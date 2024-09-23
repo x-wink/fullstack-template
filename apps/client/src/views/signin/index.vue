@@ -1,11 +1,10 @@
 <template>
     <div class="login-container x-flex col col-center">
-        <div class="title">自习室预约系统</div>
-        <img alt="LOGO" class="logo" src="@/assets/logo.png" />
+        <div class="title">XXX系统</div>
         <van-form class="box x-flex col" @submit="handleSignin">
             <h3>欢迎登录</h3>
-            <van-field v-model="form.username" :left-icon="IconUsername" placeholder="请输入学号" />
-            <van-field v-model="form.password" :left-icon="IconPassword" placeholder="请输入密码" type="password" />
+            <van-field v-model="form.username" placeholder="请输入学号" />
+            <van-field v-model="form.password" placeholder="请输入密码" type="password" />
             <div class="signup" @click="handleSignup">注册</div>
             <van-button block class="signin" :loading="loading" native-type="submit" type="primary">登录</van-button>
         </van-form>
@@ -15,9 +14,6 @@
 
 <script setup lang="ts">
     import { showToast } from 'vant';
-    import IconUsername from '@/assets/icons/username.png';
-    import IconPassword from '@/assets/icons/password.png';
-    import { UserStatus } from '@pkgs/model';
     const userStore = useUserStore();
     const router = useRouter();
 
@@ -29,20 +25,13 @@
     const handleSignin = async () => {
         loading.value = true;
         if (await userStore.signin(form.value)) {
-            const status = userStore.profile?.status;
-            if (status === UserStatus.ACCEPT) {
-                showToast('登录成功');
-                const url = userStore.returnUrl;
-                if (url) {
-                    location.replace(url);
-                    userStore.returnUrl = '';
-                } else {
-                    router.push({ name: 'Home' });
-                }
-            } else if (status === UserStatus.APPROVAL) {
-                router.push({ name: 'Status', params: { status: 'approval' } });
-            } else if (status === UserStatus.REJECT) {
-                showToast('注册审核未通过');
+            showToast('登录成功');
+            const url = userStore.returnUrl;
+            if (url) {
+                location.replace(url);
+                userStore.returnUrl = '';
+            } else {
+                router.push({ name: 'Home' });
             }
         } else {
             showToast('登录失败');
@@ -60,8 +49,7 @@
         height: 100%;
         position: relative;
         background:
-            linear-gradient(180deg, var(--dark-blue) 0%, rgba(27, 40, 84, 0) 45%),
-            url('../../assets/bgp.png') center center / cover no-repeat;
+            linear-gradient(180deg, var(--dark-blue) 0%, rgba(27, 40, 84, 0) 45%);
         > * {
             position: relative;
             z-index: 1;
@@ -70,11 +58,6 @@
             margin-top: 15%;
             color: #fff;
             font-weight: bolder;
-        }
-        .logo {
-            width: 100px;
-            height: 100px;
-            margin: 10% 0 18%;
         }
         .box {
             width: 300px;

@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@pkgs/stores": "workspace:^",
+        "@pkgs/rsa": "workspace:^",
         "axios": "^1.5.0",
         "qs": "^6.11.2"
     },

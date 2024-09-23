@@ -34,6 +34,11 @@
                     <el-option v-for="(item, index) in userTypeOpts" :key="index" v-bind="item" />
                 </el-select>
             </el-form-item>
+            <el-form-item prop="enabled">
+                <el-select v-model="condition.enabled" clearable placeholder="状态">
+                    <el-option v-for="(item, index) in userEnabledOpts" :key="index" v-bind="item" />
+                </el-select>
+            </el-form-item>
         </template>
         <template #default>
             <el-table-column label="用户名" prop="username" />
@@ -55,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-    import { UserType, type User, UserStatus, userTypeDict, userTypeOpts } from '@pkgs/model';
+    import { UserType, type User, UserStatus, userTypeDict, userTypeOpts, userEnabledOpts } from '@pkgs/model';
     import type { CommonListInstance } from '@/components';
     import { ElMessage } from 'element-plus';
 

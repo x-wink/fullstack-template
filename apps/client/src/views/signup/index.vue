@@ -1,34 +1,13 @@
 <template>
     <div class="login-container x-flex col col-center row-center">
-        <div class="title">自习室预约系统</div>
-        <img alt="LOGO" class="logo" src="@/assets/logo.png" />
+        <div class="title">XXX系统</div>
         <van-form class="box x-flex col" @submit="handleSignup">
             <h3>欢迎注册</h3>
-            <van-field v-model="form.username" :left-icon="IconUsername" placeholder="请输入学号" />
-            <van-field v-model="form.realname" :left-icon="IconUsername" placeholder="请输入姓名" />
-            <van-field v-model="form.phone" :left-icon="IconPhone" placeholder="请输入手机号码" />
-            <van-field v-model="form.leader" :left-icon="IconLeader" placeholder="请输入导师名称" />
-            <van-field
-                v-model="form.location"
-                :left-icon="IconLocation"
-                placeholder="点击选择区域"
-                readonly
-                @click="areaVisible = true"
-            />
-            <van-popup v-model:show="areaVisible" position="bottom">
-                <van-picker
-                    :columns="userLocationOpts.map(({ label: text, value }) => ({ text, value }))"
-                    @cancel="areaVisible = false"
-                    @confirm="
-                        (e) => {
-                            form.location = e.selectedOptions[0].text;
-                            areaVisible = false;
-                        }
-                    "
-                />
-            </van-popup>
-            <van-field v-model="form.password" :left-icon="IconPassword" placeholder="请输入密码" type="password" />
-            <van-field v-model="form.repwd" :left-icon="IconPassword" placeholder="请再次输入密码" type="password" />
+            <van-field v-model="form.username" placeholder="请输入账号" />
+            <van-field v-model="form.realname" placeholder="请输入姓名" />
+            <van-field v-model="form.phone" placeholder="请输入手机号码" />
+            <van-field v-model="form.password" placeholder="请输入密码" type="password" />
+            <van-field v-model="form.repwd" placeholder="请再次输入密码" type="password" />
             <div class="signup" @click="handleSignin">登录</div>
             <van-button block class="signin" :loading="loading" native-type="submit" type="primary">注册</van-button>
             <br />
@@ -41,7 +20,7 @@
         </van-form>
         <van-dialog v-model:show="protectVisible" confirm-button-text="知道了">
             <div class="protect-dialog x-flex col">
-                <h3>自习室预约系统用户协议</h3>
+                <h3>XXX系统用户协议</h3>
                 <ul class="x-flex col">
                     <li>为了页面展示，在您的明确同意后，收集您的昵称、头像等微信个人信息。</li>
                     <li>为了签到定位，在您的明确同意后，收集您的位置信息。</li>
@@ -54,30 +33,22 @@
 
 <script setup lang="ts">
     import type { Student } from '@pkgs/model';
-    import { studentDefaults, userLocationOpts } from '@pkgs/model';
+    import { studentDefaults } from '@pkgs/model';
     import { showToast } from 'vant';
-    import IconUsername from '@/assets/icons/username.png';
-    import IconPhone from '@/assets/icons/phone.png';
-    import IconLeader from '@/assets/icons/leader.png';
-    import IconLocation from '@/assets/icons/location.png';
-    import IconPassword from '@/assets/icons/password.png';
     const router = useRouter();
 
-    const areaVisible = ref(false);
     const igree = ref([]);
     const protectVisible = ref(false);
 
     const form = ref<Student & { repwd: string }>({ ...studentDefaults(), repwd: '', phone: '' });
     const dict = {
-        username: '学号',
+        username: '账号',
         realname: '姓名',
         phone: '手机号码',
-        leader: '导师名称',
-        location: '区域',
         password: '密码',
     };
     const validate = () => {
-        let valid = ['username', 'realname', 'leader', 'phone', 'location', 'password'].every((key) => {
+        let valid = ['username', 'realname', 'phone', 'password'].every((key) => {
             if (key in dict) {
                 if (!form.value[key as keyof typeof form.value]) {
                     showToast(dict[key as keyof typeof dict] + '不能为空');

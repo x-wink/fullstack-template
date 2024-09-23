@@ -1,8 +1,6 @@
 import crypto from 'crypto';
 import { config } from './config';
-import { UserStatus, type Booking, type Student, BookingStatus } from '@pkgs/model';
 import { getLogger } from 'log4js';
-import dayjs from 'dayjs';
 export const decryptMessage = (encryptedMessage: string, encodingAESKey: string, appId: string) => {
     const decipher = crypto.createDecipheriv('aes-256-cbc', encodingAESKey, '');
     let decrypted = decipher.update(encryptedMessage, 'base64', 'utf8');
@@ -61,8 +59,8 @@ export const setMenu = async () => {
         button: [
             {
                 type: 'view',
-                name: '自习室预约',
-                url: `https://${domain}/study-room/`,
+                name: 'H5页面',
+                url: `https://${domain}/`,
             },
         ],
     });
@@ -105,11 +103,7 @@ export const getUserInfo = async (code: string) => {
     );
 };
 
-export const MessageTemplate = {
-    BookingApprovalResult: 'aOpUl2r6yemHLipC0PfQfD1w_YFS18mH-T9AYvjNkiQ',
-    SignupApprovalResult: '5r1K-jnZFw1u357ecfksrykeQwfj8e677Yg7OzyFJ1g',
-    FraudWarn: 'rUQyhOVFNej_rWY3PSURc0i1iWMhbQ76q2vGcMIE1k4',
-};
+export const MessageTemplate = {} as Record<string, string>;
 
 const logger = getLogger('wechat');
 export const sendTemplateMessage = async (
@@ -131,58 +125,4 @@ export const sendTemplateMessage = async (
         url,
     });
     logger.info('发送公众号模板消息', res);
-};
-export const sendBookingApprovalMessage = async (data: Booking) => {
-    await sendTemplateMessage(MessageTemplate.BookingApprovalResult, data.user!.openid, {
-        data: {
-            username: {
-                value: data.user!.username,
-            },
-            phone: {
-                value: data.user!.phone,
-            },
-            date: {
-                value: dayjs(data.date).format('MM月DD日'),
-            },
-            roomName: {
-                value: data.room!.name,
-            },
-            seatNo: {
-                value: String(data.seatNo),
-            },
-            status: {
-                value: data.status === BookingStatus.ACCEPT ? '已通过' : '已拒绝',
-                color: data.status === BookingStatus.ACCEPT ? '#00FF00' : '#FF0000',
-            },
-        },
-        url: `https://${domain}/study-room/list`,
-    });
-};
-export const sendSignupApprovalMessage = async (data: Student) => {
-    await sendTemplateMessage(MessageTemplate.SignupApprovalResult, data.openid, {
-        data: {
-            username: {
-                value: data.username,
-            },
-            phone: {
-                value: data.phone,
-            },
-            status: {
-                value: data.status === UserStatus.ACCEPT ? '已通过' : '已拒绝',
-                color: data.status === UserStatus.ACCEPT ? '#00FF00' : '#FF0000',
-            },
-        },
-        url: `https://${domain}/study-room/${data.status === UserStatus.ACCEPT ? 'signin' : 'signup'}`,
-    });
-};
-export const sendFraudWarnMessage = async (openid: string) => {
-    await sendTemplateMessage(MessageTemplate.FraudWarn, openid, {
-        data: {
-            count: {
-                value: '3',
-                color: '#FF0000',
-            },
-        },
-        url: `https://${domain}/study-room`,
-    });
 };

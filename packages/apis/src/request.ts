@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import type { Res } from '@pkgs/model';
 import { useUserStore } from '@pkgs/stores';
+import { encryptData } from '@pkgs/rsa/browser';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import qs from 'qs';
@@ -13,7 +14,7 @@ const instance = axios.create({
     },
 });
 instance.interceptors.request.use(
-    (config) => {
+    async (config) => {
         const userStore = useUserStore();
         config.params = Object.fromEntries(
             Object.entries(config.params || {}).filter(
@@ -30,9 +31,10 @@ instance.interceptors.request.use(
                 'application/x-www-form-urlencoded;charset=UTF-8'
         ) {
             config.data = qs.stringify(config.data, { allowDots: true, arrayFormat: 'indices' });
-        }
-        if (config.data instanceof FormData) {
+        } else if (config.data instanceof FormData) {
             (config.headers as Record<string, unknown>)['Content-Type'] = 'multipart/form-data';
+        } else if (typeof config.data === 'object') {
+            config.data = await encryptData(JSON.stringify(config.data));
         }
         return config;
     },

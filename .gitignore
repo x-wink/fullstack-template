@@ -1,9 +1,5 @@
 node_modules
 dist
-uploads
-*.local
-*.production
-package-lock.json
-pnpm-lock.yaml
 logs
-*.log
+pnpm-lock.yaml
+.eslintcache

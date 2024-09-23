@@ -1,4 +1,3 @@
-import { UserStatus } from '@pkgs/model';
 import { exprised } from '@pkgs/jwt';
 import { createRouter, createWebHistory } from 'vue-router';
 export const router = createRouter({
@@ -29,80 +28,9 @@ export const router = createRouter({
                     },
                 },
                 {
-                    name: 'Status',
-                    path: 'status/:status',
-                    component: () => import('@/views/status/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Room',
-                    path: 'room',
-                    component: () => import('@/views/room/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Seat',
-                    path: 'seat/:id',
-                    component: () => import('@/views/seat/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Confirm',
-                    path: 'confirm/:id',
-                    component: () => import('@/views/confirm/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Help',
-                    path: 'help',
-                    component: () => import('@/views/help/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Rule',
-                    path: 'rule',
-                    component: () => import('@/views/rule/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Feedback',
-                    path: 'feedback',
-                    component: () => import('@/views/feedback/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Task',
-                    path: 'task',
-                    component: () => import('@/views/task/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'List',
-                    path: 'list',
-                    component: () => import('@/views/list/index.vue'),
-                    meta: {},
-                },
-                {
-                    name: 'Scan',
-                    path: 'scan/:id/:type',
-                    component: () => import('@/views/scan/index.vue'),
-                    meta: {
-                        guest: true,
-                    },
-                },
-                {
                     name: 'Home',
                     path: 'home',
                     component: () => import('@/views/home/index.vue'),
-                    meta: {
-                        header: false,
-                        footer: true,
-                    },
-                },
-                {
-                    name: 'Profile',
-                    path: 'profile',
-                    component: () => import('@/views/profile/index.vue'),
                     meta: {
                         header: false,
                         footer: true,
@@ -131,8 +59,6 @@ router.beforeEach((to, _, next) => {
     if (!to.meta.guest) {
         if (!userStore.token || exprised(userStore.token)) {
             next({ name: 'Signin' });
-        } else if (userStore.profile?.status !== UserStatus.ACCEPT && to.name !== 'Status') {
-            next({ name: 'Status', params: { status: 'approval' } });
         } else {
             next();
         }

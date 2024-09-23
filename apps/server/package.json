@@ -3,36 +3,32 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "set MODE=test && nodemon index.ts",
-        "build": "tsc --noEmit && ncc build ./index.ts -o ./dist && pnpm copy-run && pnpm copy-config",
-        "copy-run": "ts-node ./scripts/copy.ts ./scripts/run.sh ./dist/run.sh",
-        "copy-config": "ts-node ./scripts/copy.ts ./.env.production ./dist/config.env",
+        "build": "tsc --noEmit && ncc build ./index.ts -o ./dist && run-p copy:*",
+        "copy:run": "ts-node ./scripts/copy.ts ./scripts/run.sh ./dist/run.sh",
+        "copy:config": "ts-node ./scripts/copy.ts ./.env.production ./dist/config.env",
         "sftp": "npx wink-sftp -c sftp.json",
         "release": "pnpm build && pnpm sftp"
     },
-    "author": "向文可",
     "devDependencies": {
-        "@types/connect-history-api-fallback": "^1.5.0",
         "@types/express": "^4.17.17",
-        "@types/express-serve-static-core": "^4.17.36",
         "@types/lodash": "^4.14.194",
         "@types/multer": "^1.4.7",
-        "@types/serve-static": "^1.15.2",
+        "@types/node-cron": "^3.0.11",
         "@types/uuid": "^9.0.1",
         "@vercel/ncc": "^0.36.1"
     },
     "dependencies": {
         "@pkgs/jwt": "workspace:^",
         "@pkgs/model": "workspace:^",
-        "@xwink/dao": "0.0.3-beta.5",
-        "connect-history-api-fallback": "^2.0.0",
-        "crypto": "^1.0.1",
-        "dayjs": "^1.11.10",
+        "@pkgs/rsa": "workspace:^",
+        "@xwink/dao": "0.0.3-beta.7",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "lodash": "^4.17.21",
         "log4js": "^6.9.1",
         "multer": "^1.4.5-lts.1",
         "mysql2": "^3.6.2",
+        "node-cron": "^3.0.3",
         "uuid": "^9.0.0"
     }
 }

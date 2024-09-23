@@ -39,9 +39,9 @@ export interface Config {
 export const env = process.env.NODE_ENV ?? 'production';
 export const isDev = env === 'development';
 import dotenv from 'dotenv';
-import path from 'path';
+import { resolve } from 'path';
 const { error, parsed: envConfig } = dotenv.config({
-    path: path.resolve(__dirname, isDev ? '../.env' : 'config.env'),
+    path: resolve(__dirname, isDev ? '../.env' : 'config.env'),
 });
 if (error) {
     console.error(error);
@@ -53,7 +53,7 @@ const resolveConfig = (json: Record<string, unknown> = {}) => {
     for (const p in json) {
         if (p.startsWith('dir.')) {
             // 处理路径
-            json[p] = path.resolve(__dirname, isDev ? '../' : './', json[p] as string);
+            json[p] = resolve(__dirname, isDev ? '../' : './', json[p] as string);
         } else if (!isNaN(Number(json[p]).valueOf())) {
             // 处理数字
             json[p] = Number(json[p]);

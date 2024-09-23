@@ -22,6 +22,17 @@
                 <el-option v-for="(item, index) in userTypeOpts" :key="index" :label="item.label" :value="item.value" />
             </el-select>
         </el-form-item>
+        <template v-if="form.type === UserType.STUDENT">
+            <el-form-item label="真实姓名" prop="realname">
+                <el-input v-model="form.realname" clearable />
+            </el-form-item>
+            <el-form-item label="导师姓名" prop="leader">
+                <el-input v-model="form.leader" clearable />
+            </el-form-item>
+            <el-form-item label="区域" prop="location">
+                <el-input v-model="form.location" clearable />
+            </el-form-item>
+        </template>
         <el-form-item label="启用状态" prop="enabled">
             <el-switch v-model="form.enabled" active-text="启用" />
         </el-form-item>
@@ -32,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-    import { userDefaults, userTypeOpts, UserStatus } from '@pkgs/model';
+    import { userDefaults, userTypeOpts, UserStatus, UserType } from '@pkgs/model';
     import type { User, Role } from '@pkgs/model';
     import { ElMessage } from 'element-plus';
 
@@ -47,6 +58,17 @@
             enabled: [{ required: true, message: '启用状态不能为空' }],
         };
     });
+
+    watch(
+        () => form.value.type,
+        (type) => {
+            if (type !== UserType.STUDENT) {
+                form.value.realname = '';
+                form.value.leader = '';
+                form.value.location = '';
+            }
+        }
+    );
 
     const roles = ref([] as Role[]);
     const handleLoadRoles = async () => {

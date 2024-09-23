@@ -112,9 +112,10 @@ export const pageUser = async (pageIndex: number, pageSize: number, condition: U
         .like('realname', condition.realname, () => !!condition.realname)
         .like('leader', condition.leader, () => !!condition.leader)
         .like('phone', condition.phone, () => !!condition.phone)
-        .equal('type', condition.type, () => !!condition.type)
+        .equal('type', condition.type, () => typeof condition.type !== 'undefined')
         .equal('location', condition.location, () => !!condition.location)
         .equal('status', condition.status, () => !!condition.status)
+        .equal('enabled', condition.enabled, () => typeof condition.enabled !== 'undefined')
         .orderBy('create_time', OrderByDirection.DESC);
     const [{ count: total }] = await query<{ count: number }>(builder);
     builder.selectBuilder.children = [];

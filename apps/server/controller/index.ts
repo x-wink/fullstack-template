@@ -1,22 +1,13 @@
 import systemSetup from './system';
-import reserveSetup from './reserve';
-import signSetup from './sign';
-import cleaningSetup from './cleaning';
-import feedbackSetup from './feedback';
 import wechatSetup from './wechat';
-import messageSetup from './message';
+import demoSetup from './demo';
 import type { Application } from 'express';
-import { Router, json } from 'express';
+import { Router } from 'express';
 import { config } from '../utils';
 export default (app: Application) => {
     const router = Router();
-    router.use(json());
     systemSetup(router);
-    reserveSetup(router);
-    signSetup(router);
-    cleaningSetup(router);
-    feedbackSetup(router);
     wechatSetup(router);
-    messageSetup(router);
+    demoSetup(router);
     app.use(config.publish.base, router);
 };

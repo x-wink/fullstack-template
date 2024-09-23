@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "Vue.volar",
+        "xwink.wink-snippets",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "mikestead.dotenv",
+        "jock.svg",
+        "chrmarti.regex",
+        "yzhang.markdown-all-in-one"
+    ]
+}

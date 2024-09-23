@@ -1,5 +1,6 @@
 import { BaseEntity } from '../../base';
 import type { PartialBy } from '@xwink/utils';
+import type { BookingSummary } from '../reserve';
 
 export const userDefaults = () => ({
     type: UserType.STUDENT,
@@ -47,6 +48,26 @@ export const userTypeOpts = [
     {
         label: '管理人员',
         value: UserType.MANAGER,
+    },
+];
+export const userEnabledOpts = [
+    {
+        label: '禁用',
+        value: 0,
+    },
+    {
+        label: '启用',
+        value: 1,
+    },
+];
+export const userVipOpts = [
+    {
+        label: '否',
+        value: 0,
+    },
+    {
+        label: '是',
+        value: 1,
     },
 ];
 
@@ -116,6 +137,11 @@ export class Student extends User {
     declare realname: string;
     declare avatar: string;
     type = UserType.STUDENT;
+}
+
+export class DefaultRecord extends User {
+    count!: number;
+    bookings!: BookingSummary[];
 }
 
 export class UserRoleRelation {
