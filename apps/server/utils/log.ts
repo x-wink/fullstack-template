@@ -1,8 +1,8 @@
 import { configure, getLogger, levels } from 'log4js';
 import { isDev, config } from './config';
 import path from 'path';
-import { Response } from 'express';
-import { Res } from '../entity';
+import type { Response } from 'express';
+import { Res } from '@pkgs/model';
 const {
     dir: { log },
 } = config;
@@ -31,13 +31,13 @@ export const useLogger = (category = 'global', level = levels.DEBUG) => {
 };
 export const useAccessLogger = () => useLogger('access');
 
-const logger = useLogger();
+export const logger = useLogger();
 export const createErrorHandler = (res: Response) => {
     return (e: Error) => {
         logger.error(e);
         if (!res.writableFinished && !res.destroyed && !res.closed) {
             res.status(200);
-            res.send(Res.error((e as Error).message ?? e));
+            res.send(Res.error(e.message ?? e));
         }
     };
 };

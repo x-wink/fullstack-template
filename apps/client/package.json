@@ -10,9 +10,10 @@
     },
     "scripts": {
         "dev": "vite",
+        "build": "vite build",
         "preview": "vite preview",
-        "build": "npm run type-check && vite build",
-        "type-check": "vue-tsc --noEmit"
+        "sftp": "npx wink-sftp -c sftp.json",
+        "release": "pnpm build && pnpm sftp"
     },
     "dependencies": {
         "@pkgs/lib": "workspace:^",

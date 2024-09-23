@@ -1,0 +1,26 @@
+{
+    "name": "@pkgs/rsa",
+    "version": "1.0.0",
+    "main": "src/node.ts",
+    "types": "src/node.ts",
+    "exports": {
+        ".": {
+            "require": "./src/node.ts",
+            "import": "./src/node.ts",
+            "types": "./src/node.ts"
+        },
+        "./node": {
+            "require": "./src/node.ts",
+            "import": "./src/node.ts",
+            "types": "./src/node.ts"
+        },
+        "./browser": {
+            "require": "./src/browser.ts",
+            "import": "./src/browser.ts",
+            "types": "./src/browser.ts"
+        }
+    },
+    "scripts": {
+        "gen": "ts-node ./scripts/gen.ts"
+    }
+}

@@ -11,14 +11,6 @@
             "runtimeExecutable": "npm",
             "skipFiles": ["<node_internals>/**"],
             "type": "node"
-        },
-        {
-            "name": "chat",
-            "request": "launch",
-            "runtimeArgs": ["run-script", "chat"],
-            "runtimeExecutable": "npm",
-            "skipFiles": ["<node_internals>/**"],
-            "type": "node"
         }
     ]
 }

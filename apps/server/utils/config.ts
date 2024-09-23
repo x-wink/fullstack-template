@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 export interface Config {
+    env: 'test' | 'prod';
     publish: {
         base: string;
         domain: string;
@@ -22,14 +23,25 @@ export interface Config {
         user: string;
         password: string;
         database: string;
+        pool: {
+            min: number;
+            max: number;
+            acquire: number;
+            idle: number;
+        };
+    };
+    wechat: {
+        token: string;
+        appid: string;
+        secret: string;
     };
 }
-export const env = process.env.NODE_ENV || 'production';
+export const env = process.env.NODE_ENV ?? 'production';
 export const isDev = env === 'development';
 import dotenv from 'dotenv';
-import path from 'path';
+import { resolve } from 'path';
 const { error, parsed: envConfig } = dotenv.config({
-    path: path.resolve(__dirname, isDev ? '../.env.local' : 'env'),
+    path: resolve(__dirname, isDev ? '../.env' : 'config.env'),
 });
 if (error) {
     console.error(error);
@@ -37,11 +49,11 @@ if (error) {
 }
 import { merge } from 'lodash';
 const resolveConfig = (json: Record<string, unknown> = {}) => {
-    const res = {} as Record<string, unknown>;
+    const res = { env: (process.env.MODE ?? 'prod').trim() } as Record<string, unknown>;
     for (const p in json) {
         if (p.startsWith('dir.')) {
             // 处理路径
-            json[p] = path.resolve(__dirname, isDev ? '../' : './', json[p] as string);
+            json[p] = resolve(__dirname, isDev ? '../' : './', json[p] as string);
         } else if (!isNaN(Number(json[p]).valueOf())) {
             // 处理数字
             json[p] = Number(json[p]);
