@@ -8,22 +8,5 @@
     "eslint.options": { "cache": true },
     "eslint.validate": ["javascript", "typescript", "vue", "javascriptreact", "typescriptreact"],
     "git.enableSmartCommit": true,
-    "vue.codeActions.enabled": false,
-    "sqltools.connections": [
-        {
-            "mysqlOptions": {
-                "authProtocol": "default",
-                "enableSsl": "Disabled"
-            },
-            "previewLimit": 50,
-            "server": "175.178.54.28",
-            "port": 3306,
-            "driver": "MySQL",
-            "name": "腾讯云24",
-            "database": "study-room",
-            "username": "root",
-            "password": "Aa12300."
-        }
-    ],
-    "nuxt.isNuxtApp": false
+    "vue.codeActions.enabled": false
 }

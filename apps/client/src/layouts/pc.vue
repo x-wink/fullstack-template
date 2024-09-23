@@ -1,6 +1,6 @@
 <template>
     <XRain background />
-    <XBox class="layout pc flex col">
+    <XBox class="layout pc x-flex col">
         <Header />
         <main class="main">
             <Aside>

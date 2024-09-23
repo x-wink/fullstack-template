@@ -1,11 +1,12 @@
-import { fileURLToPath, URL } from 'node:url';
-
-import legacy from '@vitejs/plugin-legacy';
+/* eslint-disable no-console */
 import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { loadEnv, type ConfigEnv, UserConfig } from 'vite';
-import { ImportInfo } from 'unplugin-vue-components/types';
+import legacy from '@vitejs/plugin-legacy';
+import type { UserConfig } from 'vite';
+import { loadEnv, type ConfigEnv } from 'vite';
+import type { ImportInfo } from 'unplugin-vue-components/types';
 
 // https://vitejs.dev/config/
 export default (configEnv: ConfigEnv) => {
@@ -31,16 +32,18 @@ export default (configEnv: ConfigEnv) => {
                 },
             },
         },
-        build: {
-            outDir: './dist',
-            emptyOutDir: true,
-        },
         resolve: {
             alias: {
-                '@': fileURLToPath(new URL('./src', import.meta.url)),
+                '@': resolve(__dirname, './src'),
             },
         },
         plugins: [
+            {
+                name: 'vite-plugin-build-time',
+                transformIndexHtml(html: string) {
+                    return html.replace(/@\{build-time\}/g, new Date().toLocaleString());
+                },
+            },
             vue({
                 script: {
                     defineModel: true,
@@ -56,13 +59,26 @@ export default (configEnv: ConfigEnv) => {
                         // import { default as axios } from 'axios',
                         axios: [['default', 'axios']],
                     },
+                    {
+                        from: '@pkgs/stores',
+                        imports: ['useUserStore', 'useLayoutStore'],
+                    },
+                    {
+                        from: '@pkgs/apis',
+                        imports: [
+                            {
+                                name: '*',
+                                as: 'api',
+                            },
+                        ],
+                    },
                 ],
                 eslintrc: {
                     enabled: true,
                     filepath: './src/.eslintrc',
                     globalsPropValue: true,
                 },
-                dts: 'src/auto-imports.d.ts',
+                dts: './src/auto-imports.d.ts',
             }),
             Components({
                 dirs: ['src/components'],
@@ -85,7 +101,16 @@ export default (configEnv: ConfigEnv) => {
                 ],
             }),
             legacy({
-                targets: ['defaults', 'not IE 11', 'chrome 52'],
+                targets: [
+                    'last 2 versions and not dead',
+                    '> 0.3%',
+                    'Firefox ESR',
+                    'Chrome >= 70',
+                    'Android >= 56',
+                    'ios_saf >= 11',
+                    'safari >= 11',
+                    'not IE 11',
+                ],
             }),
         ],
     } as UserConfig;

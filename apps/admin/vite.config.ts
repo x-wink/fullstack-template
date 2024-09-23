@@ -72,12 +72,7 @@ export default (configEnv: ConfigEnv) => {
                 dirs: [],
                 resolvers: [
                     (name: string) => {
-                        if (name.startsWith('X')) {
-                            return {
-                                name,
-                                from: '@pkgs/components',
-                            };
-                        } else if (name.startsWith('Common')) {
+                        if (name.startsWith('Common')) {
                             return {
                                 name,
                                 from: '@/components',

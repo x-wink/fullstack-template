@@ -84,6 +84,10 @@
     "onWatcherCleanup": true,
     "useId": true,
     "useModel": true,
-    "useTemplateRef": true
+    "useTemplateRef": true,
+    "SeatInstance": true,
+    "api": true,
+    "useLayoutStore": true,
+    "useUserStore": true
   }
 }

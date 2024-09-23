@@ -1,21 +1,7 @@
-import {
-    type PSignin,
-    Student,
-    Message,
-    User,
-    UserType,
-    UserStatus,
-    UserRoleRelation,
-    ID,
-    messageDefaults,
-    MessageTopic,
-    DelStatus,
-    Page,
-} from '@pkgs/model';
+import { type PSignin, Student, User, UserType, UserStatus, UserRoleRelation, ID, DelStatus, Page } from '@pkgs/model';
 import { baseColumnDefines, beginTransaction, commit, registRepository, rollback } from '../../dao';
 import { ColumnType, OrderByDirection, QueryBuilder } from '@xwink/dao';
 import { encode, getUserInfo } from '../../utils';
-import { createMessage } from '../message';
 const { query, get, detail, select, create, update, remove } = registRepository<User>(
     {
         name: 't_user',
@@ -204,17 +190,6 @@ export const approvalSignup = async (id: number, status: UserStatus) => {
         if (entity) {
             res = await update(new User({ id, status }));
             entity.status = status;
-            await createMessage(
-                new Message({
-                    ...messageDefaults(),
-                    topic: MessageTopic.SIGNUP,
-                    studentId: id,
-                    studentName: entity.realname,
-                    signupStatus: status,
-                    openid: entity.openid,
-                    content: '',
-                })
-            );
         }
         commit();
     } catch (e) {

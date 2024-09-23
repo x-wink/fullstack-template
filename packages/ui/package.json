@@ -3,11 +3,6 @@
     "version": "1.0.0",
     "private": true,
     "type": "module",
-    "author": {
-        "name": "向文可",
-        "email": "13202090601@163.com",
-        "url": "https://github.com/x-wink"
-    },
     "main": "src/main.ts",
     "scripts": {
         "gen": "ts-node-esm scripts/gen/main.ts"

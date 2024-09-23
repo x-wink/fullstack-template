@@ -1,6 +1,6 @@
 <template>
     <div class="canvas-container">
-        <div class="flex col col-center form">
+        <div class="x-flex col col-center form">
             <div class="form-item">
                 <label for="#index">SVG图片</label>
                 <input id="index" v-model="index" :max="shapes.children.length - 1" :min="0" type="range" />

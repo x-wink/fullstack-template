@@ -1,6 +1,6 @@
 <template>
-    <div class="scene flex col" :style="{ aspectRatio: props.col / props.row }">
-        <div v-for="y in props.row" :key="y" class="row flex" :style="{ height: `${100 / props.row}%` }">
+    <div class="scene x-flex col" :style="{ aspectRatio: props.col / props.row }">
+        <div v-for="y in props.row" :key="y" class="row x-flex" :style="{ height: `${100 / props.row}%` }">
             <Box
                 v-for="x in props.col"
                 :key="x"
@@ -12,7 +12,8 @@
 </template>
 
 <script setup lang="ts">
-    import { Container, Shape, Point } from './core';
+    import type { Container } from './core';
+    import { Shape, Point } from './core';
     import Box from './box.vue';
 
     const props = withDefaults(

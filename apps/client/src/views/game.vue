@@ -3,7 +3,7 @@
         <li
             v-for="(item, index) in list"
             :key="index"
-            class="game-item flex col row-center col-center"
+            class="game-item x-flex col row-center col-center"
             @click="handleClick(item.code)"
         >
             <div class="img">

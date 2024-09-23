@@ -1,6 +1,6 @@
 <template>
-    <header class="header flex row-between">
-        <div class="left flex col-center">
+    <header class="header x-flex row-between">
+        <div class="left x-flex col-center">
             <h2 class="title">X-WINK</h2>
             <p v-if="isPortrait" @click="goHome">游戏大厅</p>
             <x-menu v-else :active="currentMenu" class="modules" :menus="menus" />

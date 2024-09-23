@@ -1,16 +1,16 @@
 <template>
-    <div class="russia-block flex col">
+    <div class="russia-block x-flex col">
         <div v-if="game.status === 0" class="stop">
             游戏暂停
             <button @click="game.start()">继续游戏</button>
         </div>
-        <div class="next flex row-center">
+        <div class="next x-flex row-center">
             <Container v-for="(next, index) in game.next" :key="index" :boxes="next.boxes" />
         </div>
         <div
             v-for="(player, p) in game.player"
             :key="p"
-            class="player flex col col-center"
+            class="player x-flex col col-center"
             :class="{ target: p === 0 && game.player.length > 1 }"
         >
             <div v-if="player.status === 0" class="gameover">
@@ -35,7 +35,8 @@
     import { Config, Game, GameStatus } from './core';
     import Robot from './robot';
     import { Person } from './person';
-    import { Control, Keys } from '../controls/core';
+    import type { Keys } from '../controls/core';
+    import { Control } from '../controls/core';
 
     const proxy = getCurrentInstance()!.proxy;
     const config = reactive(new Config(20, 10, 40));
