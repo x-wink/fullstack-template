@@ -32,7 +32,7 @@ export default (configEnv: ConfigEnv) => {
             },
         },
         build: {
-            outDir: '../../dist/client',
+            outDir: './dist',
             emptyOutDir: true,
         },
         resolve: {

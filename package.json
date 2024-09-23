@@ -23,7 +23,8 @@
         "publish": "npx wink-sftp -c sftp.json",
         "lint": "eslint . --ext .vue,.ts,.tsx --fix --ignore-path .gitignore --cache",
         "prettier": "prettier --write ./**/*.{vue,ts,tsx,less,json,md,html}",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "postinstall": "pnpm build:pkgs"
     },
     "dependencies": {
         "@xwink/utils": "^1.0.0"
