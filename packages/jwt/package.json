@@ -1,12 +1,12 @@
 {
-    "name": "@pkgs/jwt",
-    "version": "1.0.0",
-    "main": "src/index.ts",
-    "types": "src/index.ts",
-    "dependencies": {
-        "jose": "^4.14.6"
-    },
-    "devDependencies": {
-        "@vercel/ncc": "^0.36.1"
-    }
+  "name": "@pkgs/jwt",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "jose": "^4.14.6"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.1"
+  }
 }

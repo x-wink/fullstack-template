@@ -2,22 +2,22 @@
 
 ## 服务端
 
--   express
--   mysql2
+- express
+- mysql2
 
 ## 管理端
 
--   vite
--   vue3
--   pinia
--   vue-router
--   element-plus
--   axios
+- vite
+- vue3
+- pinia
+- vue-router
+- element-plus
+- axios
 
 ## 客户端
 
--   vite
--   vue3
+- vite
+- vue3
 
 # 开发准备
 

@@ -1,4 +1,4 @@
 /// <reference types="vite/client" />
 interface Window {
-    __buildTime: string;
+  __buildTime: string
 }

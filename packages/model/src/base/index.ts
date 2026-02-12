@@ -1,3 +1,3 @@
-export * from './res';
-export * from './page';
-export * from './dao';
+export * from './res'
+export * from './page'
+export * from './dao'

@@ -1,31 +1,31 @@
 {
-    "name": "@apps/client",
-    "private": true,
-    "version": "1.0.0",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview",
-        "sftp": "npx wink-sftp -c sftp.json",
-        "release": "pnpm build && pnpm sftp"
-    },
-    "dependencies": {
-        "@amap/amap-jsapi-loader": "^1.0.1",
-        "@pkgs/apis": "workspace:^",
-        "@pkgs/jwt": "workspace:^",
-        "@pkgs/model": "workspace:^",
-        "@pkgs/stores": "workspace:^",
-        "vant": "^4.8.0",
-        "vue": "^3.3.4",
-        "vue-router": "4"
-    },
-    "devDependencies": {
-        "@vitejs/plugin-legacy": "^5.3.2",
-        "@vitejs/plugin-vue": "^4.2.3",
-        "less": "^4.2.0",
-        "unplugin-auto-import": "^0.16.6",
-        "unplugin-vue-components": "^0.25.2",
-        "vite": "^4.4.5"
-    }
+  "name": "@apps/client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sftp": "npx wink-sftp -c sftp.json",
+    "release": "pnpm build && pnpm sftp"
+  },
+  "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "@pkgs/apis": "workspace:^",
+    "@pkgs/jwt": "workspace:^",
+    "@pkgs/model": "workspace:^",
+    "@pkgs/stores": "workspace:^",
+    "vant": "^4.8.0",
+    "vue": "^3.3.4",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^5.3.2",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "less": "^4.2.0",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
+    "vite": "^4.4.5"
+  }
 }

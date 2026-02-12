@@ -1,21 +1,21 @@
-import { default as express } from 'express';
-import http from 'http';
-import { config, env, useLogger } from './utils';
-import setupControllers from './controller';
-import { preSetup, postSetup } from './middleware';
-import { setupTasks } from './tasks';
+import { default as express } from 'express'
+import http from 'http'
+import { config, env, useLogger } from './utils'
+import setupControllers from './controller'
+import { preSetup, postSetup } from './middleware'
+import { setupTasks } from './tasks'
 // 配置服务
-const app = express();
-preSetup(app);
-setupControllers(app);
-postSetup(app);
+const app = express()
+preSetup(app)
+setupControllers(app)
+postSetup(app)
 // 启动服务
-const logger = useLogger();
+const logger = useLogger()
 const {
-    publish: { port, domain },
-} = config;
-logger.info(config);
+  publish: { port, domain },
+} = config
+logger.info(config)
 http.createServer(app).listen(port, () => {
-    setupTasks();
-    logger.info(`HTTP服务启动成功【${env}】 >> http://${domain}:${port}`);
-});
+  setupTasks()
+  logger.info(`HTTP服务启动成功【${env}】 >> http://${domain}:${port}`)
+})

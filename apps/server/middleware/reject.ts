@@ -1,8 +1,8 @@
-import type { RequestHandler } from 'express';
-import { createErrorHandler } from '../utils';
+import type { RequestHandler } from 'express'
+import { createErrorHandler } from '../utils'
 
 export const rejectHandler: RequestHandler = (req, res, next) => {
-    process.once('unhandledRejection', createErrorHandler(res));
-    process.once('uncaughtException', createErrorHandler(res));
-    next();
-};
+  process.once('unhandledRejection', createErrorHandler(res))
+  process.once('uncaughtException', createErrorHandler(res))
+  next()
+}
